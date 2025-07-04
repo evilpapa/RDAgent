@@ -63,6 +63,7 @@ class ConvManager:
     """
     This is a conversation manager of LLM
     It is for convenience of exporting conversation for debugging.
+    # 中文：这是一个大语言模型的会话管理器，便于导出会话用于调试。
     """
 
     def __init__(
@@ -100,10 +101,13 @@ class DeprecBackend(APIBackend):
 
     (xiao) thinks integrate all kinds of API in a single class is not a good design.
     So we should split them into different classes in `oai/backends/` in the future.
+    # 中文：这是不同后端的统一接口。
+    # （xiao）认为将所有 API 集成到一个类不是好设计，未来应拆分到 oai/backends/ 下的不同类。
     """
 
     # FIXME: (xiao) We should avoid using self.xxxx.
     # Instead, we can use LLM_SETTINGS directly. If it's difficult to support different backend settings, we can split them into multiple BaseSettings.
+    # 中文：应避免使用 self.xxxx，建议直接用 LLM_SETTINGS。如难以支持多后端配置，可拆分为多个 BaseSettings。
     def __init__(  # noqa: C901, PLR0912, PLR0915
         self,
         *args: Any,
@@ -238,6 +242,7 @@ class DeprecBackend(APIBackend):
         tiktoken.encoding_for_model(self.chat_model) does not cover all cases it should consider.
 
         This function attempts to handle several edge cases.
+        # 中文：tiktoken.encoding_for_model(self.chat_model) 并未覆盖所有情况，本函数尝试处理若干边界场景。
         """
 
         # 1) cases
@@ -245,6 +250,7 @@ class DeprecBackend(APIBackend):
             """
             When using Azure API, self.chat_model is the deployment name that can be any string.
             For example, it may be `gpt-4o_2024-08-06`. But tiktoken.encoding_for_model can't handle this.
+            # 中文：使用 Azure API 时，self.chat_model 是部署名，可为任意字符串，如 gpt-4o_2024-08-06，tiktoken.encoding_for_model 无法处理。
             """
             return model.replace("_", "-")
 
@@ -265,6 +271,7 @@ class DeprecBackend(APIBackend):
         """
         Check if the backend supports function calling.
         Currently, deprec backend does not support function calling so it returns False. #FIXME: maybe a mapping to the backend class is needed.
+        # 中文：检查后端是否支持函数调用。当前 deprec 后端不支持函数调用，始终返回 False。#FIXME: 也许需要后端类的映射。
         """
         return False
 
@@ -304,6 +311,9 @@ class DeprecBackend(APIBackend):
             When retrying with cache enabled, it will keep returning the same results.
             To make retries useful, we need to enable a seed.
             This seed is different from `self.chat_seed` for GPT. It is for the local cache mechanism enabled by RD-Agent locally.
+        # 中文：seed : Optional[int]
+        #   启用缓存重试时会返回相同结果，为了让重试有意义需启用 seed。
+        #   此 seed 与 GPT 的 self.chat_seed 不同，仅用于 RD-Agent 本地缓存机制。
         """
 
         # TODO: we can add this function back to avoid so much `self.cfg.log_llm_chat_content`
@@ -471,6 +481,7 @@ class DeprecBackend(APIBackend):
         if self.use_llama2 or self.use_gcr_endpoint:
             logger.warning("num_tokens_from_messages() is not implemented for model llama2.")
             return 0  # TODO implement this function for llama2
+            # 中文：尚未为 llama2 实现 num_tokens_from_messages()，需补充实现。
 
         if "gpt4" in self.chat_model or "gpt-4" in self.chat_model:
             tokens_per_message = 3
