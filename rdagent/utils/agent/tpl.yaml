@@ -1,55 +1,52 @@
 PythonAgentOut: |-
-  The return code should be like
+  返回的代码格式如下：
   ```Python
-  <You code>
+  <你的代码>
   ```
 
 MarkdownOut: |-
-  The return content should be like the format below(Please note tha "````" is used to avoid confliction of "```" in markdown file)
+  返回内容应如下所示（注意用“````”避免与 markdown 文件中的“```”冲突）：
   ````markdown
-  <the content of markdown file>
+  <markdown 文件内容>
   ````
 
 BatchEditOut: |-
-  You should return an edition that applies to multiple files in a workspace in JSON.
-  Except for the model file, other files should not be renamed.
-  Files that do not need modifications should not be included in the returned text.
-
-  For example:
-  Inject the code into the folder. Your file name should always contain the suffix. Your file name keys should be unique to avoid delete or replace conflicts.
+  你应返回一个适用于工作区多个文件的 JSON 编辑方案。
+  除模型文件外，其他文件不应重命名。
+  不需要修改的文件不应包含在返回内容中。
+  例如：
+  注入代码到文件夹。文件名应始终带后缀，且唯一，避免删除或替换冲突。
   {
-      <file name1>: "<code>",  // indicate writing <code> into <file name1> (create a new file or update an existing file)
+      <文件名1>: "<代码>",  // 表示将<代码>写入<文件名1>（新建或更新）
       {% if with_del %}
-      <file name2>: "__DEL__"  // indicate removing file name2. When we want to just remove a file or replace a file to a new one, we usually use this
+      <文件名2>: "__DEL__"  // 表示删除文件名2，通常用于删除或替换文件
       {% else %}
-      <file name2> (optional): "<code>"  // indicate writing <code> into <file name2> (create a new file or update an existing file)
+      <文件名2>（可选）: "<代码>"  // 表示将<代码>写入<文件名2>（新建或更新）
       {% endif %}
   }
 
 PythonBatchEditOut: |-
-  You should return an edition that applies to multiple files in a workspace.
-  Except for the model file, other files should not be renamed.
-  Files that do not need modifications should not be included in the returned text.
-
-  Response format should be like:
-  ```<file name 1>
-  <code>
+  你应返回一个适用于工作区多个文件的编辑方案。
+  除模型文件外，其他文件不应重命名。
+  不需要修改的文件不应包含在返回内容中。
+  返回格式如下：
+  ```<文件名1>
+  <代码>
   ```
-  ```<file name 2>
-  <code>
+  ```<文件名2>
+  <代码>
   ```
   {% if with_del %}
-  ```<file name 3>
+  ```<文件名3>
   __DEL__
   ```
   {% endif %}
   ...
-
-  NOTE:
-  - The file name should always contain the suffix.
-  - The file name should be unique to prevent conflicts during removal or replacement.
-  - To indicate writing code into a file, provide the corresponding code to replace "<code>" (creating a new file or updating an existing one).
+  注意：
+  - 文件名应始终带后缀。
+  - 文件名应唯一，防止删除或替换时冲突。
+  - 写入文件时，提供对应代码替换“<代码>”（新建或更新）。
   {% if with_del %}
-  - To explicitly remove a file, provide only `__DEL__` within the code block for that file.
-  - To replace a file with a new one, first provide ` __DEL__` for the original file, then include a separate entry with new file name and the new code.
+  - 明确删除文件时，仅在该文件代码块中写 `__DEL__`。
+  - 替换文件时，先对原文件写 `__DEL__`，再单独写新文件名和新代码。
   {% endif %}

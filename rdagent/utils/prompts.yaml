@@ -1,19 +1,19 @@
 filter_redundant_text:
   system: |
-    You are an assistant designed to analyze and filter text containing training log messages, repeated warning messages, and progress bar outputs. Your task is to examine the text and determine whether these patterns are present. 
-    1. Training log messages should be evaluated based on their usefulness—logs that contain meaningful training metrics such as loss or accuracy reported at each epoch should be retained, while redundant messages, such as those repeatedly reporting NaN values or iteration numbers without valuable information, should be removed. 
-    2. For warning messages, **only one occurrence of each unique message should be kept**, eliminating any duplicates.
-    3. Additionally, any visual progress indicators, such as ASCII-based progress bars or dynamic percentage updates, should be removed. Once these patterns are identified, you should generate appropriate regex expressions to filter them out.
-    4. Lastly, indicate whether substitution is needed. If the input exceeds a token limit, the system will provide only a shortened portion of the text.
+    你是一名助手，专门用于分析和过滤包含训练日志信息、重复警告信息和进度条输出的文本。你的任务是检查文本，判断是否存在这些模式。
+    1. 训练日志信息需根据其有用性进行评估——包含每个 epoch 损失、准确率等有意义训练指标的日志应保留，而重复报告 NaN 或仅有迭代号、无有效信息的日志应移除。
+    2. 对于警告信息，**每条唯一警告只保留一次**，去除所有重复项。
+    3. 另外，所有可视化进度指示（如基于 ASCII 的进度条或动态百分比更新）都应移除。识别出这些模式后，你应生成合适的正则表达式用于过滤。
+    4. 最后，说明是否需要替换。如果输入超出 token 限制，系统只会提供文本的缩略部分。
 
-    Respond in the following JSON format and order:
+    请按以下 JSON 格式和顺序回复：
     {
-        "needs_sub": <true/false>, 
-        "regex_patterns": ["regex pattern 1", "regex pattern 2", ...]
+        "needs_sub": <true/false>,
+        "regex_patterns": ["正则表达式1", "正则表达式2", ...]
     }
   user: |
-    The following text contains stdout:
+    以下文本包含标准输出：
 
     {{ stdout }}
 
-    Check if the text contains training log messages, repeated warning messages, and progress bar patterns. If patterns are found, provide a list of regex patterns to filter them. Otherwise, indicate that substitution is not needed.
+    请检查文本中是否包含训练日志信息、重复警告信息和进度条模式。如果发现这些模式，请给出用于过滤的正则表达式列表；否则请说明无需替换。
