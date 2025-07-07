@@ -1,244 +1,84 @@
 ==============================
-Installation and Configuration
+安装与配置
 ==============================
 
-Installation
-============
+安装
+====
 
-**Install RDAgent**: For different scenarios
+**安装 RDAgent**：针对不同场景
 
-- for purely users: please use ``pip install rdagent`` to install RDAgent
-- for dev users: `See development <development.html>`_
+- 纯用户：请使用 ``pip install rdagent`` 安装 RDAgent
+- 开发者用户：`参见开发文档 <development.html>`_
 
-**Install Docker**: RDAgent is designed for research and development, acting like a human researcher and developer. It can write and run code in various environments, primarily using Docker for code execution. This keeps the remaining dependencies simple. Users must ensure Docker is installed before attempting most scenarios. Please refer to the `official 🐳Docker page <https://docs.docker.com/engine/install/>`_ for installation instructions.
-Ensure the current user can run Docker commands **without using sudo**. You can verify this by executing `docker run hello-world`.
+**安装 Docker**：RDAgent 旨在用于科研与开发，像人类研究者和开发者一样工作。它可以在多种环境下编写和运行代码，主要通过 Docker 执行代码，从而简化了依赖。用户在大多数场景下需确保已安装 Docker。请参考 `官方 🐳Docker 页面 <https://docs.docker.com/engine/install/>`_ 获取安装说明。
+请确保当前用户可以**无需 sudo**运行 Docker 命令。你可以通过执行 `docker run hello-world` 验证。
 
-LiteLLM Backend Configuration (Default)
-=======================================
+LiteLLM 后端配置（默认）
+========================
 
-Option 1: Unified API base for both models
+选项 1：统一 API base（适用于聊天与嵌入模型）
 ------------------------------------------
 
    .. code-block:: Properties
 
-      # Set to any model supported by LiteLLM.
+      # 设置为 LiteLLM 支持的任意模型。
       CHAT_MODEL=gpt-4o 
       EMBEDDING_MODEL=text-embedding-3-small
-      # Configure unified API base
-      # The backend api_key fully follows the convention of litellm.
-      OPENAI_API_BASE=<your_unified_api_base>
-      OPENAI_API_KEY=<replace_with_your_openai_api_key>
+      # 配置统一 API base
+      # 后端 api_key 完全遵循 litellm 规范。
+      OPENAI_API_BASE=<你的统一 api base>
+      OPENAI_API_KEY=<替换为你的 openai api key>
 
-Option 2: Separate API bases for Chat and Embedding models
-----------------------------------------------------------
+选项 2：分别配置聊天与嵌入模型的 API base
+------------------------------------------
 
    .. code-block:: Properties
 
-      # Set to any model supported by LiteLLM.
+      # 设置为 LiteLLM 支持的任意模型。
       
-      # CHAT MODEL:
+      # 聊天模型：
       CHAT_MODEL=gpt-4o 
-      OPENAI_API_BASE=<your_chat_api_base>
-      OPENAI_API_KEY=<replace_with_your_openai_api_key>
+      OPENAI_API_BASE=<你的聊天 api base>
+      OPENAI_API_KEY=<替换为你的 openai api key>
 
-      # EMBEDDING MODEL:
-      # TAKE siliconflow as an example, you can use other providers.
-      # Note: embedding requires litellm_proxy prefix
+      # 嵌入模型：
+      # 以 siliconflow 为例，也可用其他提供商。
+      # 注意：嵌入模型需加 litellm_proxy 前缀
       EMBEDDING_MODEL=litellm_proxy/BAAI/bge-large-en-v1.5
-      LITELLM_PROXY_API_KEY=<replace_with_your_siliconflow_api_key>
+      LITELLM_PROXY_API_KEY=<替换为你的 siliconflow api key>
       LITELLM_PROXY_API_BASE=https://api.siliconflow.cn/v1
 
-Necessary parameters include:
+必要参数包括：
 
-- `CHAT_MODEL`: The model name of the chat model.
+- `CHAT_MODEL`：聊天模型名称。
+- `EMBEDDING_MODEL`：嵌入模型名称。
+- `OPENAI_API_BASE`：API 基础地址。如果 `EMBEDDING_MODEL` 未以 `litellm_proxy/` 开头，则用于聊天和嵌入模型；否则仅用于聊天模型。
 
-- `EMBEDDING_MODEL`: The model name of the embedding model.
+可选参数（当嵌入模型与聊天模型提供商不同需填写）：
 
-- `OPENAI_API_BASE`: The base URL of the API. If `EMBEDDING_MODEL` does not start with `litellm_proxy/`, this is used for both chat and embedding models; otherwise, it is used for `CHAT_MODEL` only.
+- `LITELLM_PROXY_API_KEY`：嵌入模型的 API key，若 `EMBEDDING_MODEL` 以 `litellm_proxy/` 开头则必填。
+- `LITELLM_PROXY_API_BASE`：嵌入模型的 API base，若 `EMBEDDING_MODEL` 以 `litellm_proxy/` 开头则必填。
 
-Optional parameters (required if your embedding model is provided by a different provider than `CHAT_MODEL`):
+**注意：** 若嵌入模型与聊天模型来自不同提供商，需在 `EMBEDDING_MODEL` 名称前加 `litellm_proxy/` 前缀。
 
-- `LITELLM_PROXY_API_KEY`: The API key for the embedding model, required if `EMBEDDING_MODEL` starts with `litellm_proxy/`.
+`CHAT_MODEL` 和 `EMBEDDING_MODEL` 参数会传递给 LiteLLM 的 completion 函数。
 
-- `LITELLM_PROXY_API_BASE`: The base URL for the embedding model, required if `EMBEDDING_MODEL` starts with `litellm_proxy/`.
+因此，使用不同提供商的模型时，请先查阅 LiteLLM 的接口配置，确保模型名称与 LiteLLM 支持的名称一致。
 
-**Note:** If you are using an embedding model from a provider different from the chat model, remember to add the `litellm_proxy/` prefix to the `EMBEDDING_MODEL` name.
+此外，还需为相应模型提供商设置额外参数，参数名需与 LiteLLM 要求一致。
 
-
-The `CHAT_MODEL` and `EMBEDDING_MODEL` parameters will be passed into LiteLLM's completion function. 
-
-Therefore, when utilizing models provided by different providers, first review the interface configuration of LiteLLM. The model names must match those allowed by LiteLLM.
-
-Additionally, you need to set up the the additional parameters for the respective model provider, and the parameter names must align with those required by LiteLLM.
-
-For example, if you are using a DeepSeek model, you need to set as follows:
+例如，若使用 DeepSeek 模型，需如下设置：
 
    .. code-block:: Properties
 
-      # For some models LiteLLM requires a prefix to the model name.
+      # 某些模型 LiteLLM 需加前缀。
       CHAT_MODEL=deepseek/deepseek-chat
-      DEEPSEEK_API_KEY=<replace_with_your_deepseek_api_key>
+      DEEPSEEK_API_KEY=<替换为你的 deepseek api key>
 
-Besides, when you are using reasoning models, the response might include the thought process. For this case, you need to set the following environment variable:
+此外，若使用推理模型，返回结果可能包含思考过程。此时需设置如下环境变量：
    
    .. code-block:: Properties
       
       REASONING_THINK_RM=True
 
-For more details on LiteLLM requirements, refer to the `official LiteLLM documentation <https://docs.litellm.ai/docs>`_.
-
-
-Configuration(deprecated)
-=========================
-
-To run the application, please create a `.env` file in the root directory of the project and add environment variables according to your requirements.
-
-If you are using this deprecated version,  you should set `BACKEND` to `rdagent.oai.backend.DeprecBackend`.
-
-Here are some other configuration options that you can use:
-
-OpenAI API
-------------
-
-Here is a standard configuration for the user using the OpenAI API.
-
-   .. code-block:: Properties
-
-      OPENAI_API_KEY=<your_api_key>
-      EMBEDDING_MODEL=text-embedding-3-small
-      CHAT_MODEL=gpt-4-turbo
-
-Azure OpenAI
-------------
-
-The following environment variables are standard configuration options for the user using the OpenAI API.
-
-   .. code-block:: Properties
-
-      USE_AZURE=True
-
-      EMBEDDING_OPENAI_API_KEY=<replace_with_your_azure_openai_api_key>
-      EMBEDDING_AZURE_API_BASE=  # The endpoint for the Azure OpenAI API.
-      EMBEDDING_AZURE_API_VERSION=  # The version of the Azure OpenAI API.
-      EMBEDDING_MODEL=text-embedding-3-small
-
-      CHAT_OPENAI_API_KEY=<replace_with_your_azure_openai_api_key>
-      CHAT_AZURE_API_BASE=  # The endpoint for the Azure OpenAI API.
-      CHAT_AZURE_API_VERSION=  # The version of the Azure OpenAI API.
-      CHAT_MODEL=  # The model name of the Azure OpenAI API.
-
-Use Azure Token Provider
-------------------------
-
-If you are using the Azure token provider, you need to set the `CHAT_USE_AZURE_TOKEN_PROVIDER` and `EMBEDDING_USE_AZURE_TOKEN_PROVIDER` environment variable to `True`. then 
-use the environment variables provided in the `Azure Configuration section <installation_and_configuration.html#azure-openai>`_.
-
-
-☁️ Azure Configuration
-- Install Azure CLI:
-
-   ```sh
-   curl -L https://aka.ms/InstallAzureCli | bash
-   ```
-
-- Log in to Azure:
-
-   ```sh
-   az login --use-device-code
-   ```
-
-- `exit` and re-login to your environment (this step may not be necessary).
-
-
-Configuration List
-------------------
-
-.. TODO: use `autodoc-pydantic` .
-
-- OpenAI API Setting
-
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| Configuration Option              | Meaning                                                         | Default Value           |
-+===================================+=================================================================+=========================+
-| OPENAI_API_KEY                    | API key for both chat and embedding models                      | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| EMBEDDING_OPENAI_API_KEY          | Use a different API key for embedding model                     | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| CHAT_OPENAI_API_KEY               | Set to use a different API key for chat model                   | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| EMBEDDING_MODEL                   | Name of the embedding model                                     | text-embedding-3-small  |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| CHAT_MODEL                        | Name of the chat model                                          | gpt-4-turbo             |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| EMBEDDING_AZURE_API_BASE          | Base URL for the Azure OpenAI API                               | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| EMBEDDING_AZURE_API_VERSION       | Version of the Azure OpenAI API                                 | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| CHAT_AZURE_API_BASE               | Base URL for the Azure OpenAI API                               | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| CHAT_AZURE_API_VERSION            | Version of the Azure OpenAI API                                 | None                    |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| USE_AZURE                         | True if you are using Azure OpenAI                              | False                   |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| CHAT_USE_AZURE_TOKEN_PROVIDER     | True if you are using an Azure Token Provider in chat model     | False                   |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-| EMBEDDING_USE_AZURE_TOKEN_PROVIDER| True if you are using an Azure Token Provider in embedding model| False                   |
-+-----------------------------------+-----------------------------------------------------------------+-------------------------+
-
-- Globol Setting
-
-+-----------------------------+--------------------------------------------------+-------------------------+
-| Configuration Option        | Meaning                                          | Default Value           |
-+=============================+==================================================+=========================+
-| max_retry                   | Maximum number of times to retry                 | 10                      |
-+-----------------------------+--------------------------------------------------+-------------------------+
-| retry_wait_seconds          | Number of seconds to wait before retrying        | 1                       |
-+-----------------------------+--------------------------------------------------+-------------------------+
-+ log_trace_path              | Path to log trace file                           | None                    |
-+-----------------------------+--------------------------------------------------+-------------------------+
-+ log_llm_chat_content        | Flag to indicate if chat content is logged       | True                    |
-+-----------------------------+--------------------------------------------------+-------------------------+
-
-
-- Cache Setting
-
-.. TODO: update Meaning for caches
-
-+------------------------------+--------------------------------------------------+-------------------------+
-| Configuration Option         | Meaning                                          | Default Value           |
-+==============================+==================================================+=========================+
-| dump_chat_cache              | Flag to indicate if chat cache is dumped         | False                   |
-+------------------------------+--------------------------------------------------+-------------------------+
-| dump_embedding_cache         | Flag to indicate if embedding cache is dumped    | False                   |
-+------------------------------+--------------------------------------------------+-------------------------+
-| use_chat_cache               | Flag to indicate if chat cache is used           | False                   |
-+------------------------------+--------------------------------------------------+-------------------------+
-| use_embedding_cache          | Flag to indicate if embedding cache is used      | False                   |
-+------------------------------+--------------------------------------------------+-------------------------+
-| prompt_cache_path            | Path to prompt cache                             | ./prompt_cache.db       |
-+------------------------------+--------------------------------------------------+-------------------------+
-| max_past_message_include     | Maximum number of past messages to include       | 10                      |
-+------------------------------+--------------------------------------------------+-------------------------+
-
-
-
-
-Loading Configuration
----------------------
-
-For users' convenience, we provide a CLI interface called `rdagent`, which automatically runs `load_dotenv()` to load environment variables from the `.env` file.
-However, this feature is not enabled by default for other scripts. We recommend users load the environment with the following steps:
-
-
-- ⚙️ Environment Configuration
-    - Place the `.env` file in the same directory as the `.env.example` file.
-        - The `.env.example` file contains the environment variables required for users using the OpenAI API (Please note that `.env.example` is an example file. `.env` is the one that will be finally used.)
-
-    - Export each variable in the .env file:
-
-      .. code-block:: sh
-
-          export $(grep -v '^#' .env | xargs)
-    
-    - If you want to change the default environment variables, you can refer to the above configuration and edith the `.env` file.
-
+更多 LiteLLM 配置细节请参考 `官方 LiteLLM 文档 <https://docs.litellm.ai/docs>`_。

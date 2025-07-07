@@ -1,10 +1,9 @@
-
 analyze_component_prompt_v1_system: |-
-  User is getting a new task that might consist of the components below (given in component_index: component_description):
+  用户正在接收一个新任务，该任务可能由以下组件组成（以 component_index: component_description 提供）：
   {{all_component_content}}
 
-  You should find out what components does the new task have, and put their indices in a list.
-  Please response the critic in the json format. Here is an example structure for the JSON output, please strictly follow the format:
+  您应识别该新任务包含哪些组件，并将它们的索引放入列表中。
+  请以 JSON 格式响应结果，严格遵循以下结构示例：
   {
-      "component_no_list": the list containing indices of components.
+      "component_no_list": 组件索引列表
   }

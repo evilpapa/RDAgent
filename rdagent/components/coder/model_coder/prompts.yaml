@@ -1,156 +1,155 @@
 extract_model_formulation_system: |-
-    offer description of the proposed model in this paper, write a latex formula with variable as well as the architecture of the model. the format should be like 
+    提供本文中提出模型的描述，写出包含变量的 LaTeX 公式以及模型的架构。格式如下：
     {
-        "model_name (The name of the model)": {
-            "description": "A detailed description of the model",
-            "formulation": "A LaTeX formula representing the model's formulation",
-            "architecture": "A detailed description of the model's architecture, e.g., neural network layers or tree structures",
+        "model_name (模型名称)": {
+            "description": "模型的详细描述",
+            "formulation": "表示模型公式的 LaTeX 公式",
+            "architecture": "模型架构的详细描述，例如神经网络层或树结构",
             "variables": {
-                "\\hat{y}_u": "The predicted output for node u",
-                "variable_name_2": "Description of variable 2",
-                "variable_name_3": "Description of variable 3"
+                "\hat{y}_u": "节点 u 的预测输出",
+                "variable_name_2": "变量 2 的描述",
+                "variable_name_3": "变量 3 的描述"
             },
             "hyperparameters": {
-                "hyperparameter_name_1": "value of hyperparameter 1",
-                "hyperparameter_name_2": "value of hyperparameter 2",
-                "hyperparameter_name_3": "value of hyperparameter 3"
+                "hyperparameter_name_1": "超参数 1 的值",
+                "hyperparameter_name_2": "超参数 2 的值",
+                "hyperparameter_name_3": "超参数 3 的值"
             },
-            "training_hyperparameters" {  # All values are for reference; you can set them yourself
+            "training_hyperparameters": {  # 所有值仅供参考；您可以自行设置
                 "n_epochs": "100",
                 "lr": "1e-3",
                 "early_stop": 10,
                 "batch_size": 256,
                 "weight_decay": 1e-4,
-            }
-            "model_type": "Tabular or TimeSeries or Graph or XGBoost"  # Should be one of "Tabular", "TimeSeries", "Graph", or "XGBoost"
+            },
+            "model_type": "Tabular 或 TimeSeries 或 Graph 或 XGBoost"  # 应为 "Tabular"、"TimeSeries"、"Graph" 或 "XGBoost" 之一
         }
     }
-    such format content should be begin with ```json and end with ``` and the content should be in json format.
+    此格式内容应以 ```json 开始并以 ``` 结束，内容应为 JSON 格式。
 
 evolving_strategy_model_coder:
     system: |-
-        User is trying to implement some pytorch models in the following scenario:
+        用户尝试在以下场景中实现一些 PyTorch 模型：
         {{ scenario }}
-        Your code is expected to align the scenario in any form which means The user needs to get the prediction of the model based on the input data.
+        您的代码需要与场景保持一致，这意味着用户需要根据输入数据获得模型的预测结果。
 
-        To help you write the correct code, the user might provide multiple information that helps you write the correct code:
-        1. The user might provide you the correct code to similar models. Your should learn from these code to write the correct code.
-        2. The user might provide you the failed former code and the corresponding feedback to the code. The feedback contains to the execution, the code and the model output value. You should analyze the feedback and try to correct the latest code.
-        3. The user might provide you the suggestion to the latest fail code and some similar fail to correct pairs. Each pair contains the fail code with similar error and the corresponding corrected version code. You should learn from these suggestion to write the correct code.
+        为帮助您编写正确的代码，用户可能会提供多种信息来帮助您：
+        1. 用户可能会提供类似模型的正确代码。您应从这些代码中学习以编写正确代码。
+        2. 用户可能会提供失败的代码及其对应的反馈。反馈包括执行结果、代码和模型输出值。您应分析反馈并尝试纠正最新代码。
+        3. 用户可能会提供对最新失败代码的建议以及一些类似的失败与修正对。每对包含失败代码及其对应的修正版本代码。您应从这些建议中学习以编写正确代码。
 
-        Your must write your code based on your former latest attempt below which consists of your former code and code feedback, you should read the former attempt carefully and must not modify the right part of your former code.
+        您必须基于以下最新尝试编写代码，其中包括用户的前代码和代码反馈。您应仔细阅读前尝试内容，并且不得修改前代码的正确部分。
 
         {% if current_code is not none %}
-        User has write some code before. You should write the new code based on this code. Here is the latest code:
+        用户之前已编写了一些代码。您应基于此代码编写新代码。以下是最新代码：
         ```python
         {{ current_code }}
         ```
-        Your code should be very similar to the former code which means your code should be ninety more percent same as the former code! You should not modify the right part of the code.
+        您的代码应与前代码非常相似，这意味着您的代码应与前代码有九成以上的相似度！您不应修改代码的正确部分。
         {% else %}
-        User has not write any code before. You should write the new code from scratch.
+        用户之前未编写任何代码。您应从头开始编写新代码。
         {% endif %}
 
         {% if queried_former_failed_knowledge|length != 0 %}
-        --------------Your former latest attempt:---------------
-        =====Code to the former implementation=====
+        --------------您的最新尝试：---------------
+        =====前实现代码=====
         {{ queried_former_failed_knowledge[-1].implementation.all_codes }}
-        =====Feedback to the former implementation=====
+        =====前实现反馈=====
         {{ queried_former_failed_knowledge[-1].feedback }}
         {% endif %}
         
-        Please response the code in the following json format. Here is an example structure for the JSON output:
+        请以以下 JSON 格式响应代码。以下是 JSON 输出的示例结构：
         {
-            "code": "The Python code as a string."
+            "code": "Python 代码作为字符串。"
         }
 
     user: |-
-        --------------Target model information:---------------
+        --------------目标模型信息：---------------
         {{ model_information_str }}
 
         {% if queried_similar_successful_knowledge|length != 0 %}
-        --------------Correct code to similar models:---------------
+        --------------类似模型的正确代码：---------------
         {% for similar_successful_knowledge in queried_similar_successful_knowledge %}
-        =====Model {{loop.index}}:=====
+        =====模型 {{loop.index}}：=====
         {{ similar_successful_knowledge.target_task.get_task_information() }}
-        =====Code:=====
+        =====代码：=====
         {{ similar_successful_knowledge.implementation.all_codes }}
         {% endfor %}
         {% endif %}
 
         {% if queried_former_failed_knowledge|length != 0 %}
-        --------------Former failed code:---------------
+        --------------之前失败的代码：---------------
         {% for former_failed_knowledge in queried_former_failed_knowledge %}
-        =====Code to implementation {{ loop.index }}=====
+        =====实现代码 {{ loop.index }}=====
         {{ former_failed_knowledge.implementation.all_codes }}
-        =====Feedback to implementation {{ loop.index }}=====
+        =====实现反馈 {{ loop.index }}=====
         {{ former_failed_knowledge.feedback }}
         {% endfor %}
         {% endif %}
 
 evaluator_code_feedback:
     system: |-
-        User is trying to implement some models in the following scenario:
+        用户尝试在以下场景中实现一些模型：
         {{ scenario }}
-        User will provide you the information of the model.
+        用户将提供模型信息。
 
-        Your job is to check whether user's code is align with the model information and the scenario.
-        The user will provide the source python code and the execution error message if execution failed.
-        The user might provide you the ground truth code for you to provide the critic. You should not leak the ground truth code to the user in any form but you can use it to provide the critic.
+        您的任务是检查用户的代码是否与模型信息和场景一致。
+        用户将提供源 Python 代码以及执行失败时的错误信息。
+        用户可能会提供正确代码供您进行批评。您不应以任何形式泄露正确代码给用户，但可以使用它提供批评。
 
-        User has also compared the output generated by the user's code and the ground truth code. The user will provide you some analysis results comparing two output. You may find some error in the code which caused the difference between the two output.
+        用户还比较了用户代码生成的输出与正确代码生成的输出。用户将提供一些分析结果，比较两个输出。您可能会发现代码中导致两个输出差异的错误。
 
-        If the ground truth code is provided, your critic should only consider checking whether the user's code is align with the ground truth code since the ground truth is definitely correct.
-        If the ground truth code is not provided, your critic should consider checking whether the user's code is reasonable and correct to the description and to the scenario.
+        如果提供了正确代码，您的批评应仅考虑检查用户代码是否与正确代码一致，因为正确代码绝对正确。
+        如果未提供正确代码，您的批评应考虑检查用户代码是否合理且与描述和场景一致。
 
-        Notice that your critics are not for user to debug the code. They are sent to the coding agent to correct the code. So don't give any following items for the user to check like "Please check the code line XXX".
+        注意，您的批评不是为了让用户调试代码。它们是发送给编码代理以纠正代码的。因此不要给用户检查的建议，例如“请检查代码行 XXX”。
 
-        You suggestion should not include any code, just some clear and short suggestions. Please point out very critical issues in your response, ignore non-important issues to avoid confusion. If no big issue found in the code, you can response "No critics found".
+        您的建议不应包含任何代码，仅需提供一些清晰简短的建议。请指出响应中的关键问题，忽略不重要的问题以避免混淆。如果代码中未发现重大问题，您可以响应“未发现批评”。
 
-        You should provide the suggestion to each of your critic to help the user improve the code. Please response the critic in the following format. Here is an example structure for the output:
-        critic 1: The critic message to critic 1
-        critic 2: The critic message to critic 2
+        您应为每个批评提供建议以帮助用户改进代码。请以以下格式响应批评。以下是输出的示例结构：
+        批评 1：批评 1 的信息
+        批评 2：批评 2 的信息
     
     user: |-
-        --------------Model information:---------------
+        --------------模型信息：---------------
         {{ model_information }}
-        --------------Python code:---------------
+        --------------Python 代码：---------------
         {{ code }}
-        --------------Execution feedback:---------------
+        --------------执行反馈：---------------
         {{ model_execution_feedback }}
         {% if model_value_feedback is not none %}
-        --------------Model value feedback:---------------
+        --------------模型值反馈：---------------
         {{ model_value_feedback }}
         {% endif %}
         {% if gt_code is not none %}
-        --------------Ground truth Python code:---------------
+        --------------正确的 Python 代码：---------------
         {{ gt_code }}
         {% endif %}
 
-
 evaluator_final_feedback:
     system: |-
-        User is trying to implement a model in the following scenario:
+        用户尝试在以下场景中实现一个模型：
         {{ scenario }}
-        User has finished evaluation and got some feedback from the evaluator.
-        The evaluator run the code and get the output and provide several feedback regarding user's code and code output. You should analyze the feedback and considering the scenario and model description to give a final decision about the evaluation result. The final decision concludes whether the model is implemented correctly and if not, detail feedback containing reason and suggestion if the final decision is False.
+        用户已完成评估并从评估者处获得了一些反馈。
+        评估者运行代码并获得输出，并提供了关于用户代码和代码输出的多个反馈。您应分析反馈并考虑场景和模型描述以给出关于评估结果的最终决定。最终决定包括模型是否正确实现，如果不正确，则详细反馈包含原因和建议，若最终决定为 False。
 
-        The implementation final decision is considered in the following logic:
-        1. If the value and the ground truth value are exactly the same under a small tolerance, the implementation is considered correct.
-        2. If no ground truth value is not provided, the implementation is considered correct if the code execution is successful and the code feedback is align with the scenario and model description.
+        实现最终决定的逻辑如下：
+        1. 如果值与正确值在小容差范围内完全相同，则实现被认为是正确的。
+        2. 如果未提供正确值，则实现被认为是正确的，前提是代码执行成功且代码反馈与场景和模型描述一致。
 
-        Please response the critic in the json format. Here is an example structure for the JSON output, please strictly follow the format:
+        请以 JSON 格式响应批评。以下是 JSON 输出的示例结构，请严格遵循格式：
         {
             "final_decision": True,
-            "final_feedback": "The final feedback message",
+            "final_feedback": "最终反馈信息",
         }
     user: |-
-        --------------Model information:---------------
+        --------------模型信息：---------------
         {{ model_information }}
-        --------------Model Execution feedback:---------------
+        --------------模型执行反馈：---------------
         {{ model_execution_feedback }}
-        --------------Model shape feedback:---------------
+        --------------模型形状反馈：---------------
         {{ model_shape_feedback }}
-        --------------Model Code feedback:---------------
+        --------------模型代码反馈：---------------
         {{ model_code_feedback }}
-        --------------Model value feedback:---------------
+        --------------模型值反馈：---------------
         {{ model_value_feedback }}

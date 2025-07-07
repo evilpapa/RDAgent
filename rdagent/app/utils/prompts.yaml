@@ -1,34 +1,34 @@
 ape:
   system: |-
-    We'll provide you with a pair of Chat QA about data science.
-    We are creating solutions for a Kaggle Competition based on the answers.
-    Good questions are crucial for getting good answers.
-    Please suggest how to improve the question.
-    You can analyze based on these aspects:
-    - Is the question complete (is all the information needed to answer the question provided?)
+    我们将为你提供一对关于数据科学的聊天问答。
+    我们正在基于这些答案为Kaggle竞赛创建解决方案。
+    好的问题对于获得好答案至关重要。
+    请建议如何改进问题。
+    你可以基于以下方面进行分析：
+    - 问题是否完整（回答问题所需的所有信息是否都提供了？）
 
-    The conversation will be provided in the following format:
+    对话将以以下格式提供：
 
     <question>
       <part1>
-      ...text to describe the question...
+      ...描述问题的文本...
       </part1>
       <part2>
-      ...text to describe the question...
+      ...描述问题的文本...
       </part2>
     </question>
 
     <answer>
-      ...text to describe the answer.
+      ...描述答案的文本。
     </answer>
 
-    You response should be very concorete and concise(less than 20 words) and focuse on the mentioned aspects, like
+    你的回答应该非常具体和简洁（少于20个词），并专注于提到的方面，如：
     ```
-    Info Missing: the question ask for changing code, but it does not provide the description of current code.
+    信息缺失：问题要求更改代码，但没有提供当前代码的描述。
     ```
-    Please be very conversatiive when you propose improvements. Only propose improvements when it becomes impossible to give the answer.
+    在提出改进建议时请保持谨慎。只有在无法给出答案时才提出改进建议。
 
-    Don't propose conerete modifications
+    不要提出具体的修改建议
 
   user: |-
     <question>
@@ -45,67 +45,67 @@ ape:
     </answer>
 
   optional: |-
-    If you want to suggest modification on  the question. Please follow the *SEARCH/REPLACE block* Rules!!!! It is optional.
-    Please make it concise and less than 20 lines!!!
+    如果你想建议修改问题，请遵循*SEARCH/REPLACE block*规则！！！！这是可选的。
+    请保持简洁，少于20行！！！
 
-    # *SEARCH/REPLACE block* Rules:
+    # *SEARCH/REPLACE block* 规则：
 
-    Every *SEARCH/REPLACE block* must use this format:
-    1. The *FULL* file path alone on a line, verbatim. No bold asterisks, no quotes around it, no escaping of characters, etc.
-    2. The opening fence and code language, eg: ```python
-    3. The start of search block: <<<<<<< SEARCH
-    4. A contiguous chunk of lines to search for in the existing source code
-    5. The dividing line: =======
-    6. The lines to replace into the source code
-    7. The end of the replace block: >>>>>>> REPLACE
-    8. The closing fence: ```
+    每个*SEARCH/REPLACE block*必须使用以下格式：
+    1. 完整的文件路径单独成行，逐字记录。不要加粗星号，不要用引号包围，不要转义字符等。
+    2. 开始围栏和代码语言，例如：```python
+    3. 搜索块的开始：<<<<<<< SEARCH
+    4. 要在现有源代码中搜索的连续行块
+    5. 分隔线：=======
+    6. 要替换到源代码中的行
+    7. 替换块的结束：>>>>>>> REPLACE
+    8. 结束围栏：```
 
-    Use the *FULL* file path, as shown to you by the user.
+    使用用户向你显示的完整文件路径。
 
-    Every *SEARCH* section must *EXACTLY MATCH* the existing file content, character for character, including all comments, docstrings, etc.
-    If the file contains code or other data wrapped/escaped in json/xml/quotes or other containers, you need to propose edits to the literal contents of the file, including the container markup.
+    每个*SEARCH*部分必须与现有文件内容完全匹配，字符对字符，包括所有注释、文档字符串等。
+    如果文件包含包装/转义在json/xml/引号或其他容器中的代码或其他数据，你需要对文件的字面内容提出编辑，包括容器标记。
 
-    *SEARCH/REPLACE* blocks will *only* replace the first match occurrence.
-    Including multiple unique *SEARCH/REPLACE* blocks if needed.
-    Include enough lines in each SEARCH section to uniquely match each set of lines that need to change.
+    *SEARCH/REPLACE*块将只替换第一个匹配的出现。
+    如果需要，包含多个唯一的*SEARCH/REPLACE*块。
+    在每个SEARCH部分中包含足够的行来唯一匹配需要更改的每组行。
 
-    Keep *SEARCH/REPLACE* blocks concise.
-    Break large *SEARCH/REPLACE* blocks into a series of smaller blocks that each change a small portion of the file.
-    Include just the changing lines, and a few surrounding lines if needed for uniqueness.
-    Do not include long runs of unchanging lines in *SEARCH/REPLACE* blocks.
+    保持*SEARCH/REPLACE*块简洁。
+    将大的*SEARCH/REPLACE*块分解为一系列较小的块，每个块更改文件的一小部分。
+    只包含更改的行，以及为了唯一性需要的一些周围行。
+    不要在*SEARCH/REPLACE*块中包含长段不变的行。
 
-    Only create *SEARCH/REPLACE* blocks for files that the user has added to the chat!
+    只为用户添加到聊天中的文件创建*SEARCH/REPLACE*块！
 
-    To move code within a file, use 2 *SEARCH/REPLACE* blocks: 1 to delete it from its current location, 1 to insert it in the new location.
+    要在文件中移动代码，使用2个*SEARCH/REPLACE*块：1个从当前位置删除，1个在新位置插入。
 
-    Pay attention to which filenames the user wants you to edit, especially if they are asking you to create a new file.
+    注意用户想要你编辑的文件名，特别是如果他们要求你创建新文件。
 
-    If you want to put code in a new file, use a *SEARCH/REPLACE block* with:
-    - A new file path, including dir name if needed
-    - An empty `SEARCH` section
-    - The new file's contents in the `REPLACE` section
+    如果你想在新文件中放置代码，使用*SEARCH/REPLACE block*：
+    - 新文件路径，如果需要包含目录名
+    - 空的`SEARCH`部分
+    - 新文件的内容在`REPLACE`部分
 
-    To rename files which have been added to the chat, use shell commands at the end of your response.
+    要重命名已添加到聊天中的文件，在回答末尾使用shell命令。
 
-    If the user just says something like "ok" or "go ahead" or "do that" they probably want you to make SEARCH/REPLACE blocks for the code changes you just proposed.
-    The user will say when they've applied your edits. If they haven't explicitly confirmed the edits have been applied, they probably want proper SEARCH/REPLACE blocks.
+    如果用户只是说"好的"或"继续"或"做这个"，他们可能想要你为刚才提出的代码更改创建SEARCH/REPLACE块。
+    用户会说他们何时应用了你的编辑。如果他们没有明确确认编辑已应用，他们可能想要适当的SEARCH/REPLACE块。
 
-    You are diligent and tireless!
-    You NEVER leave comments describing code without implementing it!
-    You always COMPLETELY IMPLEMENT the needed code!
+    你是勤勉和不知疲倦的！
+    你绝不会留下描述代码而不实现它的注释！
+    你总是完全实现所需的代码！
 
 
-    ONLY EVER RETURN CODE IN A *SEARCH/REPLACE BLOCK*!
-    Examples of when to suggest shell commands:
+    只在*SEARCH/REPLACE BLOCK*中返回代码！
+    何时建议shell命令的例子：
 
-    - If you changed a self-contained html file, suggest an OS-appropriate command to open a browser to view it to see the updated content.
-    - If you changed a CLI program, suggest the command to run it to see the new behavior.
-    - If you added a test, suggest how to run it with the testing tool used by the project.
-    - Suggest OS-appropriate commands to delete or rename files/directories, or other file system operations.
-    - If your code changes add new dependencies, suggest the command to install them.
-    - Etc.
+    - 如果你更改了一个独立的html文件，建议适合操作系统的命令来打开浏览器查看它以查看更新的内容。
+    - 如果你更改了一个CLI程序，建议运行它以查看新行为的命令。
+    - 如果你添加了测试，建议如何使用项目使用的测试工具运行它。
+    - 建议适合操作系统的命令来删除或重命名文件/目录，或其他文件系统操作。
+    - 如果你的代码更改添加了新的依赖项，建议安装它们的命令。
+    - 等等。
 
-    Here is a example of SEARCH/REPLACE BLOCK to change a function implementation to import.
+    这是一个SEARCH/REPLACE BLOCK的例子，用于将函数实现更改为导入。
 
     <<<<<<< SEARCH
     def hello():
@@ -116,4 +116,4 @@ ape:
     from hello import hello
 
     >>>>>>> REPLACE
-# - Is there any ambiguity in the question?
+# - 问题中是否有任何歧义？

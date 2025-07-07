@@ -1,13 +1,12 @@
 ==============================
-Development
+开发
 ==============================
 
-
-Related Paper
+相关论文
 -------------
 
-- `Collaborative Evolving Strategy for Automatic Data-Centric Development <https://arxiv.org/abs/2407.18690>`_
-  Co-STEER is a method to tackle data-centric development (AD2) tasks and highlight its main challenges, which need expert-like implementation (i.e., learning domain knowledge from practice) and task scheduling capability (e.g., starting with easier tasks for better overall efficiency), areas that previous work has largely overlooked. Our Co-STEER agent enhances its domain knowledge through our evolving strategy and improves both its scheduling and implementation skills by gathering and using domain-specific practical experience. With a better schedule, implementation becomes faster. At the same time, as implementation feedback becomes more detailed, scheduling accuracy improves. These two capabilities grow together through practical feedback, enabling a collaborative evolution process.
+- `协同进化策略：自动数据驱动开发 <https://arxiv.org/abs/2407.18690>`_
+  Co-STEER 是一种面向数据驱动开发（AD2）任务的方法，强调专家式实现（即从实践中学习领域知识）和任务调度能力（如优先处理简单任务以提升整体效率），而这些是以往工作普遍忽视的。我们的 Co-STEER agent 通过进化策略不断积累领域知识，并通过实践反馈提升调度与实现能力。这两项能力协同进化，使开发更高效，反馈更细致，调度更精准。
 
 .. code-block:: bibtex
 
@@ -21,5 +20,6 @@ Related Paper
     }
 
 .. image:: https://github.com/user-attachments/assets/75d9769b-0edd-4caf-9d45-57d1e577054b
-   :alt: Collaborative Evolving Strategy for Automatic Data-Centric Development
+   :alt: 协同进化策略：自动数据驱动开发
+
 

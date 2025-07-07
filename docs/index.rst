@@ -1,17 +1,15 @@
-.. RDAgent documentation master file, created by
-   sphinx-quickstart on Mon Jul 15 04:27:50 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. RDAgent 文档主文件，由 sphinx-quickstart 生成。
+   你可以完全自定义本文件，但至少应包含根 `toctree` 指令。
 
-Welcome to RDAgent's documentation!
-===================================
+欢迎查阅 RDAgent 文档！
+========================
 
 .. image:: _static/logo.png
    :alt: RD-Agent Logo
 
 .. toctree::
    :maxdepth: 3
-   :caption: Doctree:
+   :caption: 文档目录:
 
    introduction
    installation_and_configuration
@@ -26,9 +24,10 @@ Welcome to RDAgent's documentation!
    GitHub <https://github.com/microsoft/RD-Agent>
 
 
-Indices and tables
+索引与表格
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

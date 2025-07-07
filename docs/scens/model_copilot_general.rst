@@ -1,21 +1,17 @@
 .. _model_copilot_general:
 
 ======================
-General Model Copilot
+通用模型 Copilot
 ======================
 
-**🤖 Automated Model Research & Development Co-Pilot**
+**🤖自动模型研发协作助手**
 --------------------------------------------------------
 
-📖 Background
+📖 背景
 ~~~~~~~~~~~~~~
-In the fast-paced field of artificial intelligence, the number of academic papers published each year is skyrocketing. 
-These papers introduce new models, techniques, and approaches that can significantly advance the state of the art. 
-However, reproducing and implementing these models can be a daunting task, requiring substantial time and expertise. 
-Researchers often face challenges in extracting the essential details from these papers and converting them into functional code.
-And this is where the **General Model Copilot** steps in.
+AI 领域论文数量激增，带来大量新模型与方法，但复现与实现难度大。研究者常需从论文中提取关键信息并转化为可用代码，**通用模型 Copilot** 正是为此而生。
 
-🎥 `Demo <https://rdagent.azurewebsites.net/report_model>`_
+🎬 `演示 <https://rdagent.azurewebsites.net/report_model>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
@@ -27,73 +23,36 @@ And this is where the **General Model Copilot** steps in.
       </video>
     </div>
 
-🌟 Introduction
+🌟 场景简介
 ~~~~~~~~~~~~~~~~
-In this scenario, our automated system proposes hypotheses, constructs models, implements code, performs back-testing, and uses feedback to iterate continuously. The system aims to automatically optimize performance metrics from the Qlib library, finding the best code through autonomous research and development.
+本场景自动提出假设、构建模型、实现代码、回测并利用反馈持续优化，目标是自动优化 Qlib 指标，发现最优代码。
 
-Model R&D CoPilot Scenario
+模型研发 Copilot 场景
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Overview**
+**概述**
 
-This demo automates the extraction and iterative development of models from academic papers, ensuring functionality and correctness. This scenario automates the development of PyTorch models by reading academic papers or other sources. It supports various data types, including tabular, time-series, and graph data. The primary workflow involves two main components: the Reader and the Coder.
-
-**Workflow Components**
+本演示自动化提取并迭代开发论文模型，确保功能与正确性。支持表格、时序、图等多种数据类型，主要流程包括 Reader 与 Coder 两部分：
 
 1. **Reader**
-   - Parses and extracts relevant model information from academic papers or sources, including architectures, parameters, and implementation details.
-   - Uses Large Language Models to convert content into a structured format for the Coder.
+   - 解析论文，提取模型结构、参数与实现细节。
+   - 利用大模型将内容转为结构化信息。
 
-2. **Evolving Coder**
-   - Translates structured information from the Reader into executable PyTorch code.
-   - Utilizes an evolving coding mechanism to ensure correct tensor shapes, verified with sample input tensors.
-   - Iteratively refines the code to align with source material specifications.
+2. **进化 Coder**
+   - 将结构化信息转为可执行 PyTorch 代码。
+   - 通过进化机制确保张量形状正确，并用样例输入验证。
+   - 迭代优化代码以符合论文规范。
 
-**Supported Data Types**
+**支持数据类型**
+- 表格数据
+- 时序数据
+- 图数据
 
-- **Tabular Data:** Structured data with rows and columns, such as spreadsheets or databases.
-- **Time-Series Data:** Sequential data points indexed in time order, useful for forecasting and temporal pattern recognition.
-- **Graph Data:** Data structured as nodes and edges, suitable for network analysis and relational tasks.
-
-⚡ Quick Start
+⚡ 快速上手
 ~~~~~~~~~~~~~~~~~
 
-Please refer to the installation part in :doc:`../installation_and_configuration` to prepare your system dependency.
+请参考 :doc:`../installation_and_configuration` 完成依赖准备。
 
-You can try our demo by running the following command:
+- 🐍 创建 Conda 环境
+- 📦 安装 RDAgent
+- 🚀 运行应用
 
-- 🐍 Create a Conda Environment
-  
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
-
-    .. code-block:: sh
-    
-        conda create -n rdagent python=3.10
-
-  - Activate the environment:
-
-    .. code-block:: sh
-
-        conda activate rdagent
-
-- 📦 Install the RDAgent
-    
-  - You can install the RDAgent package from PyPI:
-
-    .. code-block:: sh
-
-        pip install rdagent
-
-
-- 🚀 Run the Application
-    
-  - Prepare relevant files (in pdf format) by uploading papers to the directory below and copy the path as report_file_path.
-      
-    .. code-block:: sh
-
-        rdagent/scenarios/general_model
-    
-  - Run the following command in your terminal within the same virtual environment:
-  
-    .. code-block:: sh
-
-        rdagent general_model --report_file_path=<path_to_pdf_file>

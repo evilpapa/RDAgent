@@ -1,117 +1,117 @@
 generate_lint_command_template: |
-  Please generate a command to lint or format a {language} repository.
-  Here are some information about different linting tools ```{linting_tools}```
+  请生成一个命令来检查或格式化 {language} 仓库。
+  以下是关于不同检查工具的信息：```{linting_tools}```
 linting_system_prompt_template: |
-  You are a software engineer. You can write code to a high standard and are adept at solving {language} linting problems.
+  你是一名软件工程师。你能够编写高标准的代码，并擅长解决 {language} 代码检查问题。
 session_manual_template: |
-  There are some problems with the code you provided, please modify the code again according to the instruction and return the errors list you modified.
+  你提供的代码存在一些问题，请根据指示再次修改代码，并返回你修改的错误列表。
   
-  Instruction:
+  指示：
   {operation}
   
-  Your response format should be like this:
+  你的回复格式应该如下：
   
   ```python
-  <modified code>
+  <修改后的代码>
   ```
   
   ```json
   {{
-      "errors": ["<Line Number>:<Error Start Position> <Error Code>", ...]
+      "errors": ["<行号>:<错误开始位置> <错误代码>", ...]
   }}
   ```
 session_normal_template: |
-  Please modify this code snippet based on the lint info. Here is the code snippet:
+  请根据检查信息修改这段代码。以下是代码片段：
   ```Python
   {code}
   ```
 
-  -----Lint info-----
+  -----检查信息-----
   {lint_info}
   -------------------
 
-  The lint info contains one or more errors. Different errors are separated by blank lines. Each error follows this format:
-  -----Lint info format-----
-  <Line Number>:<Error Start Position> <Error Code> <Error Message>
-  <Error Position (maybe multiple lines)>
-  <Helpful Information (sometimes have)>
+  检查信息包含一个或多个错误。不同错误用空行分隔。每个错误遵循以下格式：
+  -----检查信息格式-----
+  <行号>:<错误开始位置> <错误代码> <错误消息>
+  <错误位置（可能多行）>
+  <有用信息（有时存在）>
   --------------------------
-  The error code is an abbreviation set by the checker for ease of describing the error. The error position includes the relevant code around the error, and the helpful information provides useful information or possible fix method.
+  错误代码是检查器为便于描述错误而设置的缩写。错误位置包括错误周围的相关代码，有用信息提供了有价值的信息或可能的修复方法。
 
-  Please simply reply the code after you fix all linting errors. You should be aware of the following:
-  1. The indentation of the code should be consistent with the original code.
-  2. You should just replace the code I provided you, which starts from line {start_line} to line {end_line}.
-  3. You'll need to add line numbers to the modified code which starts from {start_lineno}.
-  4. You don't need to add comments to explain your changes.
-  Please wrap your code with following format:
+  请简单回复修复所有检查错误后的代码。你应该注意以下几点：
+  1. 代码的缩进应与原始代码保持一致。
+  2. 你应该只替换我提供给你的代码，从第 {start_line} 行到第 {end_line} 行。
+  3. 你需要为修改后的代码添加行号，从 {start_lineno} 开始。
+  4. 你不需要添加注释来解释你的更改。
+  请用以下格式包装你的代码：
 
   ```python
-  <your code..>
+  <你的代码..>
   ```
 session_start_template: |
-  Please modify the Python code based on the lint info.
-  Due to the length of the code, I will first tell you the entire code, and then each time I ask a question, I will extract a portion of the code and tell you the error information contained in this code segment.
-  You need to fix the corresponding error in the code segment and return the code that can replace the corresponding code segment.
+  请根据检查信息修改Python代码。
+  由于代码较长，我会先告诉你整个代码，然后每次我问问题时，我会提取一部分代码并告诉你这个代码段中包含的错误信息。
+  你需要修复代码段中相应的错误，并返回可以替换相应代码段的代码。
 
-  The Python code is from a complete Python project file. Each line of the code is annotated with a line number, separated from the original code by three characters ("<white space>|<white space>"). The vertical bars are aligned.
-  Here is the complete code, please be prepared to fix it:
+  Python代码来自一个完整的Python项目文件。每行代码都用行号标注，通过三个字符（"<空格>|<空格>"）与原始代码分隔。竖线是对齐的。
+  以下是完整代码，请准备修复它：
   ```Python
   {code}
   ```
 suffix2language_template: |
-  Here are the files suffix in one code repo: {suffix}.
-  Please tell me the programming language used in this repo and which language has linting-tools.
-  Your response should follow this template:
+  以下是一个代码仓库中的文件后缀：{suffix}。
+  请告诉我这个仓库使用的编程语言，以及哪种语言有检查工具。
+  你的回复应该遵循以下模板：
   {{
-      "languages": <languages list>,
-      "languages_with_linting_tools": <languages with lingting tools list>
+      "languages": <语言列表>,
+      "languages_with_linting_tools": <具有检查工具的语言列表>
   }}
 user_get_files_contain_lint_commands_template: |
-  You get a file list of a repository. Some files may contain linting rules or linting commands defined by repo authors.
-  Here are the file list:
+  你得到了一个仓库的文件列表。一些文件可能包含仓库作者定义的检查规则或检查命令。
+  以下是文件列表：
   ```
   {file_list}
   ```
   
-  Please find all files that may correspond to linting from it.
-  Please respond with the following JSON template:
+  请从中找出所有可能与检查相关的文件。
+  请用以下JSON模板回复：
   {{
       "files": </path/to/file>,
   }}
 user_get_makefile_lint_commands_template: |
-  You get a Makefile which contains some linting rules. Here are its content:
+  你得到了一个包含一些检查规则的Makefile。以下是其内容：
   ```
   {file_text}
   ```
-  Please find executable commands about linting from it.
-  Please respond with the following JSON template:
+  请从中找出关于检查的可执行命令。
+  请用以下JSON模板回复：
   {{
       "commands": ["python -m xxx --params"...],
   }}
 user_template_for_code_snippet: |
-  Please modify the Python code based on the lint info.
-  -----Python Code-----
+  请根据检查信息修改Python代码。
+  -----Python代码-----
   {code}
   ---------------------
 
-  -----Lint info-----
+  -----检查信息-----
   {lint_info}
   -------------------
 
-  The Python code is a snippet from a complete Python project file. Each line of the code is annotated with a line number, separated from the original code by three characters ("<white space>|<white space>"). The vertical bars are aligned.
+  Python代码是来自完整Python项目文件的片段。每行代码都用行号标注，通过三个字符（"<空格>|<空格>"）与原始代码分隔。竖线是对齐的。
 
-  The lint info contains one or more errors. Different errors are separated by blank lines. Each error follows this format:
-  -----Lint info format-----
-  <Line Number>:<Error Start Position> <Error Code> <Error Message>
-  <Error Context (multiple lines)>
-  <Helpful Information (last line)>
+  检查信息包含一个或多个错误。不同错误用空行分隔。每个错误遵循以下格式：
+  -----检查信息格式-----
+  <行号>:<错误开始位置> <错误代码> <错误消息>
+  <错误上下文（多行）>
+  <有用信息（最后一行）>
   --------------------------
-  The error code is an abbreviation set by the checker for ease of describing the error. The error context includes the relevant code around the error, and the helpful information suggests possible fixes.
+  错误代码是检查器为便于描述错误而设置的缩写。错误上下文包括错误周围的相关代码，有用信息建议可能的修复方法。
 
-  Please simply reply the code after you fix all linting errors.
-  The code you return does not require line numbers, and should just replace the code I provided you, and does not require comments.
-  Please wrap your code with following format:
+  请简单回复修复所有检查错误后的代码。
+  你返回的代码不需要行号，应该只替换我提供给你的代码，并且不需要注释。
+  请用以下格式包装你的代码：
 
   ```python
-  <your code..>
+  <你的代码..>
   ```

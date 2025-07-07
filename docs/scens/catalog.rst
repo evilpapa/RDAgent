@@ -1,40 +1,38 @@
 =========================
-Scenarios
+场景
 =========================
 
-Scenario lists
+场景列表
 =========================
 
-In the two key areas of data-driven scenarios, model implementation and data building, our system aims to serve two main roles: 🦾copilot and 🤖agent.
+在数据驱动的两大核心领域——模型实现与数据构建——我们的系统服务于两类主要角色：🧬copilot 与 🤖agent。
 
-- The 🦾copilot follows human instructions to automate repetitive tasks.
-- The 🤖agent, being more autonomous, actively proposes ideas for better results in the future.
+- 🧬copilot 按照人类指令自动化重复性任务。
+- 🤖agent 更具自主性，主动提出新想法以获得更优结果。
 
-The supported scenarios are listed below:
-
+支持的场景如下：
 
 .. list-table::
     :header-rows: 1
 
-    * - Scenario/Target
-      - Model Implementation
-      - Data Building
-    * - 💹 Finance
-      - :ref:`🥇The First Data-Centric Quant Multi-Agent Framework <quant_agent_fin>`
-      - :ref:`🤖Iteratively Proposing Ideas & Evolving <model_agent_fin>`  
+    * - 场景/目标
+      - 模型实现
+      - 数据构建
+    * - 💹 金融
+      - :ref:`🥇首个数据驱动量化多智能体框架 <quant_agent_fin>`
+      - :ref:`🤖迭代提出想法与进化 <model_agent_fin>`  
         
-        :ref:`🦾Auto reports reading & implementation <data_copilot_fin>`  
+        :ref:`🧬自动报告阅读与实现 <data_copilot_fin>`  
         
-        :ref:`🤖Iteratively Proposing Ideas & Evolving <data_agent_fin>`
-    * - 🏭 General
-      - :ref:`🦾Auto paper reading & implementation <model_copilot_general>`  
+        :ref:`🤖迭代提出想法与进化 <data_agent_fin>`
+    * - 🏭 通用
+      - :ref:`🧬自动论文阅读与实现 <model_copilot_general>`  
         
-      - :ref:`🤖 Data Science <data_science_agent>`
-
+      - :ref:`🤖 数据科学 <data_science_agent>`
 
 .. toctree::
     :maxdepth: 1
-    :caption: Doctree:
+    :caption: 文档目录:
     :hidden:
 
     quant_agent_fin
@@ -43,3 +41,4 @@ The supported scenarios are listed below:
     model_agent_fin
     model_copilot_general
     data_science
+

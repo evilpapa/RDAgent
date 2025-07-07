@@ -1,63 +1,63 @@
 .. _quant_agent_fin:
 
 =====================
-Finance Quant Agent
+金融量化智能体
 =====================
 
 
-**🥇The First Data-Centric Quant Multi-Agent Framework RD-Agent(Q)**
+**🥇首个数据驱动量化多智能体框架 RD-Agent(Q)**
 ---------------------------------------------------------------------
 
-R&D-Agent for Quantitative Finance, in short **RD-Agent(Q)**, is the first data-centric, multi-agent framework designed to automate the full-stack research and development of quantitative strategies via coordinated factor-model co-optimization.
+RD-Agent for Quantitative Finance，简称 **RD-Agent(Q)**，是首个数据驱动、面向量化策略全流程自动化的多智能体框架，实现因子-模型协同优化。
 
-You can learn more details about **RD-Agent(Q)** through the `paper <https://arxiv.org/abs/2505.15155>`_.
+详细介绍可参考 `论文 <https://arxiv.org/abs/2505.15155>`_。
 
-⚡ Quick Start
+⚡ 快速上手
 ~~~~~~~~~~~~~~~~~
 
-Before you start, please make sure you have installed RD-Agent and configured the environment for RD-Agent correctly. If you want to know how to install and configure the RD-Agent, please refer to the `documentation <../installation_and_configuration.html>`_.
+在开始前，请确保已正确安装并配置 RD-Agent。安装与配置方法请参考 `文档 <../installation_and_configuration.html>`_。
 
-Then, you can run the framework by running the following command:
+然后可通过以下命令运行框架：
 
-- 🐍 Create a Conda Environment
+- 🐍 创建 Conda 环境
 
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
+  - 新建 conda 环境（推荐 Python 3.10/3.11）：
 
     .. code-block:: sh
 
           conda create -n rdagent python=3.10
 
-  - Activate the environment:
+  - 激活环境：
 
     .. code-block:: sh
 
         conda activate rdagent
 
-- 📦 Install the RDAgent
+- 📦 安装 RDAgent
   
-  - You can install the RDAgent package from PyPI:
+  - 通过 PyPI 安装 RDAgent 包：
 
     .. code-block:: sh
 
         pip install rdagent
 
-- 🚀 Run the Application
+- 🚀 运行应用
     
-  - You can directly run the application by using the following command:
+  - 直接运行应用：
     
     .. code-block:: sh
 
         rdagent fin_quant
 
 
-🛠️ Usage of modules
+🛠️ 模块用法
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. _Env Config: 
 
-- **Env Config**
+- **环境变量配置**
 
-The following environment variables can be set in the `.env` file to customize the application's behavior:
+可在 `.env` 文件中设置以下环境变量自定义应用行为：
 
 .. autopydantic_settings:: rdagent.app.qlib_rd_loop.conf.QuantBasePropSetting
     :settings-show-field-summary: False
@@ -69,45 +69,27 @@ The following environment variables can be set in the `.env` file to customize t
     :exclude-members: Config, fail_task_trial_limit, v1_query_former_trace_limit, v1_query_similar_success_limit, v2_query_component_limit, v2_query_error_limit, v2_query_former_trace_limit, v2_error_summary, v2_knowledge_sampler
     :no-index:
 
-- **Qlib Configuration**
-    - The `.yaml` files in both the `model_template` and `factor_template` directories contain some configurations for running the corresponding models or factors within the Qlib framework. Below is an overview of their contents and roles:
-        - **General Settings**:
-            - **provider_uri**: Specifies the local Qlib data path, set to `~/.qlib/qlib_data/cn_data`.
-            - **market**: Configured to `csi300`, representing the CSI 300 index constituents.
-            - **benchmark**: Set to `SH000300`, used for backtesting evaluation.
+- **Qlib 配置**
+    - `model_template` 和 `factor_template` 目录下的 `.yaml` 文件包含 Qlib 运行所需配置。主要内容包括：
+        - **provider_uri**：本地 Qlib 数据路径，默认为 `~/.qlib/qlib_data/cn_data`。
+        - **market**：市场，配置为 `csi300`。
+        - **benchmark**：回测基准，配置为 `SH000300`。
         
-        - **Data Handling**:
-            - **start_time** and **end_time**: Define the full data range, from `2008-01-01` to `2022-08-01`.
-            - **fit_start_time**: The start date for fitting the model, set to `2008-01-01`.
-            - **fit_end_time**: The end date for fitting the model, set to `2014-12-31`.
-            - **features and labels**: Generated via a nested data loader combining `Alpha158DL` (for engineered features such as `RESI5`, `WVMA5`, `RSQR5`, `KLEN`, etc.) and a `StaticDataLoader` that loads precomputed factor files (`combined_factors_df.parquet`).
-            -  **normalization**: The pipeline includes `RobustZScoreNorm` (with clipping) and `Fillna` for inference, and `DropnaLabel` with `CSZScoreNorm` for training.
+        - **数据处理**：
+            - **start_time/end_time**：数据区间。
+            - **fit_start_time/fit_end_time**：模型拟合区间。
+            - **features/labels**：特征与标签生成方式。
+            - **normalization**：归一化与缺失值处理。
         
-        - **Training Configuration**:
-            - **Model**: Uses `GeneralPTNN`, a PyTorch-based neural network model.
-            - **Dataset Splits**:
-                - **train**: `2008-01-01` to `2014-12-31`
-                - **valid**: `2015-01-01` to `2016-12-31`
-                - **test**: `2017-01-01` to `2020-08-01`
+        - **训练配置**：
+            - **模型**：如 `GeneralPTNN`。
+            - **数据集划分**：训练/验证/测试区间。
+            - **超参数**：如 n_epochs、lr、batch_size 等。
+        
+        - **回测与评估**：
+            - **策略**：如 `TopkDropoutStrategy`。
+            - **回测区间、初始资金、成本配置**。
+        
+        - **记录与分析**：
+            - **SignalRecord/SigAnaRecord/PortAnaRecord**。
 
-        - **Default Hyperparameters** (can be overridden by command-line arguments):
-            - **n_epochs**: `100`
-            - **lr**: `2e-4`
-            - **early_stop**: `10`
-            - **batch_size**: `256`
-            - **weight_decay**: `0.0`
-            - **metric**: `loss`
-            - **loss**: `mse`
-            - **n_jobs**: `20`
-            - **GPU**: `0` (uses GPU 0 if available)
-            
-        - **Backtesting and Evaluation**:
-            - **strategy**: `TopkDropoutStrategy`, which selects the top 50 stocks and randomly drops 5 to introduce exploration.
-            - **backtest period**: `2017-01-01` to `2020-08-01`
-            - **initial capital**: `100,000,000`
-            - **cost configuration**: Includes open/close costs, minimum transaction costs, and slippage control.
-            
-        - **Recording and Analysis**:
-            - **SignalRecord**: Logs predicted signals.
-            - **SigAnaRecord**: Performs signal analysis without long-short separation.
-            - **PortAnaRecord**: Conducts portfolio analysis using the configured strategy and backtest settings.

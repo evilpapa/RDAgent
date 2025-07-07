@@ -1,23 +1,20 @@
 .. _data_agent_fin:
 
 =====================
-Finance Data Agent
+金融数据智能体
 =====================
 
 
-**🤖 Automated Quantitative Trading & Iterative Factors Evolution**
+**🤖自动量化交易与因子进化**
 -------------------------------------------------------------------
 
-📖 Background
+📖 背景
 ~~~~~~~~~~~~~~
-In the dynamic world of quantitative trading, **factors** serve as the strategic tools that enable traders to exploit market inefficiencies. 
-These factors—ranging from simple metrics like price-to-earnings ratios to complex models like discounted cash flows—are the key to predicting stock prices with a high degree of accuracy.
+在量化交易领域，**因子**是帮助交易者利用市场无效性的关键工具。这些因子从简单的市盈率到复杂的贴现现金流模型，都是高效预测股价的核心。
 
-By leveraging these factors, quantitative traders can develop sophisticated strategies that not only identify market patterns but also significantly enhance trading efficiency and precision. 
-The ability to systematically analyze and apply these factors is what separates ordinary trading from truly strategic market outmaneuvering.
-And this is where the **Finance Model Agent** comes into play.
+通过系统性分析和应用这些因子，量化交易者可开发出复杂策略，提升交易效率与精度。**金融模型智能体**正是为此而生。
 
-🎥 `Demo <https://rdagent.azurewebsites.net/factor_loop>`_
+🎬 `演示 <https://rdagent.azurewebsites.net/factor_loop>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
@@ -30,102 +27,49 @@ And this is where the **Finance Model Agent** comes into play.
     </div>
 
 
-🌟 Introduction
+🌟 场景简介
 ~~~~~~~~~~~~~~~~
-In this scenario, our agent illustrates the iterative process of hypothesis generation, knowledge construction, and decision-making. 
+本场景展示了假设生成、知识构建与决策的迭代过程，突出因子如何通过持续反馈与优化不断进化。
 
-It highlights how financial factors evolve through continuous feedback and refinement. 
+主要流程：
 
-Here's an enhanced outline of the steps:
+**步骤 1：假设生成 🔍**
+- 基于实验分析与领域知识提出初步假设。
 
-**Step 1 : Hypothesis Generation 🔍**
+**步骤 2：因子创建 ✨**
+- 拆分任务，开发新因子，包括名称、描述、公式与变量。
 
-- Generate and propose initial hypotheses based on previous experiment analysis and domain expertise, with thorough reasoning and financial justification.
+**步骤 3：因子实现 👨‍💻**
+- 按描述实现因子代码并定量验证。
 
-**Step 2 : Factor Creation ✨**
-
-- Based on the hypothesis, divide the tasks.
-- Each task involves developing, defining, and implementing a new financial factor, including its name, description, formulation, and variables.
-
-**Step 3 : Factor Implementation 👨‍💻**
-
-- Implement the factor code based on the description, evolving it as a developer would.
-- Quantitatively validate the newly created factors.
-
-**Step 4 : Backtesting with Qlib 📉**
-
-- Integrate the full dataset into the factor implementation code and prepare the factor library.
-- Conduct backtesting using the Alpha158 plus newly developed factors and LGBModel in Qlib to evaluate the new factors' effectiveness and performance.
+**步骤 4：Qlib 回测 📉**
+- 集成全量数据，准备因子库，使用 Qlib 回测。
 
 +----------------+------------+----------------+----------------------------------------------------+
-| Dataset        | Model      | Factors        | Data Split                                         |
+| 数据集         | 模型       | 因子           | 数据区间                                            |
 +================+============+================+====================================================+
-| CSI300         | LGBModel   | Alpha158 Plus  | +-----------+--------------------------+           |
-|                |            |                | | Train     | 2008-01-01 to 2014-12-31 |           |
-|                |            |                | +-----------+--------------------------+           |
-|                |            |                | | Valid     | 2015-01-01 to 2016-12-31 |           |
-|                |            |                | +-----------+--------------------------+           |
-|                |            |                | | Test      | 2017-01-01 to 2020-08-01 |           |
-|                |            |                | +-----------+--------------------------+           |
+| CSI300         | LGBModel   | Alpha158 Plus  | 训练：2008-01-01~2014-12-31，验证：2015-01-01~2016-12-31，测试：2017-01-01~2020-08-01 |
 +----------------+------------+----------------+----------------------------------------------------+
 
+**步骤 5：反馈分析 🔍**
+- 分析回测结果，优化模型。
 
-**Step 5 : Feedback Analysis 🔍**
+**步骤 6：假设优化 ♻️**
+- 基于反馈持续优化假设，循环迭代。
 
-- Analyze backtest results to assess performance.
-- Incorporate feedback to refine hypotheses and improve the model.
-
-**Step 6 :Hypothesis Refinement ♻️**
-
-- Refine hypotheses based on feedback from backtesting.
-- Repeat the process to continuously improve the model.
-
-⚡ Quick Start
+⚡ 快速上手
 ~~~~~~~~~~~~~~~~~
 
-Please refer to the installation part in :doc:`../installation_and_configuration` to prepare your system dependency.
+请参考 :doc:`../installation_and_configuration` 完成依赖准备。
 
-You can try our demo by running the following command:
+- 🐍 创建 Conda 环境
+- 📦 安装 RDAgent
+- 🚀 运行应用
 
-- 🐍 Create a Conda Environment
-
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
-
-    .. code-block:: sh
-
-          conda create -n rdagent python=3.10
-
-  - Activate the environment:
-
-    .. code-block:: sh
-
-        conda activate rdagent
-
-- 📦 Install the RDAgent
-  
-  - You can install the RDAgent package from PyPI:
-
-    .. code-block:: sh
-
-        pip install rdagent
-
-- 🚀 Run the Application
-    
-  - You can directly run the application by using the following command:
-    
-    .. code-block:: sh
-
-        rdagent fin_factor
-
-
-🛠️ Usage of modules
+🛠️ 模块用法
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. _Env Config: 
-
-- **Env Config**
-
-The following environment variables can be set in the `.env` file to customize the application's behavior:
+- **环境变量配置**
 
 .. autopydantic_settings:: rdagent.app.qlib_rd_loop.conf.FactorBasePropSetting
     :settings-show-field-summary: False
@@ -136,3 +80,4 @@ The following environment variables can be set in the `.env` file to customize t
     :members: coder_use_cache, data_folder, data_folder_debug, file_based_execution_timeout, select_method, max_loop, knowledge_base_path, new_knowledge_base_path
     :exclude-members: Config, fail_task_trial_limit, v1_query_former_trace_limit, v1_query_similar_success_limit, v2_query_component_limit, v2_query_error_limit, v2_query_former_trace_limit, v2_error_summary, v2_knowledge_sampler
     :no-index:
+

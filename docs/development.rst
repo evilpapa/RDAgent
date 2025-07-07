@@ -1,45 +1,43 @@
 =========================
-For Development
+开发者指南
 =========================
 
-If you want to try the latest version or contribute to RD-Agent. You can install it from the source and follow the commands in this page.
+如果你希望体验最新版本或为 RD-Agent 做贡献，可以从源码安装并按照本页命令操作。
 
    .. code-block:: bash
 
       git clone https://github.com/microsoft/RD-Agent
 
 
-🔧Prepare for development
+🛠开发环境准备
 =========================
 
-- Set up the development environment.
+- 设置开发环境。
 
    .. code-block:: bash
 
       make dev
 
-- Run linting and checking.
+- 运行代码风格检查与静态分析。
 
    .. code-block:: bash
 
       make lint
 
-
-- Some linting issues can be fixed automatically. We have added a command in the Makefile for easy use.
+- 部分代码风格问题可自动修复。Makefile 已内置相关命令，方便使用。
 
    .. code-block:: bash
 
       make auto-lint
 
 
-
-Code Structure
+代码结构
 =========================
 
 .. code-block:: text
 
     📂 src
-    ➥ 📂 <project name>: avoid namespace conflict
+    ➥ 📂 <项目名>（避免命名空间冲突）
       ➥ 📁 core
       ➥ 📁 components/A
       ➥ 📁 components/B
@@ -52,34 +50,34 @@ Code Structure
 .. list-table::
    :header-rows: 1
 
-   * - Folder Name
-     - Description
+   * - 文件夹名
+     - 说明
    * - 📁 core
-     - The core framework of the system. All classes should be abstract and usually can't be used directly.
+     - 系统核心框架。所有类应为抽象类，通常不能直接使用。
    * - 📁 component/A
-     - Useful components that can be used by others (e.g., scenarios). Many subclasses of core classes are located here.
+     - 可复用组件（如场景模块）。许多 core 类的子类位于此处。
    * - 📁 scenarios/X
-     - Concrete features for specific scenarios (usually built based on components or core). These modules are often unreusable across scenarios.
+     - 针对特定场景的具体功能（通常基于组件或 core 构建）。这些模块通常难以跨场景复用。
    * - 📁 app
-     - Applications for specific scenarios (usually built based on components or scenarios). Removing any of them does not affect the system's completeness or other scenarios.
+     - 针对特定场景的应用（通常基于组件或场景构建）。移除任何一个不会影响系统完整性或其他场景。
    * - 📁 scripts
-     - Quick and dirty things. These are candidates for core, components, scenarios, and apps.
+     - 临时代码。可作为 core、components、scenarios、apps 的候选。
 
 
 
-Conventions
+约定
 ===========
 
-
-File Naming Convention
+文件命名约定
 ----------------------
 
 .. list-table::
    :header-rows: 1
 
-   * - Name
-     - Description
+   * - 文件名
+     - 说明
    * - `conf.py`
-     - The configuration for the module, app, and project.
+     - 模块、应用、项目的配置文件。
 
-.. <!-- TODO: renaming files -->
+.. <!-- TODO: 文件重命名 -->
+
