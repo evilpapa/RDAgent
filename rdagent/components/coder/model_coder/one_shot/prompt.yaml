@@ -1,27 +1,25 @@
-
-
 code_implement_sys: |-
-  You are an assistant whose job is to answer user's question.
+  您是一名助手，负责回答用户的问题。
 code_implement_user: |-
-  With the following given information, write a python code using pytorch and torch_geometric to implement the model.
-  This model is in the graph learning field, only have one layer.
-  The input will be node_feature [num_nodes, dim_feature] and edge_index [2, num_edges]  (It would be the input of the forward model)
-  There is not edge attribute or edge weight as input. The model should detect the node_feature and edge_index shape, if there is Linear transformation layer in the model, the input and output shape should be consistent. The in_channels is the dimension of the node features.
-  Implement the model forward function based on the following information:model formula information.
-  1. model name:{{name}}
-  2. model description:{{description}}
-  3. model formulation:{{formulation}}
-  4. model variables:{{variables}}.
-  You must complete the forward function as far as you can do.
-  Execution Your implemented code will be executed in the follow way:
-  The the implemented code will be placed in a file like [uuid]/model.py
-  We'll import the model in the implementation in file `model.py` after setting the cwd into the directory
-  - from model import model_cls (So you must have a variable named `model_cls` in the file)
-    - So your implemented code could follow the following pattern
+  根据以下提供的信息，使用 pytorch 和 torch_geometric 编写 Python 代码以实现模型。
+  该模型属于图学习领域，仅有一层。
+  输入为节点特征 [num_nodes, dim_feature] 和边索引 [2, num_edges]（它将是模型前向传播的输入）。
+  输入中没有边属性或边权重。模型应检测节点特征和边索引的形状，如果模型中有线性变换层，则输入和输出形状应保持一致。in_channels 是节点特征的维度。
+  根据以下信息实现模型的前向传播函数：模型公式信息。
+  1. 模型名称:{{name}}
+  2. 模型描述:{{description}}
+  3. 模型公式:{{formulation}}
+  4. 模型变量:{{variables}}。
+  您必须尽可能完成前向传播函数。
+  执行 您实现的代码将以以下方式执行：
+  实现的代码将被放置在类似 [uuid]/model.py 的文件中。
+  我们将在设置 cwd 到目录后从文件 `model.py` 中导入实现的模型
+  - from model import model_cls（因此您必须在文件中有一个名为 `model_cls` 的变量）
+    - 因此，您实现的代码可以遵循以下模式
       ```Python
       class XXXLayer(torch.nn.Module):
           ...
       model_cls = XXXLayer
       ```
-  - initialize the model by initializing it `model_cls(input_dim=INPUT_DIM)`
-  - And then verify the model by comparing the output tensors by feeding specific input tensor.
+  - 通过初始化 `model_cls(input_dim=INPUT_DIM)` 来初始化模型
+  - 然后通过输入特定的张量来验证模型，比较输出张量。

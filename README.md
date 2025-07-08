@@ -1,13 +1,12 @@
 <h4 align="center">
   <img src="docs/_static/logo.png" alt="RA-Agent logo" style="width:70%; ">
   
-  <a href="https://rdagent.azurewebsites.net" target="_blank">🖥️ Live Demo</a> |
-  <a href="https://rdagent.azurewebsites.net/factor_loop" target="_blank">🎥 Demo Video</a> <a href="https://www.youtube.com/watch?v=JJ4JYO3HscM&list=PLALmKB0_N3_i52fhUmPQiL4jsO354uopR" target="_blank">▶️YouTube</a>   |
-  <a href="https://rdagent.readthedocs.io/en/latest/index.html" target="_blank">📖 Documentation</a> |
-  <a href="https://aka.ms/RD-Agent-Tech-Report" target="_blank">📄 Tech Report</a> |
-  <a href="#-paperwork-list"> 📃 Papers </a>
+  <a href="https://rdagent.azurewebsites.net" target="_blank">🖥️ 在线演示</a> |
+  <a href="https://rdagent.azurewebsites.net/factor_loop" target="_blank">🎥 演示视频</a> <a href="https://www.youtube.com/watch?v=JJ4JYO3HscM&list=PLALmKB0_N3_i52fhUmPQiL4jsO354uopR" target="_blank">▶️YouTube</a>   |
+  <a href="https://rdagent.readthedocs.io/en/latest/index.html" target="_blank">📖 文档</a> |
+  <a href="https://aka.ms/RD-Agent-Tech-Report" target="_blank">📄 技术报告</a> |
+  <a href="#-paperwork-list"> 📃 论文 </a>
 </h3>
-
 
 [![CI](https://github.com/microsoft/RD-Agent/actions/workflows/ci.yml/badge.svg)](https://github.com/microsoft/RD-Agent/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/microsoft/RD-Agent/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/microsoft/RD-Agent/actions/workflows/github-code-scanning/codeql)
@@ -27,83 +26,79 @@
 [![Readthedocs Preview](https://github.com/microsoft/RD-Agent/actions/workflows/readthedocs-preview.yml/badge.svg)](https://github.com/microsoft/RD-Agent/actions/workflows/readthedocs-preview.yml) <!-- this badge is too long, please place it in the last one to make it pretty --> 
 [![arXiv](https://img.shields.io/badge/arXiv-2505.14738-00ff00.svg)](https://arxiv.org/abs/2505.14738)
 
+# 🏆 最佳机器学习工程智能体！
 
+[MLE-bench](https://github.com/openai/mle-bench) 是一个全面评测 AI 智能体在机器学习工程任务表现的基准，涵盖 75 个 Kaggle 竞赛数据集，能真实反映 AI 系统在实际 ML 工程场景下的能力。
 
-# 🏆 The Best Machine Learning Engineering Agent!
+R&D-Agent 目前在 MLE-bench 上是表现最优的机器学习工程智能体：
 
-[MLE-bench](https://github.com/openai/mle-bench) is a comprehensive benchmark evaluating the performance of AI agents on machine learning engineering tasks. Utilizing datasets from 75 Kaggle competitions, MLE-bench provides robust assessments of AI systems' capabilities in real-world ML engineering scenarios.
-
-R&D-Agent currently leads as the top-performing machine learning engineering agent on MLE-bench:
-
-| Agent | Low == Lite (%) | Medium (%) | High (%) | All (%) |
+| 智能体 | 低==Lite (%) | 中等 (%) | 高 (%) | 总体 (%) |
 |---------|--------|-----------|---------|----------|
 | R&D-Agent o1-preview | 48.18 ± 2.49 | 8.95 ± 2.36 | 18.67 ± 2.98 | 22.4 ± 1.1 |
 | R&D-Agent o3(R)+GPT-4.1(D) | 51.52 ± 6.21 | 7.89 ± 3.33 | 16.67 ± 3.65 | 22.45 ± 2.45 |
 | AIDE o1-preview | 34.3 ± 2.4 | 8.8 ± 1.1 | 10.0 ± 1.9 | 16.9 ± 1.1 |
 
-**Notes:**
-- **O3(R)+GPT-4.1(D)**: This version is designed to both reduce average time per loop and leverage a cost-effective combination of backend LLMs by seamlessly integrating Research Agent (o3) with Development Agent (GPT-4.1).
-- **AIDE o1-preview**: Represents the previously best public result on MLE-bench as reported in the original MLE-bench paper.
-- Average and standard deviation results for R&D-Agent o1-preview is based on a independent of 5 seeds and for R&D-Agent o3(R)+GPT-4.1(D) is based on 6 seeds.
-- According to MLE-Bench, the 75 competitions are categorized into three levels of complexity: **Low==Lite** if we estimate that an experienced ML engineer can produce a sensible solution in under 2 hours, excluding the time taken to train any models; **Medium** if it takes between 2 and 10 hours; and **High** if it takes more than 10 hours.
+**说明：**
+- **O3(R)+GPT-4.1(D)**：该版本旨在降低平均循环时间，并通过无缝集成 Research Agent (o3) 与 Development Agent (GPT-4.1) 实现高性价比。
+- **AIDE o1-preview**：为 MLE-bench 论文中报告的先前最佳公开结果。
+- R&D-Agent o1-preview 的均值和标准差基于 5 个种子，R&D-Agent o3(R)+GPT-4.1(D) 基于 6 个种子。
+- MLE-Bench 将 75 个竞赛分为三类：**Low==Lite**（经验丰富工程师2小时内可完成）、**Medium**（2-10小时）、**High**（10小时以上）。
 
-You can inspect the detailed runs of the above results online.
-- [R&D-Agent o1-preview detailed runs](https://aka.ms/RD-Agent_MLE-Bench_O1-preview)
-- [R&D-Agent o3(R)+GPT-4.1(D) detailed runs](https://aka.ms/RD-Agent_MLE-Bench_O3_GPT41)
+详细运行结果可在线查看：
+- [R&D-Agent o1-preview 详细运行](https://aka.ms/RD-Agent_MLE-Bench_O1-preview)
+- [R&D-Agent o3(R)+GPT-4.1(D) 详细运行](https://aka.ms/RD-Agent_MLE-Bench_O3_GPT41)
 
-For running R&D-Agent on MLE-bench, refer to **[MLE-bench Guide: Running ML Engineering via MLE-bench](https://rdagent.readthedocs.io/en/latest/scens/data_science.html)**
+如何在 MLE-bench 上运行 R&D-Agent，请参考 **[MLE-bench 指南](https://rdagent.readthedocs.io/en/latest/scens/data_science.html)**
 
-# 🥇 The First Data-Centric Quant Multi-Agent Framework!
+# 🥇 首个数据驱动量化多智能体框架！
 
-R&D-Agent for Quantitative Finance, in short **RD-Agent(Q)**, is the first data-centric, multi-agent framework designed to automate the full-stack research and development of quantitative strategies via coordinated factor-model co-optimization.
+R&D-Agent for Quantitative Finance，简称 **RD-Agent(Q)**，是首个数据驱动、面向量化策略全流程自动化的多智能体框架，实现因子-模型协同优化。
 
 ![image](https://github.com/user-attachments/assets/3198bc10-47ba-4ee0-8a8e-46d5ce44f45d)
 
-Extensive experiments in real stock markets show that, at a cost under $10, RD-Agent(Q) achieves approximately 2× higher ARR than benchmark factor libraries while using over 70% fewer factors. It also surpasses state-of-the-art deep time-series models under smaller resource budgets. Its alternating factor–model optimization further delivers excellent trade-off between predictive accuracy and strategy robustness.
+真实股市实验表明，RD-Agent(Q) 在成本低于 $10 的情况下，ARR 约为基准因子库的 2 倍，且所用因子数减少 70% 以上。在资源受限时也优于 SOTA 深度时序模型。交替优化因子与模型，兼顾预测精度与策略稳健性。
 
-You can learn more details about **RD-Agent(Q)** through the [paper](https://arxiv.org/abs/2505.15155) and reproduce it through the [documentation](https://rdagent.readthedocs.io/en/latest/scens/quant_agent_fin.html).
+详细介绍可参考 [论文](https://arxiv.org/abs/2505.15155) 和 [文档](https://rdagent.readthedocs.io/en/latest/scens/quant_agent_fin.html)。
 
-# 📰 News
-| 🗞️ News        | 📝 Description                 |
+# 📰 新闻
+| 🗞️ 新闻        | 📝 描述                 |
 | --            | ------      |
-| [Technical Report Release](#overall-technical-report) | Overall framework description and results on MLE-bench | 
-| [R&D-Agent-Quant Release](#deep-application-in-diverse-scenarios) | Apply R&D-Agent to quant trading | 
-| MLE-Bench Results Released | R&D-Agent currently leads as the [top-performing machine learning engineering agent](#-the-best-machine-learning-engineering-agent) on MLE-bench |
-| Support LiteLLM Backend | We now fully support **[LiteLLM](https://github.com/BerriAI/litellm)** as a backend for integration with multiple LLM providers. |
-| General Data Science Agent | [Data Science Agent](https://rdagent.readthedocs.io/en/latest/scens/data_science.html) |
-| Kaggle Scenario release | We release **[Kaggle Agent](https://rdagent.readthedocs.io/en/latest/scens/data_science.html)**, try the new features!                  |
-| Official WeChat group release  | We created a WeChat group, welcome to join! (🗪[QR Code](https://github.com/microsoft/RD-Agent/issues/880)) |
-| Official Discord release  | We launch our first chatting channel in Discord (🗪[![Chat](https://img.shields.io/badge/chat-discord-blue)](https://discord.gg/ybQ97B6Jjy)) |
-| First release | **R&D-Agent** is released on GitHub |
+| [技术报告发布](#overall-technical-report) | 框架与 MLE-bench 结果 | 
+| [R&D-Agent-Quant 发布](#deep-application-in-diverse-scenarios) | 应用于量化交易 | 
+| MLE-Bench 结果发布 | R&D-Agent 目前为 [最佳 ML 工程智能体](#-the-best-machine-learning-engineering-agent) |
+| 支持 LiteLLM 后端 | 现已全面支持 **[LiteLLM](https://github.com/BerriAI/litellm)** 多 LLM 集成 |
+| 通用数据科学智能体 | [数据科学智能体](https://rdagent.readthedocs.io/en/latest/scens/data_science.html) |
+| Kaggle 场景发布 | 发布 **[Kaggle Agent](https://rdagent.readthedocs.io/en/latest/scens/data_science.html)**，欢迎体验新功能！ |
+| 微信交流群发布  | 欢迎加入微信群！(🗪[二维码](https://github.com/microsoft/RD-Agent/issues/880)) |
+| Discord 社区发布  | 加入 Discord 聊天频道 (🗪[![Chat](https://img.shields.io/badge/chat-discord-blue)](https://discord.gg/ybQ97B6Jjy)) |
+| 首次开源 | **R&D-Agent** 正式开源 |
 
+# 数据科学智能体预览
 
-
-# Data Science Agent Preview
-Check out our demo video showcasing the current progress of our Data Science Agent under development:
+演示视频展示了数据科学智能体的开发进展：
 
 https://github.com/user-attachments/assets/3eccbecb-34a4-4c81-bce4-d3f8862f7305
 
-# 🌟 Introduction
+# 🌟 项目简介
 <div align="center">
       <img src="docs/_static/scen.png" alt="Our focused scenario" style="width:80%; ">
 </div>
 
-R&D-Agent aims to automate the most critical and valuable aspects of the industrial R&D process, and we begin with focusing on the data-driven scenarios to streamline the development of models and data. 
-Methodologically, we have identified a framework with two key components: 'R' for proposing new ideas and 'D' for implementing them.
-We believe that the automatic evolution of R&D will lead to solutions of significant industrial value.
-
+R&D-Agent 致力于自动化工业研发中最关键、最有价值的环节，首先聚焦数据驱动场景，提升模型与数据开发效率。
+方法论上，我们提出了“R”提出新想法、“D”实现想法的框架。
+我们相信，研发自动进化将带来极具产业价值的解决方案。
 
 <!-- Tag Cloud -->
-R&D is a very general scenario. The advent of R&D-Agent can be your
-- 💰 **Automatic Quant Factory** ([🎥Demo Video](https://rdagent.azurewebsites.net/factor_loop)|[▶️YouTube](https://www.youtube.com/watch?v=X4DK2QZKaKY&t=6s))
-- 🤖 **Data Mining Agent:** Iteratively proposing data & models ([🎥Demo Video 1](https://rdagent.azurewebsites.net/model_loop)|[▶️YouTube](https://www.youtube.com/watch?v=dm0dWL49Bc0&t=104s)) ([🎥Demo Video 2](https://rdagent.azurewebsites.net/dmm)|[▶️YouTube](https://www.youtube.com/watch?v=VIaSTZuoZg4))  and implementing them by gaining knowledge from data.
-- 🦾 **Research Copilot:** Auto read research papers ([🎥Demo Video](https://rdagent.azurewebsites.net/report_model)|[▶️YouTube](https://www.youtube.com/watch?v=BiA2SfdKQ7o)) / financial reports ([🎥Demo Video](https://rdagent.azurewebsites.net/report_factor)|[▶️YouTube](https://www.youtube.com/watch?v=ECLTXVcSx-c)) and implement model structures or building datasets.
-- 🤖 **Kaggle Agent:** Auto Model Tuning and Feature Engineering([🎥Demo Video Coming Soon...]()) and implementing them to achieve more in competitions.
+R&D 是非常通用的场景。R&D-Agent 可成为你的：
+- 💰 **自动量化工厂** ([🎥演示视频](https://rdagent.azurewebsites.net/factor_loop)|[▶️YouTube](https://www.youtube.com/watch?v=X4DK2QZKaKY&t=6s))
+- 🤖 **数据挖掘智能体**：迭代提出数据与模型 ([🎥演示1](https://rdagent.azurewebsites.net/model_loop)|[▶️YouTube](https://www.youtube.com/watch?v=dm0dWL49Bc0&t=104s)) ([🎥演示2](https://rdagent.azurewebsites.net/dmm)|[▶️YouTube](https://www.youtube.com/watch?v=VIaSTZuoZg4))，并通过数据学习实现。
+- 🦾 **研究 Copilot**：自动阅读论文 ([🎥演示](https://rdagent.azurewebsites.net/report_model)|[▶️YouTube](https://www.youtube.com/watch?v=BiA2SfdKQ7o)) / 财报 ([🎥演示](https://rdagent.azurewebsites.net/report_factor)|[▶️YouTube](https://www.youtube.com/watch?v=ECLTXVcSx-c))，实现模型结构或数据集。
+- 🤖 **Kaggle 智能体**：自动模型调优与特征工程([🎥演示即将上线...]())，助力竞赛。
 - ...
 
-You can click the links above to view the demo. We're continuously adding more methods and scenarios to the project to enhance your R&D processes and boost productivity. 
+点击上方链接可查看演示。我们持续丰富方法与场景，助力你的研发流程与生产力提升。
 
-Additionally, you can take a closer look at the examples in our **[🖥️ Live Demo](https://rdagent.azurewebsites.net/)**.
+更多案例可见 **[🖥️ 在线演示](https://rdagent.azurewebsites.net/)**。
 
 <div align="center">
     <a href="https://rdagent.azurewebsites.net/" target="_blank">
@@ -111,226 +106,211 @@ Additionally, you can take a closer look at the examples in our **[🖥️ Live 
     </a>
 </div>
 
+# ⚡ 快速上手
 
-# ⚡ Quick start
+你可以通过以下命令体验上述演示：
 
-You can try above demos by running the following command:
+### 🐳 安装 Docker
+大多数场景需先安装 Docker。请参考 [官方 🐳Docker 页面](https://docs.docker.com/engine/install/) 获取安装说明。
+确保当前用户可**无需 sudo**运行 Docker。可通过 `docker run hello-world` 验证。
 
-### 🐳 Docker installation.
-Users must ensure Docker is installed before attempting most scenarios. Please refer to the [official 🐳Docker page](https://docs.docker.com/engine/install/) for installation instructions.
-Ensure the current user can run Docker commands **without using sudo**. You can verify this by executing `docker run hello-world`.
-
-### 🐍 Create a Conda Environment
-- Create a new conda environment with Python (3.10 and 3.11 are well-tested in our CI):
+### 🐍 创建 Conda 环境
+- 新建 conda 环境（推荐 Python 3.10/3.11）：
   ```sh
   conda create -n rdagent python=3.10
   ```
-- Activate the environment:
+- 激活环境：
   ```sh
   conda activate rdagent
   ```
 
-### 🛠️ Install the R&D-Agent
-- You can directly install the R&D-Agent package from PyPI:
+### 🛠️ 安装 R&D-Agent
+- 通过 PyPI 安装 R&D-Agent 包：
   ```sh
   pip install rdagent
   ```
 
-### 💊 Health check
-- rdagent provides a health check that currently checks two things.
-  - whether the docker installation was successful.
-  - whether the default port used by the [rdagent ui](https://github.com/microsoft/RD-Agent?tab=readme-ov-file#%EF%B8%8F-monitor-the-application-results) is occupied.
+### 💊 健康检查
+- rdagent 提供健康检查功能，当前检查两项：
+  - docker 是否安装成功
+  - [rdagent ui](https://github.com/microsoft/RD-Agent?tab=readme-ov-file#%EF%B8%8F-monitor-the-application-results) 默认端口是否被占用
   ```sh
   rdagent health_check
   ```
 
-
-### ⚙️ Configuration
-- The demos requires following ability:
+### ⚙️ 配置
+- 演示需具备如下能力：
   - ChatCompletion
   - json_mode
   - embedding query
 
-  You can set your Chat Model and Embedding Model in the following ways:
+  你可以通过如下方式设置 Chat Model 与 Embedding Model：
 
-- **Using LiteLLM (Default)**: We now support LiteLLM as a backend for integration with multiple LLM providers. You can configure in two ways:
+- **使用 LiteLLM（默认）**：现已支持 LiteLLM 多 LLM 集成。配置方式如下：
 
-  **Option 1: Unified API base for both models**
+  **选项 1：统一 API base**
   ```bash
   cat << EOF  > .env
-  # Set to any model supported by LiteLLM.
+  # 设置为 LiteLLM 支持的任意模型。
   CHAT_MODEL=gpt-4o 
   EMBEDDING_MODEL=text-embedding-3-small
-  # Configure unified API base
-  OPENAI_API_BASE=<your_unified_api_base>
-  OPENAI_API_KEY=<replace_with_your_openai_api_key>
+  # 配置统一 API base
+  OPENAI_API_BASE=<你的统一 api base>
+  OPENAI_API_KEY=<替换为你的 openai api key>
   ```
 
-  **Option 2: Separate API bases for Chat and Embedding models**
+  **选项 2：分别配置聊天与嵌入模型的 API base**
   ```bash
   cat << EOF  > .env
-  # Set to any model supported by LiteLLM.
-  # Configure separate API bases for chat and embedding
-  
-  # CHAT MODEL:
+  # 设置为 LiteLLM 支持的任意模型。
+  # 聊天模型：
   CHAT_MODEL=gpt-4o 
-  OPENAI_API_BASE=<your_chat_api_base>
-  OPENAI_API_KEY=<replace_with_your_openai_api_key>
+  OPENAI_API_BASE=<你的聊天 api base>
+  OPENAI_API_KEY=<替换为你的 openai api key>
 
-  # EMBEDDING MODEL:
-  # TAKE siliconflow as an example, you can use other providers.
-  # Note: embedding requires litellm_proxy prefix
+  # 嵌入模型：
+  # 以 siliconflow 为例，也可用其他提供商。
+  # 注意：嵌入模型需加 litellm_proxy 前缀
   EMBEDDING_MODEL=litellm_proxy/BAAI/bge-large-en-v1.5
-  LITELLM_PROXY_API_KEY=<replace_with_your_siliconflow_api_key>
+  LITELLM_PROXY_API_KEY=<替换为你的 siliconflow api key>
   LITELLM_PROXY_API_BASE=https://api.siliconflow.cn/v1
   ```
 
-  Notice: If you are using reasoning models that include thought processes in their responses (such as \<think> tags), you need to set the following environment variable:
+  注意：如使用带思考过程的推理模型（如含 <think> 标签），需设置如下环境变量：
   ```bash
   REASONING_THINK_RM=True
   ```
 
-- You can also use a deprecated backend if you only use `OpenAI API` or `Azure OpenAI` directly. For this deprecated setting and more configuration information, please refer to the [documentation](https://rdagent.readthedocs.io/en/latest/installation_and_configuration.html).
+- 仅用 OpenAI API 或 Azure OpenAI 时可用旧版后端。更多配置请见 [文档](https://rdagent.readthedocs.io/en/latest/installation_and_configuration.html)。
 
-### 🚀 Run the Application
+### 🚀 运行应用
 
-The **[🖥️ Live Demo](https://rdagent.azurewebsites.net/)** is implemented by the following commands(each item represents one demo, you can select the one you prefer):
+**[🖥️ 在线演示](https://rdagent.azurewebsites.net/)** 由以下命令实现（每项为一个演示，可任选）：
 
-- Run the **Automated Quantitative Trading & Iterative Factors Model Joint Evolution**:  [Qlib](http://github.com/microsoft/qlib) self-loop factor & model proposal and implementation application
+- 运行**自动量化交易与因子-模型协同进化**：
   ```sh
   rdagent fin_quant
   ```
 
-- Run the **Automated Quantitative Trading & Iterative Factors Evolution**:  [Qlib](http://github.com/microsoft/qlib) self-loop factor proposal and implementation application
+- 运行**自动量化交易与因子进化**：
   ```sh
   rdagent fin_factor
   ```
 
-- Run the **Automated Quantitative Trading & Iterative Model Evolution**: [Qlib](http://github.com/microsoft/qlib) self-loop model proposal and implementation application
+- 运行**自动量化交易与模型进化**：
   ```sh
   rdagent fin_model
   ```
 
-- Run the **Automated Quantitative Trading & Factors Extraction from Financial Reports**:  Run the [Qlib](http://github.com/microsoft/qlib) factor extraction and implementation application based on financial reports
+- 运行**自动量化交易与财报因子提取**：
   ```sh
-  # 1. Generally, you can run this scenario using the following command:
-  rdagent fin_factor_report --report_folder=<Your financial reports folder path>
+  # 1. 通用命令：
+  rdagent fin_factor_report --report_folder=<你的财报文件夹路径>
 
-  # 2. Specifically, you need to prepare some financial reports first. You can follow this concrete example:
+  # 2. 具体示例：
   wget https://github.com/SunsetWolf/rdagent_resource/releases/download/reports/all_reports.zip
   unzip all_reports.zip -d git_ignore_folder/reports
   rdagent fin_factor_report --report_folder=git_ignore_folder/reports
   ```
 
-- Run the **Automated Model Research & Development Copilot**: model extraction and implementation application
+- 运行**自动模型研发 Copilot**：
   ```sh
-  # 1. Generally, you can run your own papers/reports with the following command:
-  rdagent general_model <Your paper URL>
+  # 1. 通用命令：
+  rdagent general_model <你的论文URL>
 
-  # 2. Specifically, you can do it like this. For more details and additional paper examples, use `rdagent general_model -h`:
+  # 2. 具体示例：
   rdagent general_model  "https://arxiv.org/pdf/2210.09789"
   ```
 
-- Run the **Automated Kaggle Model Tuning & Feature Engineering**:  self-loop model proposal and feature engineering implementation application <br />
-  > Using **sf-crime** *(San Francisco Crime Classification)* as an example. <br />
-  > 1. Register and login on the [Kaggle](https://www.kaggle.com/) website. <br />
-  > 2. Configuring the Kaggle API. <br />
-  > (1) Click on the avatar (usually in the top right corner of the page) -> `Settings` -> `Create New Token`, A file called `kaggle.json` will be downloaded. <br />
-  > (2) Move `kaggle.json` to `~/.config/kaggle/` <br />
-  > (3) Modify the permissions of the kaggle.json file. Reference command: `chmod 600 ~/.config/kaggle/kaggle.json` <br />
-  > 3. Join the competition: Click `Join the competition` -> `I Understand and Accept` at the bottom of the [competition details page](https://www.kaggle.com/competitions/sf-crime/data).
+- 运行**自动 Kaggle 模型调优与特征工程**：
+  > 以 **sf-crime** *(旧金山犯罪分类)* 为例。<br />
+  > 1. 注册并登录 [Kaggle](https://www.kaggle.com/)。<br />
+  > 2. 配置 Kaggle API。<br />
+  > (1) 头像->`Settings`->`Create New Token`，下载 `kaggle.json`。<br />
+  > (2) 移动到 `~/.config/kaggle/`<br />
+  > (3) 修改权限：`chmod 600 ~/.config/kaggle/kaggle.json`<br />
+  > 3. 加入竞赛：点击 `Join the competition` -> `I Understand and Accept`。<br />
   ```bash
-  # Generally, you can run the Kaggle competition program with the following command:
-  rdagent data_science --competition <your competition name>
+  # 通用命令：
+  rdagent data_science --competition <竞赛名>
 
-  # Specifically, you need to create a folder for storing competition files (e.g., competition description file, competition datasets, etc.), and configure the path to the folder in your environment. In addition, you need to use chromedriver when you download the competition descriptors, which you can follow for this specific example:
-  
-  # 1. Install chromedriver.
-
-  # 2. Add the competition description file path to the `.env` file.
+  # 具体示例：
   mkdir -p ./git_ignore_folder/kaggle_data
   dotenv set DS_LOCAL_DATA_PATH "$(pwd)/git_ignore_folder/kaggle_data"
   dotenv set DS_IF_USING_MLE_DATA True
-
-  # 3. run the application
   rdagent data_science --competition sf-crime
   ```
 
-### 🖥️ Monitor the Application Results
-- You can run the following command for our demo program to see the run logs.
+### 🖥️ 监控应用结果
+- 可用如下命令查看运行日志：
 
   ```sh
-  rdagent ui --port 19899 --log_dir <your log folder like "log/">
+  rdagent ui --port 19899 --log_dir <你的日志文件夹，如 "log/"> 
   ```
 
-  **Note:** Although port 19899 is not commonly used, but before you run this demo, you need to check if port 19899 is occupied. If it is, please change it to another port that is not occupied.
+  **注意：** 运行前请确保 19899 端口未被占用，否则请更换端口。
 
-  You can check if a port is occupied by running the following command.
-
+  检查端口占用：
   ```sh
   rdagent health_check
   ```
 
-# 🏭 Scenarios
+# 🏭 场景
 
-We have applied R&D-Agent to multiple valuable data-driven industrial scenarios.
+R&D-Agent 已应用于多个有价值的数据驱动工业场景。
 
+## 🎯 目标：数据驱动研发智能体
 
-## 🎯 Goal: Agent for Data-driven R&D
+本项目旨在构建自动化数据驱动研发智能体，具备：
++ 📄 读取真实材料（报告、论文等），**提取**关键公式、特征与模型描述。
++ 🛠️ **实现**提取的公式（如特征、因子、模型）为可运行代码。
+   + 由于 LLM 一次性实现能力有限，智能体通过进化过程不断提升。
++ 💡 基于当前知识与观察，**提出新想法**。
 
-In this project, we are aiming to build an Agent to automate Data-Driven R\&D that can
-+ 📄 Read real-world material (reports, papers, etc.) and **extract** key formulas, descriptions of interested **features** and **models**, which are the key components of data-driven R&D .
-+ 🛠️ **Implement** the extracted formulas (e.g., features, factors, and models) in runnable codes.
-   + Due to the limited ability of LLM in implementing at once, build an evolving process for the agent to improve performance by learning from feedback and knowledge.
-+ 💡 Propose **new ideas** based on current knowledge and observations.
+## 📈 场景/演示
 
-<!-- ![Data-Centric R&D Overview](docs/_static/overview.png) -->
+在数据驱动场景的模型实现与数据构建两大核心领域，系统服务于两类主要角色：🦾Copilot 与 🤖Agent。
+- 🦾Copilot 按人类指令自动化重复任务。
+- 🤖Agent 更具自主性，主动提出新想法。
 
-## 📈 Scenarios/Demos
+支持场景如下：
 
-In the two key areas of data-driven scenarios, model implementation and data building, our system aims to serve two main roles: 🦾Copilot and 🤖Agent. 
-- The 🦾Copilot follows human instructions to automate repetitive tasks. 
-- The 🤖Agent, being more autonomous, actively proposes ideas for better results in the future.
-
-The supported scenarios are listed below:
-
-| Scenario/Target | Model Implementation                   | Data Building                                                                      |
+| 场景/目标 | 模型实现                   | 数据构建                                                                      |
 | --              | --                                     | --                                                                                 |
-| **💹 Finance**      | 🤖 [Iteratively Proposing Ideas & Evolving](https://rdagent.azurewebsites.net/model_loop)[▶️YouTube](https://www.youtube.com/watch?v=dm0dWL49Bc0&t=104s) |  🤖 [Iteratively Proposing Ideas & Evolving](https://rdagent.azurewebsites.net/factor_loop) [▶️YouTube](https://www.youtube.com/watch?v=X4DK2QZKaKY&t=6s) <br/>   🦾 [Auto reports reading & implementation](https://rdagent.azurewebsites.net/report_factor)[▶️YouTube](https://www.youtube.com/watch?v=ECLTXVcSx-c)  |
-| **🩺 Medical**      | 🤖 [Iteratively Proposing Ideas & Evolving](https://rdagent.azurewebsites.net/dmm)[▶️YouTube](https://www.youtube.com/watch?v=VIaSTZuoZg4) | -                                                                                  |
-| **🏭 General**      | 🦾 [Auto paper reading & implementation](https://rdagent.azurewebsites.net/report_model)[▶️YouTube](https://www.youtube.com/watch?v=BiA2SfdKQ7o) <br/> 🤖 Auto Kaggle Model Tuning   | 🤖Auto Kaggle feature Engineering |
+| **💹 金融**      | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/model_loop)[▶️YouTube](https://www.youtube.com/watch?v=dm0dWL49Bc0&t=104s) |  🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/factor_loop) [▶️YouTube](https://www.youtube.com/watch?v=X4DK2QZKaKY&t=6s) <br/>   🦾 [自动报告阅读与实现](https://rdagent.azurewebsites.net/report_factor)[▶️YouTube](https://www.youtube.com/watch?v=ECLTXVcSx-c)  |
+| **🩺 医疗**      | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/dmm)[▶️YouTube](https://www.youtube.com/watch?v=VIaSTZuoZg4) | -                                                                                  |
+| **🏭 通用**      | 🦾 [自动论文阅读与实现](https://rdagent.azurewebsites.net/report_model)[▶️YouTube](https://www.youtube.com/watch?v=BiA2SfdKQ7o) <br/> 🤖 自动 Kaggle 模型调优   | 🤖自动 Kaggle 特征工程 |
 
-- **[RoadMap](https://rdagent.readthedocs.io/en/latest/scens/data_science.html#roadmap)**: Currently, we are working hard to add new features to the Kaggle scenario.
+- **[路线图](https://rdagent.readthedocs.io/en/latest/scens/data_science.html#roadmap)**：Kaggle 场景新功能开发中。
 
-Different scenarios vary in entrance and configuration. Please check the detailed setup tutorial in the scenarios documents.
+不同场景入口与配置各异，详见场景文档。
 
-Here is a gallery of [successful explorations](https://github.com/SunsetWolf/rdagent_resource/releases/download/demo_traces/demo_traces.zip) (5 traces showed in **[🖥️ Live Demo](https://rdagent.azurewebsites.net/)**). You can download and view the execution trace using [this command](https://github.com/microsoft/RD-Agent?tab=readme-ov-file#%EF%B8%8F-monitor-the-application-results) from the documentation.
+更多案例见 [成功探索集锦](https://github.com/SunsetWolf/rdagent_resource/releases/download/demo_traces/demo_traces.zip)（5 个案例在 **[🖥️ 在线演示](https://rdagent.azurewebsites.net/)** 展示）。可按[文档说明](https://github.com/microsoft/RD-Agent?tab=readme-ov-file#%EF%B8%8F-monitor-the-application-results)下载并查看执行轨迹。
 
-Please refer to **[📖readthedocs_scen](https://rdagent.readthedocs.io/en/latest/scens/catalog.html)** for more details of the scenarios.
+详见 **[📖readthedocs_scen](https://rdagent.readthedocs.io/en/latest/scens/catalog.html)**。
 
-# ⚙️ Framework
+# ⚙️ 框架
 
 <div align="center">
     <img src="docs/_static/Framework-RDAgent.png" alt="Framework-RDAgent" width="85%">
 </div>
 
+自动化数据科学研发流程是极具价值但尚未充分探索的领域。我们提出的框架推动该领域发展。
 
-Automating the R&D process in data science is a highly valuable yet underexplored area in industry. We propose a framework to push the boundaries of this important research field.
-
-The research questions within this framework can be divided into three main categories:
-| Research Area | Paper/Work List |
+研究问题分三类：
+| 研究方向 | 论文/工作列表 |
 |--------------------|-----------------|
-| **Benchmark the R&D abilities** | [Benchmark](#benchmark) |
-| **Idea proposal:** Explore new ideas or refine existing ones | [Research](#research) |
-| **Ability to realize ideas:** Implement and execute ideas | [Development](#development) |
+| **研发能力基准评测** | [基准评测](#benchmark) |
+| **想法提出：** 探索新思路或优化现有方案 | [科研](#research) |
+| **实现能力：** 实现与执行想法 | [开发](#development) |
 
-We believe that the key to delivering high-quality solutions lies in the ability to evolve R&D capabilities. Agents should learn like human experts, continuously improving their R&D skills.
+我们认为，持续进化研发能力是高质量解决方案的关键。智能体应像专家一样持续成长。
 
-More documents can be found in the **[📖 readthedocs](https://rdagent.readthedocs.io/)**.
+更多文档见 **[📖 readthedocs](https://rdagent.readthedocs.io/)**。
 
-# 📃 Paper/Work list
+# 📃 论文/工作列表
 
-## Overall Technical Report
+## 总体技术报告
 - [R&D-Agent: Automating Data-Driven AI Solution Building Through LLM-Powered Automated Research, Development, and Evolution](https://arxiv.org/abs/2505.14738)
 ```BibTeX
 @misc{yang2024rdagent,
@@ -345,7 +325,7 @@ More documents can be found in the **[📖 readthedocs](https://rdagent.readthed
 ```
 ![image](https://github.com/user-attachments/assets/28b0488d-a546-4fef-8dc5-563ed64a9b4d)
 
-## 📊 Benchmark
+## 📊 基准评测
 - [Towards Data-Centric Automatic R&D](https://arxiv.org/abs/2404.11276)
 ```BibTeX
 @misc{chen2024datacentric,
@@ -359,17 +339,17 @@ More documents can be found in the **[📖 readthedocs](https://rdagent.readthed
 ```
 ![image](https://github.com/user-attachments/assets/494f55d3-de9e-4e73-ba3d-a787e8f9e841)
 
-## 🔍 Research
+## 🔍 科研
 
-In a data mining expert's daily research and development process, they propose a hypothesis (e.g., a model structure like RNN can capture patterns in time-series data), design experiments (e.g., finance data contains time-series and we can verify the hypothesis in this scenario), implement the experiment as code (e.g., Pytorch model structure), and then execute the code to get feedback (e.g., metrics, loss curve, etc.). The experts learn from the feedback and improve in the next iteration.
+数据挖掘专家的日常研发流程包括提出假设（如 RNN 能捕捉时序数据模式）、设计实验（如在金融数据中验证假设）、实现代码（如 Pytorch 结构），并通过反馈（如指标、损失曲线）不断优化。
 
-Based on the principles above, we have established a basic method framework that continuously proposes hypotheses, verifies them, and gets feedback from the real-world practice. This is the first scientific research automation framework that supports linking with real-world verification.
+基于上述原则，我们建立了持续提出假设、验证并从实践中获取反馈的基础方法框架。这是首个支持与真实世界联动验证的科研自动化框架。
 
-For more detail, please refer to our **[🖥️ Live Demo page](https://rdagent.azurewebsites.net)**.
+更多细节见 **[🖥️ 在线演示页面](https://rdagent.azurewebsites.net)**。
 
-## 🛠️ Development
+## 🛠️ 开发
 
-- [Collaborative Evolving Strategy for Automatic Data-Centric Development](https://arxiv.org/abs/2407.18690)
+- [协同进化策略：自动数据驱动开发](https://arxiv.org/abs/2407.18690)
 ```BibTeX
 @misc{yang2024collaborative,
     title={Collaborative Evolving Strategy for Automatic Data-Centric Development},
@@ -382,7 +362,7 @@ For more detail, please refer to our **[🖥️ Live Demo page](https://rdagent.
 ```
 ![image](https://github.com/user-attachments/assets/75d9769b-0edd-4caf-9d45-57d1e577054b)
 
-## Deep Application in Diverse Scenarios
+## 多场景深度应用
 
 - [R&D-Agent-Quant: A Multi-Agent Framework for Data-Centric Factors and Model Joint Optimization](https://arxiv.org/abs/2505.15155)
 ```BibTeX
@@ -397,18 +377,17 @@ For more detail, please refer to our **[🖥️ Live Demo page](https://rdagent.
 ```
 ![image](https://github.com/user-attachments/assets/3186f67a-c2f8-4b6b-8bb9-a9b959c13866)
 
+# 🤝 贡献指南
 
-# 🤝 Contributing
+欢迎为 R&D-Agent 提交贡献和建议。详见 [贡献指南](CONTRIBUTING.md)。
 
-We welcome contributions and suggestions to improve R&D-Agent. Please refer to the [Contributing Guide](CONTRIBUTING.md) for more details on how to contribute.
+提交 PR 前请确保代码通过自动化 CI 检查。
 
-Before submitting a pull request, ensure that your code passes the automatic CI checks.
+## 📝 说明
+本项目欢迎各类贡献与建议。
+无论是修复 bug、完善文档、优化代码还是修正错别字，每一份贡献都很宝贵。
 
-## 📝 Guidelines
-This project welcomes contributions and suggestions.
-Contributing to this project is straightforward and rewarding. Whether it's solving an issue, addressing a bug, enhancing documentation, or even correcting a typo, every contribution is valuable and helps improve R&D-Agent.
-
-To get started, you can explore the issues list, or search for `TODO:` comments in the codebase by running the command `grep -r "TODO:"`.
+可先浏览 issues 列表，或用 `grep -r "TODO:"` 搜索代码中的 `TODO:`。
 
 <img src="https://img.shields.io/github/contributors-anon/microsoft/RD-Agent"/>
 
@@ -416,7 +395,7 @@ To get started, you can explore the issues list, or search for `TODO:` comments 
   <img src="https://contrib.rocks/image?repo=microsoft/RD-Agent&max=100&columns=15" />
 </a>
 
-Before we released R&D-Agent as an open-source project on GitHub, it was an internal project within our group. Unfortunately, the internal commit history was not preserved when we removed some confidential code. As a result, some contributions from our group members, including Haotian Chen, Wenjun Feng, Haoxue Wang, Zeqi Ye, Xinjie Shen, and Jinhui Li, were not included in the public commits.
+R&D-Agent 开源前为组内项目，因去除部分敏感代码，部分成员（如 Haotian Chen、Wenjun Feng、Haoxue Wang、Zeqi Ye、Xinjie Shen、Jinhui Li）贡献未计入公开提交。
 
-# ⚖️ Legal disclaimer
-<p style="line-height: 1; font-style: italic;">The RD-agent is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. The RD-agent is aimed to facilitate research and development process in the financial industry and not ready-to-use for any financial investment or advice. Users shall independently assess and test the risks of the RD-agent in a specific use scenario, ensure the responsible use of AI technology, including but not limited to developing and integrating risk mitigation measures, and comply with all applicable laws and regulations in all applicable jurisdictions. The RD-agent does not provide financial opinions or reflect the opinions of Microsoft, nor is it designed to replace the role of qualified financial professionals in formulating, assessing, and approving finance products. The inputs and outputs of the RD-agent belong to the users and users shall assume all liability under any theory of liability, whether in contract, torts, regulatory, negligence, products liability, or otherwise, associated with use of the RD-agent and any inputs and outputs thereof.</p>
+# ⚖️ 法律声明
+<p style="line-height: 1; font-style: italic;">RD-agent 按“原样”提供，不附带任何明示或暗示担保，包括但不限于适销性、特定用途适用性和非侵权。RD-agent 旨在促进金融行业研发流程，不适用于任何金融投资或建议。用户应自行评估和测试 RD-agent 在具体场景下的风险，确保负责任地使用 AI 技术（包括但不限于风险缓解措施），并遵守所有适用法律法规。RD-agent 不提供金融意见，也不代表微软立场，亦不替代专业金融人员。RD-agent 的输入输出归用户所有，用户应承担全部责任。</p>

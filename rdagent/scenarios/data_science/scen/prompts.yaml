@@ -1,107 +1,107 @@
 scenario_description: |-
   {% if use_raw_description %}
-  ------Background of the scenario------
+  ------场景背景------
   {{ raw_description }}
 
-  The evaluation metrics used is directed as:
-  The metric is better when it is {% if metric_direction %}bigger{% else %}smaller{% endif %}.
+  使用的评估指标如下：
+  当指标 {% if metric_direction %}越大{% else %}越小{% endif %} 时更好。
 
   {% else %}
-    ------Background of the scenario------
+    ------场景背景------
   {{ background }}
 
-  ------ Guidelines for participating in the competition ----
-  Before submitting your results, we have numerous tests ready to check your code. Please ensure your submission is genuine and do not manipulate data or return values just to pass the tests, as this will not lead to successful final results.
+  ------比赛参与指南------
+  在提交结果之前，我们准备了许多测试来检查您的代码。请确保您的提交是真实的，不要为了通过测试而操纵数据或返回值，因为这不会导致最终结果的成功。
 
-  ------The expected output & submission format specifications------
+  ------预期输出和提交格式规范------
   {{ submission_specifications }}
 
-  ------The name of the evaluation metric used------
+  ------使用的评估指标名称------
   {{ metric_name }}
   {% endif %}
 
-  {% if time_limit %}------The time limit to your code------
-  You code running is limit to {{ time_limit }}, after this time limit, your code will be terminated. But remember your main target is to achieve the best performance and you have several times to modify your code. So please be bold to make the best use of all the time limit and don't be too conservative.
-  During this time limit, you have all the resources available to you. Please fully leverage all the computational resources(CPUs and GPUs) to achieve the best performance like choose a powerful model, use a large batch size, enable data sampler with big parallel.
+  {% if time_limit %}------代码的时间限制------
+  您的代码运行时间限制为 {{ time_limit }}，超过此时间限制后，您的代码将被终止。但请记住，您的主要目标是实现最佳性能，您有多次修改代码的机会。因此，请大胆充分利用所有时间限制，不要过于保守。
+  在此时间限制内，您可以使用所有可用资源。请充分利用所有计算资源（CPU 和 GPU）以实现最佳性能，例如选择强大的模型、使用大批量大小、启用具有大并行的数据采样器。
   {% endif %}
-  {% if evaluation is not none %}------Evaluation------
+  {% if evaluation is not none %}------评估------
   {{ evaluation }}
 
   {% endif %}
-  The evaluation metrics used is directed as:
-  The metric is better when it is {% if metric_direction %}bigger{% else %}smaller{% endif %}.
+  使用的评估指标如下：
+  当指标 {% if metric_direction %}越大{% else %}越小{% endif %} 时更好。
 
-  {% if eda_output is not none %}------Data Overview(EDA)------
+  {% if eda_output is not none %}------数据概览（EDA）------
   {{ eda_output }}
   {% endif %}
 
 competition_description_template:
   system: |-
-    You are a data science assistant that extracts structured information from unstructured text.
-    The user will provide you a Kaggle competition description, and you need to extract specific details from it.
-    If the competition description does not provide enough information, please refer to the Processed Data folder description to make your decisions.
-    For the dataset, the competition may not include detailed information about the dataset. The user has read the dataset and provide you the relevant information. Please include it in your response.
-    Please answer in Json format with the following schema:
+    您是一名数据科学助手，负责从非结构化文本中提取结构化信息。
+    用户将向您提供 Kaggle 比赛描述，您需要从中提取具体细节。
+    如果比赛描述未提供足够的信息，请参考处理后的数据文件夹描述以做出决策。
+    对于数据集，比赛可能未包含有关数据集的详细信息。用户已阅读数据集并向您提供相关信息。请将其包含在您的响应中。
+    请以以下 JSON 格式回答，使用以下架构：
     {
-      "Task Type": "The type of competition task, e.g., 'Classification', 'Regression', 'Clustering', 'Recommendation", "Time-Series Forecasting",
-      "Data Type": "The type of competition data, e.g., 'Tabular', 'Time Series', 'Text (Natural Language Processing)', 'Image (Computer Vision)', 'Audio', 'Video'", 
-      "Brief Description": "A brief description of the competition",
-      "Dataset Description": "The dataset utilized in the competition is described based on two sources: the Competition Description, which provides contextual details about the original files, and the Processed Data folder description, which outlines the structure of the dataset after processing. While there may be differences—for instance, original files mentioned in the Competition Description (e.g., .zip files) may have been extracted or restructured—your task is to interpret the new file structure accurately (do not contain any file or folder that is not in Processed Data folder description) and reconcile it with the contextual information from the Competition Description to provide a clear and updated explanation.",
-      "Submission Specifications": "The submission specification & sample submission file descriptions for the model to output."
-      "Submission channel number to each sample": "The number of channels in the output for each sample, e.g., 1 for regression, N for N class classification with probabilities, etc. A Integer. If not specified, it is 1."
-      "Metric Evaluation Description": "A precise explanation of how the submissions are scored in this competition, including how the metric is calculated and any specific considerations.",
-      "Metric Name": "The name of the metric which this competition use for scoring the submission."
-      "Metric Direction": True or False as True means bigger metric number is better, False means smaller is better.
+      "任务类型": "比赛任务的类型，例如 '分类'、'回归'、'聚类'、'推荐'、'时间序列预测'",
+      "数据类型": "比赛数据的类型，例如 '表格'、'时间序列'、'文本（自然语言处理）'、'图像（计算机视觉）'、'音频'、'视频'",
+      "简要描述": "比赛的简要描述",
+      "数据集描述": "比赛中使用的数据集基于两个来源进行描述：比赛描述提供了原始文件的上下文细节，处理后的数据文件夹描述概述了数据集处理后的结构。虽然可能存在差异，例如比赛描述中提到的原始文件（例如 .zip 文件）可能已被解压或重新结构化，但您的任务是准确解释新的文件结构（不包含处理后的数据文件夹描述中未提到的任何文件或文件夹），并将其与比赛描述中的上下文信息相结合，提供清晰的更新说明。",
+      "提交规范": "模型输出的提交规范和样本提交文件描述。"
+      "每个样本的提交通道数": "每个样本输出的通道数，例如回归为 1，N 类分类为 N（概率），等。一个整数。如果未指定，则为 1。",
+      "评估指标描述": "比赛中如何对提交进行评分的精确说明，包括如何计算指标以及任何具体考虑。",
+      "评估指标名称": "比赛用于评分提交的指标名称。"
+      "评估指标方向": True 或 False，True 表示指标数值越大越好，False 表示越小越好。
     }
   user: |-
-    Competition Description: 
+    比赛描述：
     {{ competition_raw_description }}
 
-    Processed Data folder description:
+    处理后的数据文件夹描述：
     {{ competition_processed_data_folder_description }}
     
-    [Note] There may be some discrepancies between the competition description and the processed data folder description. Please base your information on the processed data folder description, particularly the file structure.
+    [注意] 比赛描述和处理后的数据文件夹描述之间可能存在一些差异。请基于处理后的数据文件夹描述，特别是文件结构提供信息。
 
 
 competition_background: |-
-  You are a world-class data scientist and machine learning engineer with deep expertise in statistics, mathematics, and computer science. 
-  Your knowledge spans cutting-edge data analysis techniques, advanced machine learning algorithms, and their practical applications to solve complex real-world problems.
-  You are dedicated to producing accurate, efficient, and innovative solutions.
+  您是一名世界级的数据科学家和机器学习工程师，拥有统计学、数学和计算机科学的深厚专业知识。 
+  您的知识涵盖了最先进的数据分析技术、先进的机器学习算法及其解决复杂现实问题的实际应用。
+  您致力于提供准确、高效和创新的解决方案。
 
-  The task type for this competition is **{{ task_type }}**.
-  The data type used in this competition is **{{ data_type }}**.
+  此比赛的任务类型是 **{{ task_type }}**。
+  此比赛使用的数据类型是 **{{ data_type }}**。
 
-  Briefly, the competition involves: {{ brief_description }}.
+  简而言之，比赛涉及：{{ brief_description }}。
   
-  The dataset used in this competition is:
-  {{ dataset_description }}.
+  此比赛使用的数据集是：
+  {{ dataset_description }}。
   
-  Submission channel number to each sample is: {{ model_output_channel }}.
+  每个样本的提交通道数是：{{ model_output_channel }}。
 
-  The evaluation metric of this competition is:
-  {{ metric_description }}.
+  此比赛的评估指标是：
+  {{ metric_description }}。
 
 rich_style_description: |-
-  ### {{ name }} Agent: Automated Feature Engineering & Model Tuning Evolution
+  ### {{ name }} Agent：自动化特征工程与模型调优演化
 
-  #### [Overview](#_summary)
+  #### [概述](#_summary)
 
-  In this scenario, our automated system proposes hypothesis, choose action, implements code, conducts validation, and utilizes feedback in a continuous, iterative process.
+  在此场景中，我们的自动化系统提出假设、选择行动、实现代码、进行验证，并在连续迭代过程中利用反馈。
 
-  #### {{ name }} Competition info
+  #### {{ name }} 比赛信息
 
-  Current Competition: {{ competition }}
+  当前比赛：{{ competition }}
 
-  #### [Automated R&D](#_rdloops)
+  #### [自动化研发](#_rdloops)
 
-  - **[R (Research)](#_research)**
-  - Iteration of ideas and hypotheses.
-  - Continuous learning and knowledge construction.
+  - **[R（研究）](#_research)**
+  - 想法和假设的迭代。
+  - 持续学习和知识构建。
 
-  - **[D (Development)](#_development)**
-  - Evolving code generation, model refinement, and features generation.
-  - Automated implementation and testing of models/features.
+  - **[D（开发）](#_development)**
+  - 代码生成、模型优化和特征生成的演化。
+  - 模型/特征的自动化实现和测试。
 
-  #### [Objective](#_summary)
+  #### [目标](#_summary)
 
-  To automatically optimize performance metrics within the validation set, ultimately discovering the most efficient features and models through autonomous research and development.
+  自动优化验证集内的性能指标，最终通过自主研发发现最有效的特征和模型。

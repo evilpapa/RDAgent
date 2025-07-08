@@ -177,76 +177,76 @@ component_spec:
           scores[model_name] = calculate_metric(val_label, val_pred)
       
       ...
-      some code about ensemble strategy
+      一些关于集成策略的代码
       ...
       ensemble_val_pred = ...
 
       ensemble_score = calculate_metric(val_label, ensemble_val_pred)
-      scores["ensemble"] = ensemble_score  # Ensure "ensemble" is explicitly stored
+      scores["ensemble"] = ensemble_score  # 确保 "ensemble" 被明确存储
       
       scores_df = pd.DataFrame(scores.items(), columns=["Model", <metric_name>])
       scores_df.to_csv("scores.csv", index=False)
       ```
-      - Even if only one model is present, compute the ensemble score and store it under `"ensemble"`.
+      - 即使只有一个模型存在，也要计算集成分数并将其存储在 "ensemble" 下。
 
-    3. Code Standards:
-      - Do not use progress bars (e.g., tqdm) in the code.
+    3. 代码标准：
+      - 不要在代码中使用进度条（例如 tqdm）。
 
-    4. Notes:
-      - Ensure flexibility to handle multiple ensemble strategies based on competition requirements.
-    
+    4. 注意事项：
+      - 确保能够灵活处理基于比赛要求的多种集成策略。
+
   Workflow: |-
-    Your task is to implement the main workflow script (`main.py`) for a Kaggle-style machine learning competition project. 
-    Follow the provided project structure and specifications to ensure consistency and maintainability:
-    1. Workflow Integration:
-      - Integrate the following components into the workflow:
-        - Data loading (`load_data.py`).
-        - Feature engineering (`feature.py`).
-        - Model workflow for training and testing (`model_*.py`). 
-        - Ensemble workflow that combines results from the model workflow to obtain the final prediction (`ensemble.py`).
-      - Treat each component as a modular and callable Python function.
-      - The workflow script should be flexible enough to handle either a single model or multiple models, with filenames (model_*.py) that are not determined at the outset.
-        For multiple model selection, utilize Python code to identify eligible models based on filenames, for example:
+    您的任务是为 Kaggle 风格的机器学习比赛项目实现主工作流程脚本（`main.py`）。
+    请遵循提供的项目结构和规范，以确保一致性和可维护性：
+    1. 工作流程集成：
+      - 将以下组件集成到工作流程中：
+        - 数据加载（`load_data.py`）。
+        - 特征工程（`feature.py`）。
+        - 用于训练和测试的模型工作流程（`model_*.py`）。
+        - 集成工作流程，将模型工作流程的结果结合起来以获得最终预测（`ensemble.py`）。
+      - 将每个组件视为模块化且可调用的 Python 函数。
+      - 工作流程脚本应足够灵活以处理单个模型或多个模型，文件名（model_*.py）在开始时未确定。
+        对于多个模型选择，使用 Python 代码根据文件名识别合格模型，例如：
         ```python
         available_models = [f for f in os.listdir('.') if f.startswith('model_') and 'test' not in f]
         ```
-      - The workflow script should be directly executable. We will run your script as is, so do not assume that your functions will be imported and called separately.
-    2. Feature Engineering
-      - The feature engineering should be called only once. For example:
+      - 工作流程脚本应直接可执行。我们将按原样运行您的脚本，因此不要假设您的函数会被单独导入和调用。
+    2. 特征工程
+      - 特征工程应仅调用一次。例如：
         `X_transformed, y_transformed, X_test_transformed = feat_eng(X, y, X_test)`
-      - It should be called before dataset splitting.
+      - 它应该在数据集拆分之前被调用。
 
-    3. Dataset Splitting
-      - The dataset returned by `load_data` is not pre-split. After calling `feat_eng`, split the data into training and test sets.
-      - [Notice] If feasible, apply cross-validation on the training set (`X_transformed`, `y_transformed`) to ensure a reliable assessment of model performance.
-      - Keep the test set (`X_test_transformed`) unchanged, as it is only used for generating the final predictions.
-      - Pseudocode logic for reference:
+    3. 数据集拆分
+      - `load_data` 返回的数据集没有预先拆分。在调用 `feat_eng` 之后，将数据拆分为训练集和测试集。
+      - [注意] 如果可行，对训练集（`X_transformed`，`y_transformed`）应用交叉验证，以确保可靠评估模型性能。
+      - 保持测试集（`X_test_transformed`）不变，因为它仅用于生成最终预测。
+      - 参考的伪代码逻辑：
         ```
-        Set number of splits and initialize KFold cross-validator.
-        Create dictionaries for validation and test predictions.
-        For each model file:
-            Import the model dynamically.
-            Initialize arrays for out-of-fold (OOF) and test predictions.
-            For each fold in KFold:
-                Split data into training and validation sets.
-                Run model workflow to get validation and test predictions.
-                Validate shapes.
-                Store validation and test predictions.
-            Compute average test predictions across folds.
-            Save OOF and averaged test predictions.
-        Ensemble predictions from all models and print the final shape.
+        设置拆分数量并初始化 KFold 交叉验证器。
+        为验证和测试预测创建字典。
+        对于每个模型文件：
+            动态导入模型。
+            初始化用于折叠外（OOF）和测试预测的数组。
+            对于 KFold 中的每个折叠：
+                将数据拆分为训练集和验证集。
+                运行模型工作流程以获取验证和测试预测。
+                验证形状。
+                存储验证和测试预测。
+            计算跨折叠的平均测试预测。
+            保存 OOF 和平均测试预测。
+        从所有模型中集成预测并打印最终形状。
         ```
 
-    4. Submission File:
-      - Save the final predictions as `submission.csv`, ensuring the format matches the competition requirements (refer to `sample_submission` in the Folder Description for the correct structure).
-      - Present the required submission format explicitly and ensure the output adheres to it.
+    4. 提交文件：
+      - 将最终预测保存为 `submission.csv`，确保格式符合比赛要求（请参阅文件描述中的 `sample_submission` 以获取正确的结构）。
+      - 明确提交格式的要求，并确保输出符合该格式。
 
-    5. Code Standards:
-      - Do not use progress bars (e.g., tqdm) in the code.
+    5. 代码标准：
+      - 不要在代码中使用进度条（例如 tqdm）。
 
-    6. Ensemble Strategy:
-      Consolidate all model outputs into a dictionary, where each key is the model's filename (excluding the .py extension) and its corresponding value is the model's output.
-      Sample code:
+    6. 集成策略：
+      将所有模型输出合并到一个字典中，其中每个键是模型的文件名（不包括 .py 扩展名），相应的值是模型的输出。
+      示例代码：
       {% raw %}
       {% for model_name in model_names %}
       model_module = __import__(model_name.replace('.py', ''))
@@ -264,55 +264,55 @@ component_spec:
       {% endraw %}
     
   Pipeline: |-
-    0. Program Execution:
-      - The workflow will be executed by running `python main.py` with no command-line arguments. Ensure that `main.py` does not require or expect any parameters.
-      - The working directory will only contain `main.py`. Any additional files required for execution must be downloaded or generated by `main.py` itself.
+    0. 程序执行:
+      - 通过运行 `python main.py` 来执行工作流程，不带任何命令行参数。确保 `main.py` 不需要或期望任何参数。
+      - 工作目录将只包含 `main.py`。执行所需的任何其他文件必须由 `main.py` 本身下载或生成。
       
-    1. File Handling:
-      - Handle file encoding and delimiters appropriately.
-      - Combine or process multiple files if necessary.
-      - Avoid using the sample submission file to infer test indices. If a dedicated test index file is available, use that. If not, use the order in the test file as the test index.
-      - Ensure you load the actual data from the files, not just the filenames or paths. Do not postpone data loading to later steps.
+    1. 文件处理:
+      - 适当处理文件编码和分隔符。
+      - 如有必要，合并或处理多个文件。
+      - 避免使用示例提交文件来推断测试索引。如果有专用的测试索引文件，请使用它。如果没有，请按测试文件中的顺序使用测试索引。
+      - 确保从文件中加载实际数据，而不仅仅是文件名或路径。不要推迟数据加载到后面的步骤中。
 
-    2. Data Preprocessing:
-      - Convert data types correctly (e.g., numeric, categorical, date parsing).
-      - Optimize memory usage for large datasets using techniques like downcasting or reading data in chunks if necessary.
-      - Domain-Specific Handling: 
-        - Apply competition-specific preprocessing steps as needed (e.g., text tokenization, image resizing).
+    2. 数据预处理:
+      - 正确转换数据类型（例如，数值型、分类变量、日期解析）。
+      - 使用降级或分块读取等技术优化大数据集的内存使用。
+      - 特定领域的处理： 
+        - 根据需要应用比赛特定的预处理步骤（例如，文本标记化、图像调整大小）。
 
-    3. Code Standards:
-      - DO NOT use progress bars (e.g., `tqdm`).
-      - DO NOT use the sample submission file to extract test index information.
-      - DO NOT exclude features inadvertently during this process.
+    3. 代码标准:
+      - 不要使用进度条（例如，`tqdm`）。
+      - 不要使用示例提交文件提取测试索引信息。
+      - 在此过程中不要无意中排除特征。
 
-    4. NOTES
-      - Never use sample submission as the test index, as it may not be the same as the test data. Use the test index file or test data source to get the test index.
-      - For neural network models, use pytorch rather than tensorflow as the backend if possible.
-      - For decision tree models, use xgboost or RandomForest rather than lightgbm as the backend if possible.
-      - For neural network models, it's always better to firstly try from a pretrained model and then fine-tune it rather than training from scratch.
+    4. 注意事项
+      - 永远不要将示例提交作为测试索引，因为它可能与测试数据不同。使用测试索引文件或测试数据源获取测试索引。
+      - 对于神经网络模型，如果可能，尽量使用 pytorch 而不是 tensorflow 作为后端。
+      - 对于决策树模型，如果可能，尽量使用 xgboost 或 RandomForest 而不是 lightgbm 作为后端。
+      - 对于神经网络模型，首先尝试从预训练模型开始，然后进行微调，而不是从头开始训练，通常会得到更好的效果。
 
-    5. General Considerations:
-      - Ensure scalability for large datasets.
-      - Handle missing values and outliers appropriately (e.g., impute, remove, or replace).
-      - Ensure consistency between feature data types and transformations.
-      - Prevent data leakage: Do not use information derived from the test set when transforming training data.
+    5. 一般注意事项:
+      - 确保对大数据集的可扩展性。
+      - 适当处理缺失值和异常值（例如，插补、删除或替换）。
+      - 确保特征数据类型和转换的一致性。
+      - 防止数据泄漏：在转换训练数据时，不要使用从测试集派生的信息。
 
-    6. Notes:
-      - GPU and multiprocessing are available and are encouraged to use for accelerating transformations.
+    6. 注意事项:
+      - 提供 GPU 和多处理支持，鼓励加速转换。
   
-    7. Metric Calculation and Storage:
-      - Calculate the metric (mentioned in the evaluation section of the competition information) for each model and ensemble strategy on valid, and save the results in `scores.csv`
-      - The evaluation should be based on 5-fold cross-validation but only if that's an appropriate evaluation for the task at hand. Store the mean validation score of 5-fold cross-validation in `scores.csv` on each model.
-      - Even if only one model is present, compute the ensemble score and store it under `"ensemble"`.
-      - The index of `scores.csv` should include the model name and the "ensemble" strategy. "ensemble" should be exactly in the index with all lower case letters. Ensemble is the result from several models. If only one model is present, the ensemble score should be the same as the model score.
-      - The column names in `scores.csv` should be:
-        - Model: The name of the model or ensemble strategy.
-        - <metric_name>: The calculated metric value for that model or ensemble strategy. The metric name can be found in the scenario description. The metric name should be exactly the same as the one in the scenario description since user will use it to check the result.
-      - Validation metrics should be aligned across all ideas and implementations. Avoid proposing ideas that might affect the validation metrics and modifying the related code.
+    7. 指标计算和存储:
+      - 计算每个模型和集成策略在有效数据上的指标（在比赛信息的评估部分提到），并将结果保存在 `scores.csv` 中
+      - 评估应基于 5 倍交叉验证，但仅在这对手头任务是适当的评估时进行。在每个模型上将 5 倍交叉验证的平均验证分数存储在 `scores.csv` 中。
+      - 即使只有一个模型存在，也要计算集成分数并将其存储在 "ensemble" 下。
+      - `scores.csv` 的索引应包括模型名称和 "ensemble" 策略。"ensemble" 应该完全用小写字母表示。集成是来自多个模型的结果。如果只存在一个模型，则集成分数应与模型分数相同。
+      - `scores.csv` 中的列名应为:
+        - Model: 模型或集成策略的名称。
+        - <metric_name>: 该模型或集成策略的计算指标值。指标名称可以在场景描述中找到。指标名称应与场景描述中的名称完全相同，因为用户将用它来检查结果。
+      - 验证指标应在所有想法和实现中保持一致。避免提出可能影响验证指标的想法并修改相关代码。
 
-    8. Submission File:
-      - Save the final predictions as `submission.csv`, ensuring the format matches the competition requirements (refer to `sample_submission` in the Folder Description for the correct structure).
-      - Present the required submission format explicitly and ensure the output adheres to it.
+    8. 提交文件:
+      - 将最终预测保存为 `submission.csv`，确保格式符合比赛要求（请参阅文件描述中的 `sample_submission` 以获取正确的结构）。
+      - 明确提交格式的要求，并确保输出符合该格式。
 
 guidelines:
   coding: |-

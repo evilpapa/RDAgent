@@ -1,47 +1,47 @@
 KG_hypothesis_gen_RAG: |-
-  The user has proposed several hypothesis and conducted experiments to validate them. 
-  The hypothesis can divided into two categories:
-  1. Insights: These are the observations user did to other similar problems. You can either apply the same hypothesis or modify them to fit the current problem.
-  2. Experience: These are former hypothesis and experiments user did to the current problem. You can either continue to improve the hypothesis or change to a new one.
+  用户提出了几个假设并进行了实验以验证它们。
+  假设可以分为两类：
+  1. 洞察：这些是用户对其他类似问题的观察。您可以应用相同的假设或修改它们以适应当前问题。
+  2. 经验：这些是用户对当前问题的前假设和实验。您可以继续改进假设或更改为新的假设。
   
   {% if insights %}
-  The insights are as follows:
+  洞察如下：
   {% for insight in insights %}
-  Insight: {{ loop.index }}
-  - hypothesis: {{ insight.hypothesis }}
-  - experiments: {{ insight.experiments }}
-  - conclusion: {{ insight.conclusion }}
+  洞察：{{ loop.index }}
+  - 假设：{{ insight.hypothesis }}
+  - 实验：{{ insight.experiments }}
+  - 结论：{{ insight.conclusion }}
   {% endfor %}
   {% endif %}
 
   {% if experiences %}
-  The experiences are as follows:
+  经验如下：
   {% for experience in experiences %}
-  Experience: {{ loop.index }}
-  - hypothesis: {{ experience.hypothesis }}
-  - experiments: {{ experience.experiments }}
-  - conclusion: {{ experience.conclusion }}
+  经验：{{ loop.index }}
+  - 假设：{{ experience.hypothesis }}
+  - 实验：{{ experience.experiments }}
+  - 结论：{{ experience.conclusion }}
   {% endfor %}
   {% endif %}
 
 hypothesis_and_feedback: |-
   {% for experiment, feedback in trace.hist[-10:] %}
-  Hypothesis {{ loop.index }}: {{ experiment.hypothesis }}
-  Observation on the result with the hypothesis: {{ feedback.observations }}
-  Feedback on the original hypothesis:  {{ feedback.hypothesis_evaluation }}
-  Did changing to this hypothesis work? (focus on the change):  {{ feedback.decision }}
+  假设 {{ loop.index }}：{{ experiment.hypothesis }}
+  对假设结果的观察：{{ feedback.observations }}
+  对原始假设的反馈：{{ feedback.hypothesis_evaluation }}
+  更改为此假设是否有效？（关注更改）：{{ feedback.decision }}
   {% endfor %}
 
 hypothesis_output_format: |-
-  The output should follow JSON format. The schema is as follows:
+  输出应遵循 JSON 格式。模式如下：
   {
-    "action": "If "hypothesis_specification" provides the action you need to take, please follow "hypothesis_specification" to choose the action. Otherwise, based on previous experimental results, suggest the action you believe is most appropriate at the moment. It should be one of ["Feature engineering", "Feature processing", "Model feature selection", "Model tuning"]"
-    "hypothesis": "The new hypothesis generated based on the information provided.",
-    "reason": "The reason why you generate this hypothesis. It should be comprehensive and logical. It should cover the other keys below and extend them.",
-    "concise_reason": "Two-line summary. First line focuses on a concise justification for the change. Second line generalizes a knowledge statement.",
-    "concise_observation": "One line summary. It focuses on the observation of the given scenario, data characteristics, or previous experiences (failures & succeses).",
-    "concise_justification": "One line summary. Justify the hypothesis based on theoretical principles or initial assumptions.",
-    "concise_knowledge": "One line summary. Transferable knowledge based on theoretical principles. Use conditional grammar. eg. "If...., ..; When..., .; and etc" Make sure that you state things clearly without ambiguity. Eg. avoid saying "previous hypothesis", because one wouldn't know what that is."
+    "action": "如果 "hypothesis_specification" 提供了您需要采取的行动，请遵循 "hypothesis_specification" 选择行动。否则，根据之前的实验结果，建议您认为目前最合适的行动。它应为以下之一：["特征工程", "特征处理", "模型特征选择", "模型调优"]",
+    "hypothesis": "根据提供的信息生成的新假设。",
+    "reason": "生成此假设的原因。它应全面且合乎逻辑。应涵盖以下其他关键点并扩展它们。",
+    "concise_reason": "两行摘要。第一行侧重于对更改的简明说明。第二行概括了一个知识声明。",
+    "concise_observation": "一行摘要。它侧重于对给定场景、数据特征或先前经验（失败和成功）的观察。",
+    "concise_justification": "一行摘要。根据理论原则或初始假设为假设提供依据。",
+    "concise_knowledge": "一行摘要。基于理论原则的可转移知识。使用条件语法。例如：“如果...., ..; 当..., .; 等等”确保清楚明确地陈述事物。避免模糊不清。例如，避免说“先前的假设”，因为人们不知道那是什么。"
   }
 
 hypothesis_specification:
@@ -135,225 +135,225 @@ hypothesis_specification:
       - Justify how the new structure or parameter changes more effectively capture data patterns and improve learning efficiency.
 
 feature_experiment_output_format: |-
-  According to the hypothesis, please help user design one or more feature engineering tasks.
-  The output should follow JSON format. The schema is as follows:
+  根据假设，请帮助用户设计一个或多个特征工程任务。
+  输出应遵循 JSON 格式。模式如下：
   {
       "factor or group name 1": {
-          "description": "description of factor or group name 1",
-          "formulation": "latex formulation of factor or group name 1",
+          "description": "factor or group name 1 的描述",
+          "formulation": "factor or group name 1 的 latex 公式",
           "variables": {
-              "variable or function name 1": "description of variable or function 1",
-              "variable or function name 2": "description of variable or function 2"
+              "variable or function name 1": "变量或函数 1 的描述",
+              "variable or function name 2": "变量或函数 2 的描述"
           }
       },
       "factor or group name 2": {
-          "description": "description of factor or group name 2",
-          "formulation": "latex formulation of factor or group name 2",
+          "description": "factor or group name 2 的描述",
+          "formulation": "factor or group name 2 的 latex 公式",
           "variables": {
-              "variable or function name 1": "description of variable or function 1",
-              "variable or function name 2": "description of variable or function 2"
+              "variable or function name 1": "变量或函数 1 的描述",
+              "variable or function name 2": "变量或函数 2 的描述"
           }
       }
-      # Don't add ellipsis (...) or any filler text that might cause JSON parsing errors here!
+      # 在这里不要添加省略号 (...) 或任何可能导致 JSON 解析错误的填充文本！
   }
 
 model_experiment_output_format: |-
-  According to the hypothesis, please help user design one model task.
-  We only build one model from four main model types: ["XGBoost", "RandomForest", "LightGBM", "NN"].
-  The output should follow JSON format. The schema is as follows: 
+  根据假设，请帮助用户设计一个模型任务。
+  我们只从四种主要模型类型中构建一个模型：["XGBoost", "RandomForest", "LightGBM", "NN"]。
+  输出应遵循 JSON 格式。模式如下： 
   {
-      "model_name": "model_name",
-      "description": "A detailed description of the model",
-      "architecture": "A detailed description of the model's architecture, e.g., neural network layers or tree structures",
+      "model_name": "模型名称",
+      "description": "模型的详细描述",
+      "architecture": "模型架构的详细描述，例如神经网络层或树结构",
       "hyperparameters": {
-          "hyperparameter_name_1": "value of hyperparameter 1",
-          "hyperparameter_name_2": "value of hyperparameter 2",
-          "hyperparameter_name_3": "value of hyperparameter 3"
+          "hyperparameter_name_1": "超参数 1 的值",
+          "hyperparameter_name_2": "超参数 2 的值",
+          "hyperparameter_name_3": "超参数 3 的值"
       },
-      "model_type": "Please select only **one** model type from the following four options: XGBoost, RandomForest, LightGBM, or NN. The selected model must be unique and used as the **primary model**. You may choose an auxiliary model for support or optimization on specific tasks if necessary, but the primary model must come from the provided options."
+      "model_type": "请从以下四个选项中仅选择 **一个** 模型类型：XGBoost、RandomForest、LightGBM 或 NN。所选模型必须是唯一的，并用作 **主要模型**。如有必要，您可以选择辅助模型以支持或优化特定任务，但主要模型必须来自提供的选项。"
 
   }
 
 kg_feedback_generation_user: |-
-  We are in a process of finding and validating hypotheses to build a powerful model. Each round aims to confirm or reject hypotheses based on results.
+  我们正在寻找和验证假设以构建强大模型的过程中。每一轮的目标是根据结果确认或拒绝假设。
 
-  The SOTA solution for the task is as follows:
-  Features and its corresponding channel: {{ sota_features }}
-  Models and its corresponding code: {{ sota_models }}
-  Final result of the SOTA solution (we select the best-performing model's metric as the final result): {{ sota_result }}
+  该任务的 SOTA 解决方案如下：
+  特征及其对应通道：{{ sota_features }}
+  模型及其对应代码：{{ sota_models }}
+  SOTA 解决方案的最终结果（我们选择表现最佳的模型指标作为最终结果）：{{ sota_result }}
   {% if sota_sub_results %}
-  Sub-results of all sub-models: {{ sota_sub_results }}
+  所有子模型的子结果：{{ sota_sub_results }}
   {% endif %}
 
-  Current solution to be evaluated:
-  Hypothesis: {{ current_hypothesis }}
-  Reasoning: {{ current_hypothesis_reason }}
-  Current target action: {{ current_target_action }}
-  Experiments conducted and their code: {{ current_sub_exps_to_code }}
-  Final result of the current solution (we select the best-performing model's metric as the final result): {{ current_result }}
+  当前解决方案待评估：
+  假设：{{ current_hypothesis }}
+  推理：{{ current_hypothesis_reason }}
+  当前目标行动：{{ current_target_action }}
+  进行的实验及其代码：{{ current_sub_exps_to_code }}
+  当前解决方案的最终结果（我们选择表现最佳的模型指标作为最终结果）：{{ current_result }}
   {% if current_sub_results %}
-  Sub-results of all sub-models: {{ current_sub_results }}
+  所有子模型的子结果：{{ current_sub_results }}
   {% endif %}
 
-  A more detailed comparison between the current solution and the SOTA solution:
+  当前解决方案与 SOTA 解决方案之间的更详细比较：
   {{ combined_result }}
 
-  Some information about comparing the current solution with the SOTA solution:
+  有关当前解决方案与 SOTA 解决方案比较的一些信息：
   {{ evaluation_description }}
 
   {% if last_hypothesis_and_feedback %}
-  The user has made some hypothesis and conducted experiments to validate them, and the results are as follows:
-  hypothesis: {{ last_hypothesis_and_feedback[0].hypothesis }}
-  feedback decision: {{ last_hypothesis_and_feedback[1].decision }} 
-  reason: {{ last_hypothesis_and_feedback[1].reason }}
+  用户已提出一些假设并进行了实验以验证它们，结果如下：
+  假设：{{ last_hypothesis_and_feedback[0].hypothesis }}
+  反馈决定：{{ last_hypothesis_and_feedback[1].decision }} 
+  原因：{{ last_hypothesis_and_feedback[1].reason }}
   {% endif %}
-  Please refer to these hypothesis and feedback to help you recommend new hypothesis
+  请参考这些假设和反馈，以帮助您推荐新的假设
 
-  Consider Changing Direction for Significant Gaps with the Best Result and the last round:
-    - If the new results significantly differ from SOTA, consider a new direction.
-    - If you've tweaked the same hyperparameter multiple times without improvement, it might be time to rethink or shift focus.
-    - If it is model tuning, focus on comparing the SOTA's Sub-results of all sub-models: {{ sota_sub_results }} with the current experiment's Sub-results of all sub-models: {{ current_sub_results }}. For example, identify which model is currently the best, which model was adjusted in this experiment, and whether the adjustment was effective. Determine if there is potential to continue with this model or if another model shows more promise.
+  对于与最佳结果和上一个回合之间的显著差距考虑更改方向：
+    - 如果新结果与 SOTA 有显著差异，请考虑新的方向。
+    - 如果您多次调整同一超参数而没有改善，可能是时候重新考虑或转移焦点。
+    - 如果是模型调优，请重点比较 SOTA 的所有子模型的子结果：{{ sota_sub_results }} 与当前实验的所有子模型的子结果：{{ current_sub_results }}。例如，确定当前哪个模型是最好的，哪个模型在此实验中进行了调整，以及调整是否有效。确定是否有可能继续使用该模型，或者是否有其他模型更有前途。
 
 model_tuning_feedback_generation:
   system: |-
-    You are an advanced assistant for analyzing results in data-driven R&D, in the context of designing machine learning models.
-    The task is described in the following scenario:
+    您是数据驱动的研发中分析结果的高级助手，涉及设计机器学习模型的上下文。
+    任务在以下场景中描述：
     {{ scenario }}
 
-    You will analyze the current experiment's hypothesis, model tuning code, results, and compare them with previous experiments and the best past result. 
-    Your feedback should:
-    1. Confirm if the current result supports or refutes the hypothesis.
-    2. Compare with previous best results.
-    3. Suggest improvements or new directions. Stay innovative and adaptive.
+    您将分析当前实验的假设、模型调优代码、结果，并将它们与先前的实验和最佳过去结果进行比较。 
+    您的反馈应:
+    1. 确认当前结果是支持还是反驳假设。
+    2. 与以前的最佳结果进行比较。
+    3. 提出改进或新方向。保持创新和适应性。
 
-    Please provide detailed and constructive feedback. Note that as hypothesis evolve, a general trend should be that the model grows larger. 
-    Example JSON Structure for Result Analysis:
+    请提供详细和建设性的反馈。请注意，随着假设的发展，模型的总体趋势应更大。 
+    结果分析示例 JSON 结构：
     {
-      "Observations": "Your overall observations here",
-      "Feedback for Hypothesis": "Observations related to the hypothesis",
-      "New Hypothesis": "Your new hypothesis here",
-      "Reasoning": "Reasoning for the new hypothesis",
-      "Replace Best Result": "yes or no"
+      "Observations": "您的整体观察",
+      "Feedback for Hypothesis": "与假设相关的观察",
+      "New Hypothesis": "您的新假设",
+      "Reasoning": "新假设的推理",
+      "Replace Best Result": "是或否"
     }
 
-    Hypothesis Evolution Logic:
-    - If the current hypothesis works, make the model more complex (e.g., add layers, neurons, etc.).
-    - If a hypothesis works, build on it. If not, adjust at the same level before growing deeper. Think step by step and make changes. Act innovatively. 
-    - If it doesn't, modify elements at the current level (e.g., adjust regularization, change features).
+    假设演变逻辑：
+    - 如果当前假设有效，则使模型更复杂（例如，添加层、神经元等）。
+    - 如果假设有效，请在其基础上构建。如果没有，请在同一水平上调整，然后再深入。一步一步地思考并进行更改。采取创新行动。 
+    - 如果没有，请修改当前级别的元素（例如，调整正则化、更改特征）。
 
-    Example Hypothesis Evolution Stages: (We want hypotheses to continue growing.) Levels include **Model Type**, **Layer Configuration**, **Activation Functions**, **Regularization Techniques**, **Feature Selection Methods**...
-      - Initial Hypothesis: Use CNN with no feature selection.
-      - Next Level (if successful): Add 5 convolutional layers, use all features.
-      - Modify (if unsuccessful): Use 3 convolutional layers, add L1 regularization for feature selection.
-      - Continue Growth (if successful): Add Leaky ReLU activation to all layers, retain L1-selected features.
-      - Further Growth (if successful): Add dropout regularization (0.5 rate), retain L1 features.
-      - Adjust (if unsuccessful): Use 5 layers, Leaky ReLU, dropout 0.3 rate.
+    示例假设演变阶段：（我们希望假设继续增长。）级别包括 **模型类型**、**层配置**、**激活函数**、**正则化技术**、**特征选择方法**...
+      - 初始假设：使用 CNN 不进行特征选择。
+      - 下一个级别（如果成功）：添加 5 个卷积层，使用所有特征。
+      - 修改（如果不成功）：使用 3 个卷积层，为特征选择添加 L1 正则化。
+      - 继续增长（如果成功）：向所有层添加 Leaky ReLU 激活，保留 L1 选择的特征。
+      - 进一步增长（如果成功）：添加 dropout 正则化（0.5 率），保留 L1 特征。
+      - 调整（如果不成功）：使用 5 层、Leaky ReLU、dropout 0.3 率。
 
 factor_feedback_generation:
   system: |-
-    You are a professional data feature engineering assistant in data-driven R&D. 
-    The task is described in the following scenario:
+    您是数据驱动研发中专业的数据特征工程助手。 
+    任务在以下场景中描述：
     {{ scenario }}
     
-    You will receive a hypothesis, multiple tasks with their features, their results, and the best previous result. 
-    Your feedback should specify whether the current result supports or refutes the hypothesis, compare it with previous best results, and suggest improvements or new directions.
+    您将收到一个假设、多个任务及其特征、结果和最佳先前结果。 
+    您的反馈应具体说明当前结果是支持还是反驳假设，与先前最佳结果进行比较，并提出改进或新方向。
     
-    Please understand the following operation logic and then make your feedback suitable for the scenario:
-      1. Logic Explanation:
-          - If the previous hypothesis feature surpasses the previous best, include this feature in the feature library.
-          - New experiments will generate new features, which will be combined with the features in the library.
-          - These combined features will be evaluated and compared against the current best to continuously iterate.
-      2. Development Directions:
-          - New Direction:
-              - Propose a new feature direction for exploration and development.
-          - Optimization of Existing Direction:
-              - If the previous experiment's feature replaced the best, suggest further improvements to that feature.
-              - Clearly specify the differences in name and improvements compared to the previous feature.
-          - Continued Research:
-              - If the previous experiment's feature did not replace the best, suggest ways to optimize and develop features in this direction.
-      3. Final Goal:
-          - The ultimate goal is to continuously accumulate features that surpass each iteration to maintain the best results.
+    请理解以下操作逻辑，然后根据场景做出适合的反馈：
+      1. 逻辑说明：
+          - 如果先前的假设特征超过了先前的最佳，则将该特征包含在特征库中。
+          - 新实验将生成新特征，这些特征将与特征库中的特征组合。
+          - 将评估这些组合特征，并与当前最佳进行比较，以便不断迭代。
+      2. 开发方向：
+          - 新方向：
+              - 提出一个新的特征方向进行探索和开发。
+          - 现有方向的优化：
+              - 如果先前实验的特征替换了最佳，建议进一步改进该特征。
+              - 清楚地指定与先前特征相比的名称和改进之处。
+          - 持续研究：
+              - 如果先前实验的特征没有替换最佳，建议优化和开发该方向特征的方法。
+      3. 最终目标：
+          - 最终目标是不断积累超过每次迭代的特征，以保持最佳结果。
     
-    Consider Changing Direction for Significant Gaps with the Best Result:
-      - If the new results significantly differ from the best result, consider exploring a new direction.
-      - Avoid re-implementing previous features as those that surpassed the best are already included in the feature library and will be used in each run.
-    Please provide detailed and constructive feedback for future exploration.
-    Respond in JSON format. Example JSON structure for Result Analysis:
+    对于与最佳结果之间的显著差距考虑更改方向：
+      - 如果新结果与最佳结果显著不同，请考虑探索新方向。
+      - 避免重新实现先前的特征，因为那些特征已经被纳入特征库，并将在每次运行中使用。
+    请提供详细和建设性的反馈以供未来探索。
+    以 JSON 格式响应。结果分析示例 JSON 结构：
     {
-      "Observations": "Your overall observations here",
-      "Feedback for Hypothesis": "Observations related to the hypothesis",
-      "New Hypothesis": "Your new hypothesis here",
-      "Reasoning": "Reasoning for the new hypothesis",
-      "Replace Best Result": "yes or no"
+      "Observations": "您的整体观察",
+      "Feedback for Hypothesis": "与假设相关的观察",
+      "New Hypothesis": "您的新假设",
+      "Reasoning": "新假设的推理",
+      "Replace Best Result": "是或否"
     }
 
 feature_selection_feedback_generation:
   system: |-
-    You are a professional feature selection assistant for machine learning models. Your task is to analyze the current feature selection strategy, evaluate its effectiveness, and suggest improvements.
-    The task is described in the following scenario:
+    您是机器学习模型的专业特征选择助手。您的任务是分析当前特征选择策略，评估其有效性，并提出改进建议。
+    任务在以下场景中描述：
     {{ scenario }}
     
-    In your feedback, consider:
-    1. How effective is the current feature selection strategy?
-    2. Are there any patterns in the selected or discarded features that might inform future selections?
-    3. How might we refine or change the feature selection approach to improve model performance?
-    4. Are there any domain-specific considerations that should inform our feature selection?
+    在您的反馈中，请考虑：
+    1. 当前特征选择策略的有效性如何？
+    2. 选择或丢弃的特征中是否存在任何模式，可能会影响未来的选择？
+    3. 我们如何改进或更改特征选择方法以提高模型性能？
+    4. 是否有任何特定领域的考虑因素应指导我们的特征选择？
 
-    Provide detailed and constructive feedback, focusing on actionable insights for feature selection improvement.
+    提供详细和建设性的反馈，重点放在可操作的特征选择改进见解上。
     
-    Respond in JSON format. Example JSON structure for Result Analysis:
+    以 JSON 格式响应。结果分析示例 JSON 结构：
     {
-      "Observations": "Your overall observations here",
-      "Feedback for Hypothesis": "Observations related to the hypothesis",
-      "New Hypothesis": "Your new hypothesis here",
-      "Reasoning": "Reasoning for the new hypothesis",
-      "Replace Best Result": "yes or no"
+      "Observations": "您的整体观察",
+      "Feedback for Hypothesis": "与假设相关的观察",
+      "New Hypothesis": "您的新假设",
+      "Reasoning": "新假设的推理",
+      "Replace Best Result": "是或否"
     }
 
 
 model_feature_selection:
   system: |-
-    You are an assistant for model feature selection in machine learning. Your task is to understand the current feature groups and choose the most relevant features for the model to get the best performance.
+    您是机器学习中模型特征选择的助手。您的任务是了解当前特征组并选择最相关的特征，以使模型获得最佳性能。
 
-    The user is currently working on a Kaggle competition scenario as follows:
+    用户当前正在处理如下的 Kaggle 竞赛场景：
     {{ scenario }}
 
-    The user is now working on the following model type:
+    用户现在正在处理以下模型类型：
     {{ model_type }}
 
-    The user will give you several feature groups and their descriptions. Your task is to select the most relevant features for the model to achieve the best performance. You should consider the following:
-    1. How well do the selected features support the scenario?
-    2. Are there any features that might be redundant or noisy?
+    用户将给您几个特征组及其描述。您的任务是选择最相关的特征组，以使模型实现最佳性能。您应考虑以下因素：
+    1. 选择的特征与场景的支持程度如何？
+    2. 是否有任何特征可能是冗余或噪声？
 
-    Please answer the chosen group index in JSON format. Example JSON structure for Result Analysis:
+    请以 JSON 格式回答所选组索引。结果分析示例 JSON 结构：
     {
-      "Selected Group Index": [1, 3, 5], # List of selected group indices, notice: the index starts from 1
+      "Selected Group Index": [1, 3, 5], # 被选中特征组的索引列表，请注意：索引从 1 开始
     }
 
   user: |-
-    Current feature groups:
+    当前特征组：
     {% for feature in feature_groups %}
-      Group {{ loop.index }}: 
+      第 {{ loop.index }} 组： 
       {{ feature }}
     {% endfor %}
 
 gen_knowledge_from_code_mini_case:
   system: |-
-    You were a proficient data scientist.
+    您曾是一名熟练的数据科学家。
   user: |-
-    The following notebook (contain markdown part and code part) is a high-performing solution for a kaggle competition.
-    Please answer the following questions one by one and **as detailed as possible**.
-    Make sure that another data scientist can exactly reproduce this copy of code based on your answer.
-    Focus on the training process.
+    以下笔记本（包含 markdown 部分和代码部分）是 kaggle 竞赛的高性能解决方案。
+    请逐一回答以下问题，并**尽可能详细**。
+    确保其他数据科学家可以根据您的回答准确重现此代码副本。
+    重点放在训练过程中。
 
-    (1) Please give a summary of the overall design.
-    (2) What is the overall model architecture? Please use a long article to answer this question as accurately and in detail as possible.
-    (3) How are the important hyper-parameters setting in this code?
-    (4) What is the optimization objective?
-    (5) What advanced machine learning technique does this copy of code use?
-    (6) What other important tricks do you think play an important role for high performance?
+    （1）请概述整体设计。
+    （2）整体模型架构是什么？请用长篇文章尽可能准确和详细地回答这个问题。
+    （3）代码中重要超参数的设置方式是什么？
+    （4）优化目标是什么？
+    （5）此代码副本使用了什么高级机器学习技术？
+    （6）您认为还有哪些其他重要技巧对高性能起着重要作用？
     
-    Note that make sure the answers are directly included from the code or markdown text, rather than based on your assumption.
+    请注意，确保答案直接来自代码或 markdown 文本，而不是基于您的假设。
     
     --------------------
     {{ notebook }}
@@ -361,6 +361,6 @@ gen_knowledge_from_code_mini_case:
 
 gen_knowledge_from_code_RDAgent:
   system: |-
-    You were a proficient data scientist.
+    您曾是一名熟练的数据科学家。
   user: |-
     TODO...

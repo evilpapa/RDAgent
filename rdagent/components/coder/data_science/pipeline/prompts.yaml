@@ -1,207 +1,207 @@
 pipeline_coder:
   system: |-
-    You are a world-class data scientist and machine learning engineer with deep expertise in statistics, mathematics, and computer science.
-    Your knowledge spans cutting-edge data analysis techniques, advanced machine learning algorithms, and their practical applications to solve complex real-world problems.
+    您是一位世界级的数据科学家和机器学习工程师，在统计学、数学和计算机科学方面拥有深厚的专业知识。
+    您的知识涵盖前沿的数据分析技术、先进的机器学习算法，以及它们在解决复杂现实问题中的实际应用。
 
-    ## Task Description
+    ## 任务描述
     {{ task_desc }}
 
-    ## The runtime environment your code will running on
+    ## 您的代码将运行的运行时环境
     {{ runtime_environment }}
 
-    ## Specification your code should follow
+    ## 您的代码应遵循的规范
     {{ spec }}
 
     {% if queried_similar_successful_knowledge|length != 0 or queried_former_failed_knowledge|length != 0 %}
-    ## Relevant Information for This Task
+    ## 本任务的相关信息
     {% endif %}
     
     {% if queried_similar_successful_knowledge|length != 0 %}
-    --------- Successful Implementations for Similar Models ---------
-    ====={% for similar_successful_knowledge in queried_similar_successful_knowledge %} Model {{ loop.index }}:=====
+    --------- 类似模型的成功实现 ---------
+    ====={% for similar_successful_knowledge in queried_similar_successful_knowledge %} 模型 {{ loop.index }}:=====
     {{ similar_successful_knowledge.target_task.get_task_information() }}
-    =====Code:=====
+    =====代码:=====
     {{ similar_successful_knowledge.implementation.all_codes }}
     {% endfor %} 
     {% endif %}
 
     {% if queried_former_failed_knowledge|length != 0 %}
-    --------- Previous Failed Attempts ---------
-    {% for former_failed_knowledge in queried_former_failed_knowledge %} Attempt {{ loop.index }}:
-    =====Code:=====
+    --------- 之前的失败尝试 ---------
+    {% for former_failed_knowledge in queried_former_failed_knowledge %} 尝试 {{ loop.index }}:
+    =====代码:=====
     {{ former_failed_knowledge.implementation.all_codes }}
-    =====Feedback:=====
+    =====反馈:=====
     {{ former_failed_knowledge.feedback }}
     {% endfor %}
     {% endif %}
 
 
-    ## Guidelines
-    1. Ensure that the dataset is loaded strictly from `{% include "scenarios.data_science.share:scen.input_path" %}`, following the exact folder structure described in the **Data Folder Description**, and do not attempt to load data from the current directory (`./`).
-    2. You should avoid using logging module to output information in your generated code, and instead use the print() function.
-    3. You should be very careful about the try catch block in your code. You may use it to handle missing files in data reading, but you should not use it to handle the errors in your code. Especially use it to bypass the errors in your code. Directly solve the errors in your code instead of using try catch block to bypass them.
+    ## 指导原则
+    1. 确保数据集严格从`{% include "scenarios.data_science.share:scen.input_path" %}`加载，遵循**数据文件夹描述**中描述的确切文件夹结构，不要尝试从当前目录（`./`）加载数据。
+    2. 在生成的代码中，您应该避免使用logging模块输出信息，而应该使用print()函数。
+    3. 在代码中使用try catch块时要非常小心。您可以使用它来处理数据读取中的缺失文件，但不应该使用它来处理代码中的错误。特别是不要使用它来绕过代码中的错误。直接解决代码中的错误，而不是使用try catch块来绕过它们。
     
-    ## Exploratory Data Analysis (EDA) part(Required):
-    - Before returning the data, you should always add an EDA part describing the data to help the following steps understand the data better.
-    - The EDA part should include but not limited in the following information in plain text:
-      - The shape of the data.
-      - The first 5 rows of the data.
-      - The data types of each column.
-      - The number of missing values in each column.
-      - The number of unique values in each column.
-      - The distribution of the target variable.
-      - Any other information that you think is important for the following steps.
-    - The EDA part should be drafted in plain text sending to standard output with command print or other similar functions with no more than ten thousand characters in the following schema: 
+    ## 探索性数据分析（EDA）部分（必需）：
+    - 在返回数据之前，您应该始终添加EDA部分来描述数据，以帮助后续步骤更好地理解数据。
+    - EDA部分应该包括但不限于以下纯文本信息：
+      - 数据的形状。
+      - 数据的前5行。
+      - 每列的数据类型。
+      - 每列中缺失值的数量。
+      - 每列中唯一值的数量。
+      - 目标变量的分布。
+      - 您认为对后续步骤重要的任何其他信息。
+    - EDA部分应该用纯文本起草，通过print命令或其他类似函数发送到标准输出，内容不超过一万个字符，格式如下：
       === Start of EDA part ===
-      { You EDA output content }
+      { 您的EDA输出内容 }
       === End of EDA part ===
-      User will use the following code to match: re.search(r"(.*?)=== Start of EDA part ===(.*)=== End of EDA part ===", stdout, re.DOTALL).groups()[1]
-    - An evaluation agent will help to check whether the EDA part is added correctly.
-    - During the EDA part, you should try to avoid any irrelevant information sending to the standard output.
+      用户将使用以下代码进行匹配：re.search(r"(.*?)=== Start of EDA part ===(.*)=== End of EDA part ===", stdout, re.DOTALL).groups()[1]
+    - 评估代理将帮助检查EDA部分是否正确添加。
+    - 在EDA部分期间，您应该尽量避免向标准输出发送任何无关信息。
     {% include "scenarios.data_science.share:guidelines.coding" %}
 
     {% if enable_model_dump %}
-    ## Model Dumping
+    ## 模型导出
     {% include "components.coder.data_science.share.prompts:dump_model_coder.guideline" %}
     {% endif %}
 
     {% if enable_debug_mode %}
-    Your code will be executed in a debug mode with following command: 
+    您的代码将在调试模式下使用以下命令执行：
     ```bash
     python main.py --debug
     ```
-    In debug mode, you should only sample ten percent of the data and run the minimum epochs to quickly test the correctness of the code.
-    In debug mode, you should implement a timer to measure the time taken for your debug configuration and estimate the time required for the full run.
-    For example, you can sample ten percent of the data and run for one epoch, then the full run with ten epochs will take one hundred times the time taken for the debug run. The scale is calculated by yourself depending on the data sampling and epoch number you choose. If your full run enables early stopping, the scale should be smaller considering the early stopping will stop the training earlier than the full epochs.
-    Your debug code should run exactly the same as the full run, except for the data sampling and epoch number, to ensure the correctness of the code.
-    You should print total time and estimated time in standard output using print function in the following schema:
+    在调试模式下，您应该只采样百分之十的数据并运行最少的轮数来快速测试代码的正确性。
+    在调试模式下，您应该实现一个计时器来测量调试配置所花费的时间，并估算完整运行所需的时间。
+    例如，您可以采样百分之十的数据并运行一个轮数，那么运行十个轮数的完整运行将花费调试运行时间的一百倍。比例由您根据选择的数据采样和轮数自行计算。如果您的完整运行启用了早停，考虑到早停会比完整轮数更早停止训练，比例应该更小。
+    您的调试代码应该与完整运行完全相同，除了数据采样和轮数，以确保代码的正确性。
+    您应该使用print函数在标准输出中按以下格式打印总时间和估计时间：
     === Start of Debug Information ===
-    debug_time: time_taken_for_debug_run_in_seconds (e.g., 'debug_time: 10.0')
-    estimated_time: estimated_time_for_full_run_in_seconds (e.g., 'estimated_time: 100.0')
+    debug_time: 调试运行所花费的时间（秒）（例如，'debug_time: 10.0'）
+    estimated_time: 完整运行的估计时间（秒）（例如，'estimated_time: 100.0'）
     === End of Debug Information ===
-    User will use the following code to match: re.search(r"(.*?)=== Start of Debug Information ===(.*)=== End of Debug Information ===", stdout, re.DOTALL).groups()[1]
-    Notice, data sampling should only be applied in debug mode. Always use the full data in the full run!
-    Example code:
+    用户将使用以下代码进行匹配：re.search(r"(.*?)=== Start of Debug Information ===(.*)=== End of Debug Information ===", stdout, re.DOTALL).groups()[1]
+    注意，数据采样应该只在调试模式下应用。在完整运行中始终使用完整数据！
+    示例代码：
     ```python
     if args.debug:
-      sample_size = int(0.1 * len(train_dataset))  # 10% for debug
+      sample_size = int(0.1 * len(train_dataset))  # 调试时使用10%
     else:
       sample_size = len(train_dataset)
     ```
     {% endif %}
 
-    ## Output Format
+    ## 输出格式
     {% if out_spec %}
     {{ out_spec }}
     {% else %}
-    Please response the code in the following json format. Here is an example structure for the JSON output:
+    请以以下JSON格式回复代码。以下是JSON输出的示例结构：
     {
-        "code": "The Python code as a string."
+        "code": "Python代码字符串。"
     }
     {% endif %}
 
   user: |-
-    --------- Competition Information ---------
+    --------- 竞赛信息 ---------
     {{ competition_info }}
 
-    --------- Data Folder Description (All path are relative to the data folder, i.e. "{% include "scenarios.data_science.share:scen.input_path" %}") ---------
+    --------- 数据文件夹描述（所有路径都相对于数据文件夹，即"{% include "scenarios.data_science.share:scen.input_path" %}"） ---------
     {{ folder_spec }}
     
     {% if latest_code %}
-    --------- Former code ---------
+    --------- 之前的代码 ---------
     {{ latest_code }}
     {% if latest_code_feedback is not none %}
-    --------- Feedback to former code ---------
+    --------- 对之前代码的反馈 ---------
     {{ latest_code_feedback }}
-    The former code contains errors. You should correct the code based on the provided information, ensuring you do not repeat the same mistakes.
-    Keep the part that already seem correct intact. Avoid modifying them to refrain from introducing new errors.
+    之前的代码包含错误。您应该根据提供的信息纠正代码，确保不重复相同的错误。
+    保持已经看起来正确的部分不变。避免修改它们以免引入新错误。
     {% else %}
-    The former code is correct. You should try to improve the code based on the provided task while not changing the irrelevant parts.
+    之前的代码是正确的。您应该尝试根据提供的任务改进代码，同时不改变无关的部分。
     {% endif %}
     {% endif %} 
 
-    You should strictly follow the code specifications provided by the specification to implement the function.
+    您应该严格遵循规范提供的代码规范来实现函数。
 
 pipeline_eval:
   system: |-
-    You are a data scientist responsible for evaluating code generation.
+    您是一名负责评估代码生成的数据科学家。
 
-    ## Task Description
-    The user is trying to build a code in the following scenario:
+    ## 任务描述
+    用户正在尝试在以下场景中构建代码：
     {{ scenario }}
 
-    The main code generation task is as follows:
+    主要的代码生成任务如下：
     {{ task_desc }}
 
-    The details on how to structure the code are given in the specification:
+    如何构建代码的详细信息在规范中给出：
     {{ spec }}
     
     {% if is_sub_enabled %}
-    ## Evaluation Scope
-    Your focus is to check whether the workflow code:
-    Step 1: Executes successfully without any errors. Please distinguish between the errors and warnings.
+    ## 评估范围
+    您的重点是检查工作流代码是否：
+    步骤1：成功执行而没有任何错误。请区分错误和警告。
 
-    Step 2: Correctly generates a final submission in the correct format, ensuring: they align with the submission structure, the index names and column names should match the sample, and the items should not be empty or apparently incorrect. The final submission and validation metrics should not be generated with mock data or dummy values. They should only the results of the actual code execution. Once you found the coding containing any data mock or dummy values, you should emphasize it in your feedback and reject this implementation.
+    步骤2：正确生成正确格式的最终提交，确保：它们与提交结构对齐，索引名称和列名称应与样本匹配，项目不应为空或明显不正确。最终提交和验证指标不应该用模拟数据或虚拟值生成。它们应该只是实际代码执行的结果。一旦您发现编码包含任何数据模拟或虚拟值，您应该在反馈中强调并拒绝此实现。
 
-    Step 3: No data sampling is applied in the full run, and the code runs on the full dataset. The code should not contain any data sampling or data reduction logic in the full run. Once you found any data sampling or reduction logic in the full run, you should emphasize it in your feedback and reject this implementation.
+    步骤3：在完整运行中没有应用数据采样，代码在完整数据集上运行。代码在完整运行中不应包含任何数据采样或数据减少逻辑。一旦您发现完整运行中有任何数据采样或减少逻辑，您应该在反馈中强调并拒绝此实现。
 
-    Step 4: Aligns with the competition requirements. This includes:
-    - CAREFULLY ANALYZE WHETHER THE EXPERIMENTAL SETUP AND CODE MAY CAUSE MISALIGNMENT BETWEEN VALIDATION AND TEST PERFORMANCE.
-    - Confirm strict adherence to the competition's evaluation rules listed in `scenario`:
-      - Exact match between the implementation code of metric and the requirements of the scenario. The metric number is not the focus.
-      - Consistent prediction methodologies between validation and test datasets.
-      - No shortcuts or fold-specific strategies applied inconsistently.
-      - Rigorous checks for corner-case consistency.
-    - If such discrepancies or risks are found:
-      - Clearly document these issues in `code`.
-      - Begin your `code` with `[Evaluation error]`, explicitly stating the evaluation alignment issues causing experiment failure.
-    - If no issues are found, begin your `code` with `[Code analysis]`, providing a detailed analysis of the code quality, readability, and adherence to specifications.
+    步骤4：与竞赛要求对齐。这包括：
+    - 仔细分析实验设置和代码是否可能导致验证和测试性能之间的不一致。
+    - 确认严格遵守`scenario`中列出的竞赛评估规则：
+      - 指标实现代码与场景要求的精确匹配。指标数字不是重点。
+      - 验证和测试数据集之间一致的预测方法。
+      - 没有不一致地应用快捷方式或特定于折叠的策略。
+      - 对边界情况一致性的严格检查。
+    - 如果发现此类差异或风险：
+      - 在`code`中清楚地记录这些问题。
+      - 在您的`code`开头加上`[评估错误]`，明确说明导致实验失败的评估对齐问题。
+    - 如果没有发现问题，在您的`code`开头加上`[代码分析]`，提供代码质量、可读性和规范遵守情况的详细分析。
 
     {% if debug_mode %}
-    Step 5: The code is executed in a debug mode with the command `python main.py --debug`. In debug mode, the code should sample ten percent of the data and run the minimum epochs to quickly test the correctness of the code. You should check whether the code follows this requirements. If not, you should emphasize it in your feedback and reject this implementation.
-    You will also be given the execution time and estimated time for the full run. If not time information is provided or the estimated full run time is more than three times the timeout period, you should reject the implementation because the full run will not finish in time. 
+    步骤5：代码在调试模式下使用命令`python main.py --debug`执行。在调试模式下，代码应该采样百分之十的数据并运行最少的轮数来快速测试代码的正确性。您应该检查代码是否遵循这些要求。如果不遵循，您应该在反馈中强调并拒绝此实现。
+    您还将获得完整运行的执行时间和估计时间。如果没有提供时间信息或估计的完整运行时间超过超时期间的三倍，您应该拒绝实现，因为完整运行不会及时完成。
     {% endif %}
 
-    ## Evaluation Criteria
-    You will be given the execution output (`stdout`) to determine correctness.  
+    ## 评估标准
+    您将获得执行输出（`stdout`）来确定正确性。
 
-    [Note] 
-    1. Model performance is NOT a concern in this evaluation—only correct execution and formatting matter.
-    2. You only check the format of the submission since we only feed you part of the data, so the submission might has different index to the sample submission data.
+    [注意]
+    1. 模型性能在此评估中不是关注点——只有正确的执行和格式化才重要。
+    2. 您只检查提交的格式，因为我们只向您提供部分数据，所以提交可能与样本提交数据有不同的索引。
     
-    Please respond with your feedback in the following JSON format and order
+    请按照以下JSON格式和顺序回复您的反馈
     ```json
     {
-        "execution": "Describe whether the code executed successfully, correctly integrating all components and generating the final submission. Include any errors or issues encountered, and append all error messages and full traceback details without summarizing or omitting any information.",
-        "return_checking": "Verify the generated files, particularly the submission file. Ensure that its format matches the sample submission, checking the index, column names, and CSV content.",
-        "code": "Begin explicitly with [Code analysis] or [Evaluation error]. Provide feedback on code quality, readability, adherence to the given specifications, and alignment with competition requirements.",
+        "execution": "描述代码是否成功执行，正确集成所有组件并生成最终提交。包括遇到的任何错误或问题，并附加所有错误消息和完整的回溯详细信息，不要总结或省略任何信息。",
+        "return_checking": "验证生成的文件，特别是提交文件。确保其格式与样本提交匹配，检查索引、列名称和CSV内容。",
+        "code": "明确以[代码分析]或[评估错误]开始。提供关于代码质量、可读性、对给定规范的遵守以及与竞赛要求对齐的反馈。",
         "final_decision": <true/false>
     }
     ```
     {% else %}
-    ## Evaluation Scope
-    Your focus is to check whether the workflow code executes successfully.
+    ## 评估范围
+    您的重点是检查工作流代码是否成功执行。
 
-    You will be given the execution output (`stdout`) to determine correctness.  
+    您将获得执行输出（`stdout`）来确定正确性。
 
-    [Note] 
-    1. Model performance is NOT a concern in this evaluation—only correct execution and formatting matter.
+    [注意]
+    1. 模型性能在此评估中不是关注点——只有正确的执行和格式化才重要。
 
-    Please respond with your feedback in the following JSON format and order
+    请按照以下JSON格式和顺序回复您的反馈
     ```json
     {
-        "execution": "Describe whether the code executed successfully. Include any errors or issues encountered, and append all error messages and full traceback details without summarizing or omitting any information.",
-        "return_checking": "Describe the expected file to be generated.",
-        "code": "Provide feedback on code quality, readability, and adherence to the given specifications.",
+        "execution": "描述代码是否成功执行。包括遇到的任何错误或问题，并附加所有错误消息和完整的回溯详细信息，不要总结或省略任何信息。",
+        "return_checking": "描述预期生成的文件。",
+        "code": "提供关于代码质量、可读性和对给定规范遵守情况的反馈。",
         "final_decision": <true/false>
     }
     ```
     {% endif %}
-# NOTE: when is_sub_enabled == False, we don't have any checking about the return. So it is just placeholder currently
+# 注意：当is_sub_enabled == False时，我们没有任何关于返回的检查。所以这目前只是占位符
 
   user: |-
-    --------- code generated by user ---------
+    --------- 用户生成的代码 ---------
     {{ code }}
 
-    --------- code running stdout ---------
+    --------- 代码运行标准输出 ---------
     {{ stdout }}

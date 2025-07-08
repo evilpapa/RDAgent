@@ -1,155 +1,155 @@
 kg_description_template:
   system: |-
-    You are an assistant that extracts structured information from unstructured text.
-    The user will provide you a Kaggle competition description, and you need to extract specific details from it.
-    For the dataset, the competition may not include detailed information about the dataset. The user has read the dataset and provide you the relevant information. Please include it in your response.
-    Please answer in Json format with the following schema:
+    您是一名助手，负责从非结构化文本中提取结构化信息。
+    用户将向您提供一个 Kaggle 竞赛描述，您需要从中提取具体细节。
+    对于数据集，竞赛可能不包括数据集的详细信息。用户已阅读数据集并向您提供相关信息，请将其包含在您的回复中。
+    请以 Json 格式回答，使用以下模式：
     {
-      "Competition Type": "The type of competition, e.g., 'Classification', 'Regression', 'Clustering', 'Prediction", "Time-Series Forecasting",
-      "Competition Description": "A brief description of the competition",
-      "Target Description": "A description of the target variable to be predicted",
-      "Competition Features": "Two-line description of the overall features involved within the competition as background."
-      "Submission Specifications": "The submission specification & sample submission csv descriptions for the model to output."
-      "Submission channel number to each sample": "The number of channels in the output for each sample, e.g., 1 for regression, N for N class classification with probabilities, etc. A Integer. If not specified, it is 1."
-      "Metric Evaluation Description": "A brief description of the metrics used in the evaluation. Please note that if `evaluation_metric_direction` is True, it indicates that higher values are better; if False, lower values are preferred."
+      "竞赛类型": "竞赛的类型，例如：'分类'、'回归'、'聚类'、'预测'、'时间序列预测'",
+      "竞赛描述": "竞赛的简要描述",
+      "目标描述": "目标变量的描述",
+      "竞赛特征": "竞赛背景中涉及的整体特征的两行描述。"
+      "提交规范": "模型输出的提交规范和示例提交 csv 描述。"
+      "每个样本的提交通道数": "每个样本输出的通道数，例如：回归为 1，N 类分类为 N 个概率等。一个整数。如果未指定，则为 1。"
+      "评估指标描述": "评估中使用的指标的简要描述。请注意，如果 `evaluation_metric_direction` 为 True，则表示值越高越好；如果为 False，则表示值越低越好。"
     }
-    Since these might be very similar column names in data like one_hot_encoded columns, you can use some regex to group them together.
+    由于这些可能是数据中非常相似的列名，例如 one_hot_encoded 列，您可以使用一些正则表达式将它们分组。
 
 
   user: |-
-    Competition Description: 
+    竞赛描述：
     {{ competition_descriptions }}
-    The raw data information:
+    原始数据信息：
     {{ raw_data_information }}
-    Evaluation_metric_direction: 
+    评估指标方向：
     {{ evaluation_metric_direction }}
 
 kg_background: |-
-  You are solving a data science tasks and the type of the competition is {{ competition_type }}.
-  The competition description is: {{competition_description}}. 
+  您正在解决数据科学任务，竞赛类型是 {{ competition_type }}。
+  竞赛描述是：{{competition_description}}。 
   
-  We provide an overall script in file: train.py. The user will run the train.py script along with several feature and model scripts to train several model to get a good performance on this task.
+  我们在文件 train.py 中提供了一个整体脚本。用户将运行 train.py 脚本以及多个特征和模型脚本来训练多个模型，以在此任务中获得良好的性能。
 
-  The train.py script is as follows:
+  train.py 脚本如下：
   ```python
   {{ train_script }}
   ```
   
-  The final output of our pipeline is from a ensemble of up to four models. Each model is trained on a different subset of the data.
-  The four model types are: XGBoost, RandomForest, LightGBM and Neural Network (A Pytorch model).
-  About the Neural Network model, You can try different architectures and hyperparameters to improve the performance. You can even use a pytorch model to ensemble the other three types of models. Try to open your mind on the NN model.
+  我们的管道最终输出来自最多四个模型的集成。每个模型都在数据的不同子集上进行训练。
+  四种模型类型是：XGBoost、RandomForest、LightGBM 和神经网络（一个 Pytorch 模型）。
+  关于神经网络模型，您可以尝试不同的架构和超参数来提高性能。您甚至可以使用 pytorch 模型来集成其他三种类型的模型。尝试在神经网络模型上打开思路。
   
-  The data is extracted from the competition dataset, focusing on relevant attributes in {{ competition_features }}.
+  数据来自竞赛数据集，重点关注 {{ competition_features }} 中的相关属性。
 
-  The user firstly designs and implements a feature book for each model. The feature book is a combination of several features and feature groups.
-  The feature book is built from:
-  - Raw features: The raw features are the original features from the dataset.
-  - generated features: The generated features are the features that are calculated based on the raw features according to some formulations. The calculation should be align with some physical or logical meaning. Don't just simply apply some numeric operations to the raw features.
-  - feature groups: The feature groups are preprocessed group of features from the raw features like normalization, one hot encoding, etc.
-  The feature or feature group is defined in the following parts:
-  - Name: The name of the feature or feature group.
-  - Description: A description of the feature or feature group.
-  - Formulation: The formulation of the feature or feature group.
-  - Variables: The variable list used in the formulation. Notice: The variable should be a specific feature in the dataset. Please make sure the feature name is exactly the same as the feature name in the dataset.
+  用户首先为每个模型设计和实现特征书。特征书是多个特征和特征组的组合。
+  特征书由以下部分构成：
+  - 原始特征：原始特征是数据集中的原始特征。
+  - 生成特征：生成特征是根据原始特征通过某些公式计算得出的特征。计算应与某些物理或逻辑含义一致。不要仅仅对原始特征应用一些数字操作。
+  - 特征组：特征组是来自原始特征的预处理特征组，如归一化、独热编码等。
+  特征或特征组在以下部分中定义：
+  - 名称：特征或特征组的名称。
+  - 描述：特征或特征组的描述。
+  - 公式：特征或特征组的公式。
+  - 变量：公式中使用的变量列表。注意：变量应是数据集中具体的特征。请确保特征名称与数据集中的特征名称完全相同。
   
-  For each model, the user will design and implement the model in a separate script.
-  The model is defined in the following parts:
-  - Name: The name of the model.
-  - Description: A description of the model.
-  - Architecture: The detailed architecture of the model, such as neural network layers or tree structures.
-  - ModelType: The type of the model, which should be one of ["XGBoost", "RandomForest", "LightGBM", "NN"].
-  The model should provide clear and detailed documentation of its architecture and hyperparameters.
+  对于每个模型，用户将在单独的脚本中设计和实现模型。
+  模型在以下部分中定义：
+  - 名称：模型的名称。
+  - 描述：模型的描述。
+  - 架构：模型的详细架构，例如神经网络层或树结构。
+  - 模型类型：模型的类型，应为 ["XGBoost"、"RandomForest"、"LightGBM"、"NN"] 之一。
+  模型应清晰详细地记录其架构和超参数。
 
-  The user tries to optimize the performance iteratively by employing one of the feature related or model related action items:
-  - Feature related:
-    - "Feature engineering": The user will design several new tasks and implement several new features. The new feature might only affect the model using all the feature book.
-    - "Feature processing": The user will design a new task to process the feature book like normalization or one hot encoding to improve the model performance. Any processing with help of a deep model is not included in this task.
-  - Model related:
-    - "Model feature selection": The user will modify one model to select the part of the features from the feature book to improve the model performance.
-    - "Model tuning": The user will tune the hyperparameters of XGBoost, RandomForest or LightGBM or build or improve the NN model to improve the model performance. 
-  Notice: You can automatically optimize the hyperparameters of the model using some library when training the model. Since we don't have a lot of time to train the model, please use a small number of trials to optimize the hyperparameters. 
-  Our validation set split is not deterministic, so when you are using hyperparameter tuning, you can merge training and validation and use cross validation method to tune the hyperparameters.
-  One you have determine the best model parameter, you should retrain the model on all training and validation set to get the final model.
+  用户通过采用与特征相关或模型相关的行动项目之一，迭代地优化性能：
+  - 特征相关：
+    - "特征工程"：用户将设计几个新任务并实现几个新特征。新特征可能只影响使用所有特征书的模型。
+    - "特征处理"：用户将设计一个新任务来处理特征书，如归一化或独热编码，以提高模型性能。任何借助深度模型的处理均不包括在此任务中。
+  - 模型相关：
+    - "模型特征选择"：用户将修改一个模型，从特征书中选择部分特征，以提高模型性能。
+    - "模型调优"：用户将调整 XGBoost、RandomForest 或 LightGBM 的超参数，或构建或改进 NN 模型，以提高模型性能。 
+  注意：您可以在训练模型时使用某些库自动优化模型的超参数。由于我们没有太多时间训练模型，请使用少量试验来优化超参数。 
+  我们的验证集拆分不是确定性的，因此当您使用超参数调整时，可以合并训练和验证并使用交叉验证方法来调整超参数。
+  一旦确定最佳模型参数，应在所有训练和验证集上重新训练模型，以获得最终模型。
 
-  For each loop, you need to help user decide which action item to choose and provide the corresponding code to implement the action item.
+  对于每个循环，您需要帮助用户决定选择哪个行动项目，并提供相应的代码来实现该行动项目。
 
 kg_feature_interface: |-
-  Your code should contain several parts:
-  1. The import part: import the necessary libraries.
-  2. A class that contains the feature engineering logic.
-    The class should have the following methods:
-      - fit: This method should fit the feature engineering model to the training data.
-      - transform: This method should transform the input data and return it.
-    For some tasks like generating new features, the fit method may not be necessary. Please pass this function as a no-op.
-  3. A variable called feature_engineering_cls that contains the class name.
-  The input to 'fit' is the training data in pandas dataframe, and the input to 'transform' is the data to be transformed in pandas dataframe.
-  The original columns should be excluded from the returned DataFrame.
+  您的代码应包含几个部分：
+  1. 导入部分：导入必要的库。
+  2. 包含特征工程逻辑的类。
+    该类应具有以下方法：
+      - 拟合：该方法应将特征工程模型拟合到训练数据。
+      - 转换：该方法应转换输入数据并返回。
+    对于某些任务，如生成新特征，拟合方法可能不是必需的。请将此函数作为无操作传递。
+  3. 一个名为 feature_engineering_cls 的变量，包含类名。
+  '拟合'的输入是 pandas 数据框中的训练数据，'转换'的输入是 pandas 数据框中的要转换的数据。
+  原始列应从返回的 DataFrame 中排除。
 
-  Notice: Since we have a very big dataset, the feature engineering should be efficient and fast. Otherwise, please sufficiently exploit the multiprocessing or parallel computing to speed up the feature engineering process!
+  注意：由于我们有一个非常大的数据集，特征工程应该高效快速。否则，请充分利用多处理或并行计算来加速特征工程过程！
 
-  Exception handling will be managed externally, so avoid using try-except blocks in your code. The user will handle any exceptions that arise and provide feedback as needed.
+  异常处理将在外部管理，因此请避免在代码中使用 try-except 块。用户将处理出现的任何异常并根据需要提供反馈。
   
-  The feat_eng function can be one of the following:
-  - Feature engineering: This function calculated one new feature based on the existing raw data.
-  - Feature processing: This function processes the existing raw data like normalization or one hot encoding and return the processed data in the form of a pandas DataFrame.
+  feat_eng 函数可以是以下内容之一：
+  - 特征工程：此函数根据现有原始数据计算一个新特征。
+  - 特征处理：此函数处理现有原始数据，如归一化或独热编码，并以 pandas DataFrame 形式返回处理后的数据。
 
-  Here is an example of how your Python code should be structured:
+  以下是您的 Python 代码应如何构建的示例：
   ```python
   import pandas as pd
 
   class FeatureEngineeringName:
       def fit(self, train_df: pd.DataFrame):
           """
-          Fit the feature engineering model to the training data. 
-          For example, for one hot encoding, this would involve fitting the encoder to the training data.
-          For feature scaling, this would involve fitting the scaler to the training data.
+          将特征工程模型拟合到训练数据。 
+          例如，对于独热编码，这将涉及将编码器拟合到训练数据。
+          对于特征缩放，这将涉及将缩放器拟合到训练数据。
           """
           return self
 
       def transform(self, X: pd.DataFrame):
           """
-          Transform the input data.
+          转换输入数据。
           """
           return X
-          return X.mean(axis=1).to_frame("mean_feature") # Example feature engineering
-          return X.fillna(0) # Example feature processing
+          return X.mean(axis=1).to_frame("mean_feature") # 示例特征工程
+          return X.fillna(0) # 示例特征处理
 
   feature_engineering_cls = FeatureEngineeringName
   ```
 
-  To Note:
-  Top 0. I have already completed the encoded labeling process, so please avoid any one-hot encoding or similar operations in the future. Focus instead on targeted and efficient feature engineering techniques, such as normalizing float-type features, filtering based on specific categories, or other concise transformations that can be quickly implemented and tested without unnecessary complexity. Also, ensure that the index of the output DataFrame matches the original DataFrame's index, and that the number of columns remains consistent across train, validation, and test sets.
-  1. Ensure that your code meets these requirements and produces a feature-engineered DataFrame that contains only the newly engineered columns, aligning with the user's data and objectives.
-  2. Ensure that the index of the output DataFrame matches the index of the original DataFrame. For example:
-    Incorrect: `normalized_df = pd.DataFrame(normalized_features, columns=X.columns)`
-    Correct: `normalized_df = pd.DataFrame(normalized_features, columns=X.columns, index=X.index)`
-  3. Ensure consistency in column count across train, validation, and test sets post-feature engineering. For example, fit PCA on the training set and apply the same transformation to validation and test sets to keep the number of columns aligned, and use OneHotEncoder may also cause different number of columns.
-  4. Ensure that the generation of new features does not drastically increase the number of columns, which can slow down data processing. For example, avoid creating pairwise interactions for all features, as this would lead to a quadratic increase in the number of columns.
-  5. Avoids raising a `ValueError` or any other exceptions that could interrupt the main program's flow. The code should not include checks that could potentially lead to a `ValueError`. Instead, focus on writing robust and fault-tolerant feature engineering functions that handle edge cases and missing data gracefully, without stopping the program.
-  6. Specific categories of features can be filtered, and processing can be applied to those categories. For example, normalization can be applied to float-type features, but such processing should not be done on one-hot encoded features.
-  7. You are participating in a Kaggle competition and need data engineering ideas that are small, efficient, and quick to execute. Your suggestions should avoid unnecessary complexity or excessive processing time. Focus on delivering concise, impactful transformations or preprocessing steps that improve model performance with minimal resource usage. Please suggest clear, targeted approaches that can be implemented and tested rapidly.
+  注意事项：
+  0. 我已经完成了编码标签处理过程，因此请避免在将来的任何独热编码或类似操作。请专注于有针对性和高效的特征工程技术，例如归一化浮点型特征、基于特定类别的过滤或其他可以快速实施和测试的简明转换。同时，确保输出 DataFrame 的索引与原始 DataFrame 的索引匹配，并且列数在训练、验证和测试集之间保持一致。
+  1. 确保您的代码满足这些要求，并生成仅包含新工程特征的特征工程 DataFrame，以符合用户的数据和目标。
+  2. 确保输出 DataFrame 的索引与原始 DataFrame 的索引匹配。例如：
+    错误：`normalized_df = pd.DataFrame(normalized_features, columns=X.columns)`
+    正确：`normalized_df = pd.DataFrame(normalized_features, columns=X.columns, index=X.index)`
+  3. 确保在特征工程后，训练、验证和测试集之间的列数保持一致。例如，在训练集上拟合 PCA，并将相同的转换应用于验证和测试集，以保持列数一致，使用独热编码器也可能导致列数不一致。
+  4. 确保新特征的生成不会大幅增加列数，因为这会减慢数据处理速度。例如，避免对所有特征创建成对交互，因为这会导致列数呈平方级数增加。
+  5. 避免引发 `ValueError` 或可能中断主程序流程的其他异常。代码不应包括可能导致 `ValueError` 的检查。相反，专注于编写健壮且容错的特征工程函数，能够优雅地处理边缘情况和缺失数据，而不会停止程序。
+  6. 可以过滤特定类别的特征，并对这些类别应用处理。例如，可以对浮点型特征应用归一化，但不应对独热编码特征进行此类处理。
+  7. 您正在参加 Kaggle 竞赛，需要快速、高效的小型数据工程想法。您的建议应避免不必要的复杂性或过长的处理时间。专注于提供简明、有效的转换或预处理步骤，以最小的资源消耗提高模型性能。请提出可以快速实施和测试的清晰、针对性的方法。
 
 kg_model_interface: |-
-  Your code should contain several parts:
-  1. The import part: import the necessary libraries.
-  2. A function called fit() that trains the model and returns the trained model.
-    The function should take the following arguments:
-      - X_train: The training features as a pandas DataFrame.
-      - y_train: The training labels as a pandas Series.
-      - X_valid: The validation features as a pandas DataFrame.
-      - y_valid: The validation labels as a pandas Series.
-    The function should return the trained model.
-  3. A function called predict() that makes predictions using the trained model. 
-    The function should take the following arguments:
-      - model: The trained model.
-      - X: The features as a pandas DataFrame.
-    The function should return the predicted probabilities or boolean predictions in numpy.ndarray format.
-    Please refer to the train.py script to verify whether the output should be a class label or a probability!
+  您的代码应包含几个部分：
+  1. 导入部分：导入必要的库。
+  2. 一个名为 fit() 的函数，用于训练模型并返回训练好的模型。
+    该函数应接受以下参数：
+      - X_train：训练特征，格式为 pandas DataFrame。
+      - y_train：训练标签，格式为 pandas Series。
+      - X_valid：验证特征，格式为 pandas DataFrame。
+      - y_valid：验证标签，格式为 pandas Series。
+    该函数应返回训练好的模型。
+  3. 一个名为 predict() 的函数，用于使用训练好的模型进行预测。 
+    该函数应接受以下参数：
+      - model：训练好的模型。
+      - X：特征，格式为 pandas DataFrame。
+    该函数应返回 numpy.ndarray 格式的预测概率或布尔预测。
+    请参考 train.py 脚本以验证输出是类标签还是概率！
 
-  Here are some examples of how your Python code should be structured:
+  以下是您的 Python 代码应如何构建的示例：
 
   {% if tag == "XGBoost" or tag is none %}
-  For XGBoost:
+  对于 XGBoost：
   ```python
   import pandas as pd
   import numpy as np
@@ -161,11 +161,11 @@ kg_model_interface: |-
   ) -> xgboost.Booster:
       dtrain = DMatrix(X_train, label=y_train)
       dvalid = DMatrix(X_valid, label=y_valid)
-      params = ...  # Set parameters to XGBoost model
+      params = ...  # 设置 XGBoost 模型的参数
       model = xgboost.train(params, dtrain, num_boost_round=100)
       y_pred = model.predict(dvalid)
 
-      accuracy = ...  # Calculate accuracy
+      accuracy = ...  # 计算准确率
       return model
 
 
@@ -177,7 +177,7 @@ kg_model_interface: |-
   ```
   {% endif %}
   {% if tag == "RandomForest" or tag is none %}
-  For RandomForest:
+  对于 RandomForest：
   ```python
   import pandas as pd
   import numpy as np
@@ -187,9 +187,9 @@ kg_model_interface: |-
   def fit(
       X_train: pd.DataFrame, y_train: pd.Series, X_valid: pd.DataFrame, y_valid: pd.Series
   ) -> RandomForestClassifier | RandomForestRegressor:
-      model = RandomForestClassifier(...)  # fir classification tasks
-      model = RandomForestRegressor(...)  # for regression tasks
-      model.fit(X_train, y_train, ...) # Train the model
+      model = RandomForestClassifier(...)  # 分类任务
+      model = RandomForestRegressor(...)  # 回归任务
+      model.fit(X_train, y_train, ...) # 训练模型
 
       return model
 
@@ -201,7 +201,7 @@ kg_model_interface: |-
   ```
   {% endif %}
   {% if tag == "LightGBM" or tag is none %}
-  For LightGBM:
+  对于 LightGBM：
   ```python
   import pandas as pd
   import numpy as np
@@ -210,8 +210,8 @@ kg_model_interface: |-
   def fit(
       X_train: pd.DataFrame, y_train: pd.Series, X_valid: pd.DataFrame, y_valid: pd.Series
   ) -> LGBMClassifier | LGBMRegressor:
-      model = LGBMClassifier(...)  # for classification tasks, please add parameters here
-      model = LGBMRegressor(...)  # for regression tasks, please add parameters here
+      model = LGBMClassifier(...)  # 分类任务，请在此处添加参数
+      model = LGBMRegressor(...)  # 回归任务，请在此处添加参数
 
       model.fit(X=X_train, y=y_train, eval_set=[(X_valid, y_valid)])
       return model
@@ -224,7 +224,7 @@ kg_model_interface: |-
   ```
   {% endif %}
   {% if tag == "NN" or tag is none %}
-  For Neural Network:
+  对于神经网络：
   ```python
   import pandas as pd
   import numpy as np
@@ -235,22 +235,22 @@ kg_model_interface: |-
   class NNModel(torch.nn.Module):
       def __init__(self):
           super(Model, self).__init__()
-          # Define your model here
+          # 在此定义您的模型
 
       def forward(self, x):
-          # Define the forward pass
+          # 定义前向传播
           return x
 
   def fit(X_train: pd.DataFrame, y_train: pd.DataFrame, X_valid: pd.DataFrame, y_valid: pd.DataFrame) -> torch.nn.Module:
-      model = NNModel()  # Initialize the model, You can write your own model class
+      model = NNModel()  # 初始化模型，您可以编写自己的模型类
 
-      optimizer = torch.optim.Adam(model.parameters(), lr=0.01)  # Example optimizer, you can use any optimizer
-      criterion = torch.nn.CrossEntropyLoss()  # Example loss function, you can use any loss function
+      optimizer = torch.optim.Adam(model.parameters(), lr=0.01)  # 示例优化器，您可以使用任何优化器
+      criterion = torch.nn.CrossEntropyLoss()  # 示例损失函数，您可以使用任何损失函数
 
       train_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=64, shuffle=True)
       valid_loader = DataLoader(TensorDataset(X_valid, y_valid), batch_size=64, shuffle=False)
 
-      # Example training loop, you can customize this loop as per your requirement
+      # 示例训练循环，您可以根据需要自定义此循环
       for epoch in range(10):
           model.train()
           for X_batch, y_batch in train_loader:
@@ -269,7 +269,7 @@ kg_model_interface: |-
 
           y_pred = torch.tensor(y_pred)
           accuracy = (y_pred == y_valid).float().mean()
-          # You can early stop based on the validation, please customize this as per your requirement
+          # 您可以根据验证结果提前停止，请根据需要自定义
       return model
 
 
@@ -284,40 +284,41 @@ kg_model_interface: |-
   {% endif %}
 
 kg_feature_simulator: |-
-  The data preprocessing method you provide will be used to prepare data by processing it, concatenating the results with other features, and removing unnecessary features before training the model. 
-  The processed data will then be used for model training and prediction.
+  您提供的数据预处理方法将用于通过处理数据、将结果与其他特征连接以及在训练模型之前删除不必要的特征来准备数据。 
+  然后，处理后的数据将用于模型训练和预测。
   
-  User will use your data preprocessing method to do the following steps:
-  1. Execute your Python files to process the data. (what you need to do)
-  2. Concatenate the processed features with other features and the original data.
-  3. Remove any unnecessary features before training the model.
-  4. Train a model such as LightGBM, CatBoost, LSTM, or a simple PyTorch model using the processed data.
-  5. Evaluate the performance of your preprocessing method and provide feedback.
+  用户将使用您的数据预处理方法执行以下步骤：
+  1. 执行您的 Python 文件以处理数据。（您需要做的）
+  2. 将处理后的特征与其他特征和原始数据连接。
+  3. 在训练模型之前删除任何不必要的特征。
+  4. 使用处理后的数据训练模型，例如 LightGBM、CatBoost、LSTM 或简单的 PyTorch 模型。
+  5. 评估数据预处理方法的性能并提供反馈。
 
 kg_feature_output_format: |-
-  The output should be a pandas DataFrame with the new features. The columns should be the new features, and the rows should correspond to the number of samples in the input DataFrame.
-  Sample output dataframe info:
+  输出应为一个 pandas DataFrame，包含新特征。列应为新特征，行应对应于输入 DataFrame 中的样本数量。
+  输出数据框信息示例:
   <class 'pandas.core.frame.DataFrame'>
-  Index: {Same to the input DataFrame}
-  Data columns (total N columns):
-  #   Column      Dtype  
+  索引: {与输入 DataFrame 相同}
+  数据列（总计 N 列）:
+  #   列名      数据类型  
   ---  ------      -----  
   0   feature_name_0   float64
   1   feature_name_1  float64
-  dtypes: float64(N)
-  memory usage: {Memory usage of the output DataFrame}
+  数据类型：float64(N)
+  内存使用情况：{输出 DataFrame 的内存使用情况}
 
 kg_model_output_format: |-
-  For model related tasks, the output should be an np.ndarray with the appropriate number of predictions. 
-  Please refer to the train.py script to verify whether the output should be a class label or a probability!
+  对于与模型相关的任务，输出应为具有适当数量预测的 np.ndarray。 
+  请参考 train.py 脚本以验证输出是类标签还是概率！
   {% if channel == 1 %}
-  For each sample, the output should be a single value (e.g., (8, 1) if there are 8 samples).
+  对于每个样本，输出应为单个值（例如，如果有 8 个样本，则为 (8, 1)）。
   {% else %}
-  For each sample, the output should be multiple values with {{ channel }} numbers (e.g., (8, {{ channel }}) if there are 8 samples).
+  对于每个样本，输出应为多个值，数量为 {{ channel }}（例如，如果有 8 个样本，则为 (8, {{ channel }})）。
   {% endif %}
   
 kg_model_simulator: |-
-  The models will be trained on the competition dataset and evaluated on their ability to predict the target. Metrics like accuracy and AUC-ROC is used to evaluate the model performance. 
-  Model performance will be iteratively improved based on feedback from evaluation results.
-  Your output should follow some requirements to submit to the competition:
+  模型将在竞赛数据集上进行训练，并评估其预测目标的能力。 
+  使用准确率和 AUC-ROC 等指标来评估模型性能。 
+  模型性能将根据评估结果的反馈进行迭代改进。
+  您的输出应遵循一些提交竞赛的要求：
   {{ submission_specifications }}

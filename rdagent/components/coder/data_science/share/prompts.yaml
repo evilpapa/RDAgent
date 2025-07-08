@@ -1,37 +1,37 @@
 dump_model_coder:
   guideline: |-
-    Please dump the model in a "models/" subfolder in the first running, and the script rerun performs inference without needing to retrain the model when running the code again.
-    If there are parameters generated from the training data that might be needed for inference on test data, please save them in the "models/" subfolder as well.
-    If no test set is provided, reserve a portion of the data as your test set and save the generated test files in the models/ subfolder for use in submission and inference.
-    Make sure that the required files, like submission.csv and scores.csv, are created without model training step through loading the saved model and test data file directly.
+    请在第一次运行时将模型保存到 "models/" 子文件夹中，并在脚本重新运行时执行推理，而无需重新训练模型。
+    如果训练数据生成的参数可能在测试数据推理中需要，请将它们保存到 "models/" 子文件夹中。
+    如果未提供测试集，请保留部分数据作为测试集，并将生成的测试文件保存到 "models/" 子文件夹中，以用于提交和推理。
+    确保所需文件（如 submission.csv 和 scores.csv）可以通过加载保存的模型和测试数据文件直接创建，而无需模型训练步骤。
 
 dump_model_eval:
   system: |-
-    You are a data scientist tasked with evaluating code generation. You've developed a Kaggle competition code that can produce a submission file.
-    The code should follow the guideline below:
+    您是一名数据科学家，负责评估代码生成。您已开发出一个 Kaggle 比赛代码，可以生成提交文件。
+    代码应遵循以下指南：
     {% include "components.coder.data_science.share.prompts:dump_model_coder.guideline" %}
 
-    You will receive the following information:
-    - The implemented code
-    - The stdout from running the code
-    - The file list in "models/" subfolder
-    - The scores.csv file generated during both training and inference (if it exists)
+    您将收到以下信息：
+    - 实现的代码
+    - 运行代码的标准输出
+    - "models/" 子文件夹中的文件列表
+    - 在训练和推理过程中生成的 scores.csv 文件（如果存在）
 
-    Focus on these aspects:
-    - Check if the code saves the model in the "models/" subfolder.
-    - Check if the code saves the test data in the "models/" subfolder when there is no test data specified.
-    - Ensure that when the code is rerun, it skips the training process and loads the model from the "models/" subfolder for direct inference.
-      - Verify that there is no training activity in the output.
-    - Ensure that even if you skip the model training by loading saved models, the files like scores.csv and submission.csv are still correctly created.
-    - The model's performance should remain consistent and not vary unreasonably between training and inference.
+    重点关注以下方面：
+    - 检查代码是否将模型保存到 "models/" 子文件夹中。
+    - 检查代码是否在未指定测试数据时将测试数据保存到 "models/" 子文件夹中。
+    - 确保代码重新运行时跳过训练过程，并从 "models/" 子文件夹加载模型以直接推理。
+      - 验证输出中是否没有训练活动。
+    - 确保即使通过加载保存的模型跳过模型训练，文件如 scores.csv 和 submission.csv 仍然正确创建。
+    - 模型性能应保持一致，不应在训练和推理之间出现不合理的变化。
 
-    Please respond with your feedback in the following JSON format and order
+    请以以下 JSON 格式和顺序反馈您的意见
     ```json
     {
-        "execution": "Describe whether the code executed successfully. Include any errors or issues encountered, and append all error messages and full traceback details without summarizing or omitting any information. Carefully check the stdout to ensure that when the code is rerun, it skips the training process and loads the model from the 'models/' subfolder for direct inference. Append the information that makes you think that the model is still being retrained when rerunning the code."
-        "return_checking": "Verify the generated files include necessary files. Make sure scores.csv file does not change unreasonably between training and inference",
-        "code": "The code has explicity dump the model into 'models/' subfolder; When the modes files are already in 'models/' subfolder, the code will explicity skip the training process.",
-        "final_decision": <true or false in boolean type; only return true when ensuring that the code saves the model in a 'models/' subfolder, and the script rerun performs inference without needing to retrain the model.>
+        "execution": "描述代码是否成功执行。包括遇到的任何错误或问题，并附上所有错误消息和完整的回溯详细信息，不要总结或省略任何信息。仔细检查标准输出以确保代码重新运行时跳过训练过程，并从 'models/' 子文件夹加载模型以直接推理。附上让您认为模型在重新运行代码时仍在重新训练的信息。",
+        "return_checking": "验证生成的文件是否包含必要文件。确保 scores.csv 文件在训练和推理之间不会出现不合理的变化",
+        "code": "代码已明确将模型保存到 'models/' 子文件夹；当模型文件已存在于 'models/' 子文件夹中时，代码将明确跳过训练过程。",
+        "final_decision": <true 或 false 的布尔值；仅在确保代码将模型保存到 'models/' 子文件夹中，并且脚本重新运行时执行推理而无需重新训练模型时返回 true。>
     }
     ```
 

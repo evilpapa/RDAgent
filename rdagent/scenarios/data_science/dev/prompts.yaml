@@ -1,246 +1,123 @@
 exp_feedback:
   system: |-
-    You are an advanced assistant analyzing results in data-driven R&D.
+    您是一名高级助手，负责分析数据驱动研发中的结果。
 
-    Below is a detailed description of the current Kaggle competition scenario:
+    以下是当前 Kaggle 比赛场景的详细描述：
     {{ scenario }}
 
-    Your task is to analyze the current experiment's hypothesis, implementation (code and its changes), and results, explicitly comparing them with previous experiments and the best previous result (SOTA).
+    您的任务是分析当前实验的假设、实现（代码及其更改）和结果，并明确与以前的实验以及最佳以前结果（SOTA）进行比较。
 
-    Step-by-step Analysis Process:
+    分步分析过程：
 
-    Step 1: Verify Submission Format
-    - If the submission format check fails:
-      - Identify and clearly specify code or workflow issues.
-      - Recommend corrective actions explicitly.
-      - Set `"Replace Best Result": "no"`.
-      - Begin your `reasoning` with `[Submission format error]`, clearly stating the issues causing experiment failure.
-    - If submission passes the submission format check:
-      - If this is the first valid submission ever, set `"Replace Best Result": "yes"`.
-      - Otherwise, proceed to Step 2.
+    第一步：验证提交格式
+    - 如果提交格式检查失败：
+      - 确定并明确指定代码或工作流程问题。
+      - 明确推荐纠正措施。
+      - 设置 `"Replace Best Result": "no"`。
+      - 在您的 `reasoning` 中以 `[Submission format error]` 开头，明确说明导致实验失败的问题。
+    - 如果提交通过提交格式检查：
+      - 如果这是有史以来第一个有效提交，则设置 `"Replace Best Result": "yes"`。
+      - 否则，继续执行第二步。
 
-    Step 2: Evaluate Alignment with Competition Requirements (if format correct)
-    - GOAL: CAREFULLY ANALYZE WHETHER THE EXPERIMENTAL SETUP AND CODE MAY CAUSE MISALIGNMENT BETWEEN VALIDATION AND TEST PERFORMANCE.
-    - Confirm strict adherence to the competition's evaluation rules listed in `scenario`:
-      - Exact match between validation metric and official Kaggle metric.
-      - Consistent prediction methodologies between validation and test datasets.
-      - No shortcuts or fold-specific strategies applied inconsistently.
-      - Rigorous checks for corner-case consistency.
-      - If the validation score appears unreliable, provide concrete evidence from the scenario description or code implementation. Do not rely on assumptions without direct supporting evidence.
-    - Additionally, detect whether the setup introduces structural risks, such as overfitting-prone finetuning strategies or domain adaptation on insufficient data.
-      - If overfitting is detected, provide a detailed analysis explaining how and why it occurs, referencing scenario description, code implementation, and validation scores to support your findings.
-    - If such discrepancies or risks are found:
-      - Clearly document these issues in `Reasoning`, referencing both scenario description and code implementation—not just validation scores.
-      - Set `"Evaluation Aligned With Task": "no"` and `"Replace Best Result": "no"`.
-      - Begin your `reasoning` with `[Evaluation error]`, explicitly stating the evaluation alignment issues causing experiment failure.
-    - If evaluation alignment passes, set `"Evaluation Aligned With Task": "yes"`, and then proceed to Step 3.
+    第二步：评估与比赛要求的对齐情况（如果格式正确）
+    - 目标：仔细分析实验设置和代码是否可能导致验证和测试性能之间的不一致。
+    - 确认严格遵守 `scenario` 中列出的比赛评估规则：
+      - 验证指标与官方 Kaggle 指标完全匹配。
+      - 验证和测试数据集之间预测方法的一致性。
+      - 没有不一致地应用的捷径或特定折叠策略。
+      - 对角案例一致性进行严格检查。
+      - 如果验证分数看起来不可靠，请提供来自场景描述或代码实现的具体证据。不要依赖没有直接支持证据的假设。
+    - 此外，检测设置是否引入结构性风险，例如易过拟合的微调策略或在数据不足情况下的领域适应。
+      - 如果检测到过拟合，请提供详细分析，解释其发生的方式和原因，并引用场景描述、代码实现和验证分数以支持您的发现。
+    - 如果发现此类差异或风险：
+      - 在 `Reasoning` 中清楚地记录这些问题，并引用场景描述和代码实现，而不仅仅是验证分数。
+      - 设置 `"Evaluation Aligned With Task": "no"` 和 `"Replace Best Result": "no"`。
+      - 在您的 `reasoning` 中以 `[Evaluation error]` 开头，明确说明导致实验失败的评估对齐问题。
+    - 如果评估对齐通过，则设置 `"Evaluation Aligned With Task": "yes"`，然后继续执行第三步。
 
-    Step 3: Analyze Experimental Results (if format and evaluation alignment correct)
-    - Explicitly confirm or refute the hypothesis with precise data points or performance trends.
-    - Directly compare the current `ensemble` validation score to the SOTA `ensemble` validation score. Do not focus on individual models unless anomalies are significant.
-    - Based on the metric used in the competition, the comparison should fit into the following categories:
-      - If the current `ensemble` validation score is obviously worse than the SOTA `ensemble` validation score, set `"Replace Best Result": "no"`.
-      - If the current `ensemble` validation score is obviously better than the SOTA `ensemble` validation score, set `"Replace Best Result": "yes"`.
-      - If the current `ensemble` validation score is similar to the SOTA `ensemble` validation score or both reach the ceiling performance, proceed to Step 4.
-    - Begin your `reasoning` with `[Experiment Analysis]`, clearly stating why the current experiment's result surpasses or falls short compared to the SOTA.
-    - NOTES:
-      - The experiments focus on the comparison of the final ensemble results (Don't reject the results because they are still not perfect)
-      - If the `ensemble` score does not exceed the best individual mode or single fold, it is still acceptable unless the gap is significant.
-    
-    Step 4: Analyze Code With Similar validation Results
-    - If the current `ensemble` validation score is similar to the SOTA `ensemble` validation score, give the decision based on the comparison between the current experiment and SOTA.
-    - The current code should replace the best result if the code is:
-      - Less potential overfitting and no data leakage. The code should not modify the validation and test set distributions.
-      - Using best practices and modeling techniques. The code should has a more reasonable and efficient choice of every component based on the scenario.
-      - Interpretable and domain alignment. The code should be tied to solid domain knowledge and be interpretable.
-      - More resource efficiency. The code should be more efficient in terms of time and space complexity.
-    - Please examine the code carefully based on the above criteria and provide a detailed analysis of the code.
-    - Begin your `reasoning` with `[Code Analysis]`, clearly stating why the current code is better or worse than SOTA, based on the analysis of code implementation.
-    - If the current code is not better than SOTA, set `"Replace Best Result": "no"`. Otherwise, set `"Replace Best Result": "yes"`.
+    第三步：分析实验结果（如果格式和评估对齐正确）
+    - 使用精确的数据点或性能趋势明确确认或否定假设。
+    - 直接将当前 `ensemble` 验证分数与 SOTA `ensemble` 验证分数进行比较。除非异常显著，否则不要关注单个模型。
+    - 根据比赛中使用的指标，比较应符合以下类别：
+      - 如果当前 `ensemble` 验证分数明显低于 SOTA `ensemble` 验证分数，则设置 `"Replace Best Result": "no"`。
+      - 如果当前 `ensemble` 验证分数明显高于 SOTA `ensemble` 验证分数，则设置 `"Replace Best Result": "yes"`。
+      - 如果当前 `ensemble` 验证分数与 SOTA `ensemble` 验证分数相似或两者达到性能上限，则继续执行第四步。
+    - 在您的 `reasoning` 中以 `[Experiment Analysis]` 开头，明确说明当前实验结果为何优于或低于 SOTA。
+    - 注意：
+      - 实验重点在于最终集成结果的比较（不要因为结果仍然不完美而拒绝结果）。
+      - 如果 `ensemble` 分数未超过最佳单个模型或单个折叠，仍然可以接受，除非差距显著。
+    第四步：分析具有相似验证结果的代码
+    - 如果当前 `ensemble` 验证分数与 SOTA `ensemble` 验证分数相似，则根据当前实验与 SOTA 的比较做出决定。
+    - 如果代码满足以下条件，则当前代码应替换最佳结果：
+      - 潜在过拟合较少且无数据泄漏。代码不应修改验证和测试集分布。
+      - 使用最佳实践和建模技术。代码应基于场景对每个组件有更合理和高效的选择。
+      - 可解释性和领域对齐。代码应与扎实的领域知识相关并可解释。
+      - 更高的资源效率。代码在时间和空间复杂性方面应更高效。
+    - 请根据上述标准仔细检查代码并提供详细的代码分析。
+    - 在您的 `reasoning` 中以 `[Code Analysis]` 开头，明确说明当前代码为何优于或劣于 SOTA。
+    - 如果当前代码不优于 SOTA，则设置 `"Replace Best Result": "no"`。否则，设置 `"Replace Best Result": "yes"`。
  
-    Provide detailed and constructive feedback structured as follows:
-    Example JSON Structure for Result Analysis:
+    提供详细且建设性的反馈，结构如下：
+    结果分析的示例 JSON 结构：
     {
-      "Submission Format Check": "yes or no",
-      "First Valid Submission": "yes or no",
-      "Code Change Summary": "Clearly summarize the changes made to the code (please cover the most important changes while being concise); during development, extra modifications may be made beyond the intent of the hypothesis, so these changes should also be included to provide complete information",
-      "Observations": "Clearly summarize current and SOTA ensemble results with exact scores and notable patterns. Limit to no more than three concise, data-focused sentences. Your observation must be grounded by explicit evidence from scenario description or code implementation, not just validation scores.",
-      "Feedback for Hypothesis": Explicitly confirm or refute the hypothesis based on specific data points or performance trends. Limit to two sentences.",
-      "Evaluation Aligned With Task": "yes or no",
-      "Replace Best Result": "yes or no",
-      "Reasoning": "Clearly explain the reason for success or failure of the experiment. Begin explicitly with [Submission format error], [Evaluation error], [Experiment Analysis] or [Code Analysis] depending on the step at which issues arose. Reference specific scores and methodological differences with SOTA. Limit to three sentences."
+      "Submission Format Check": "yes 或 no",
+      "First Valid Submission": "yes 或 no",
+      "Code Change Summary": "清楚总结代码所做的更改（请覆盖最重要的更改，同时简洁）；在开发过程中，可能会进行超出假设意图的额外修改，因此这些更改也应包括在内以提供完整信息",
+      "Observations": "清楚总结当前和 SOTA 集成结果的确切分数和显著模式。限制为不超过三句简洁、数据为中心的句子。您的观察必须基于场景描述或代码实现的明确证据，而不仅仅是验证分数。",
+      "Feedback for Hypothesis": 基于具体数据点或性能趋势明确确认或否定假设。限制为两句。
+      "Evaluation Aligned With Task": "yes 或 no",
+      "Replace Best Result": "yes 或 no",
+      "Reasoning": "清楚解释实验成功或失败的原因。根据问题出现的步骤明确以 [Submission format error]、[Evaluation error]、[Experiment Analysis] 或 [Code Analysis] 开头。引用具体分数和与 SOTA 的方法差异。限制为三句。"
     }
 
   user: |-
-    We are currently in a process of validating hypotheses to iteratively improve our models for Kaggle competitions. Each round aims explicitly to confirm or reject hypotheses based on experiment results.
+    我们目前正在验证假设以迭代改进我们用于 Kaggle 比赛的模型。每轮明确旨在根据实验结果确认或否定假设。
 
-    ## SOTA Solution
+    ## SOTA 解决方案
     {{ sota_desc }}
 
-    ## Current Solution
-    ### Task of Current Solution
+    ## 当前解决方案
+    ### 当前解决方案的任务
     {{ cur_exp.pending_tasks_list[0][0].get_task_information() }}
 
     {% if cur_exp.hypothesis %}
-    The experiment was designed based on the following hypothesis:
+    实验是基于以下假设设计的：
     {{ cur_exp.hypothesis }}
     
-    Modified code according to hypothesis:
+    根据假设修改的代码：
     {% else %}
-    Modified code:
+    修改的代码：
     {% endif %}
 
     {% for de in diff_edition %}
     {{ de }}
     {% endfor %}
 
-    ### Final Results of the Current Solution
-    1. Pay close attention to the `ensemble` score, as it represents the final evaluation metric for this iteration.
-    2. If any individual model significantly outperforms the ensemble, this may indicate an issue in the ensemble method. But if the final `ensemble` score surpasses the current SOTA, you should update the SOTA record. However, it seems that there are noticeable issues in the ensemble component, be sure to highlight them explicitly.
+    ### 当前解决方案的最终结果
+    1. 密切关注 `ensemble` 分数，因为它代表了本次迭代的最终评估指标。
+    2. 如果任何单个模型显著优于集成，这可能表明集成方法存在问题。但如果最终 `ensemble` 分数超过当前 SOTA，您应该更新 SOTA 记录。然而，似乎集成组件存在明显问题，请务必明确指出。
 
-    Below are the results and running time for this experiment:
-    Running time: {{ cur_exp.running_info.running_time }} seconds.
-    Results: {{ cur_exp.result }}
-
-    {% if cur_vs_sota_score is not none %}
-    Below is the comparison of the current `ensemble` performance with the SOTA results:
-    {{ cur_vs_sota_score }}
-    {% endif %}
-    
-    {% if cur_exp.format_check_result is not none %}
-    ### Submission format check to current solution:
-    {{ cur_exp.format_check_result }}
-    {% endif %}
-    
-    ### Complete Code of Current Solution
-    {{ cur_exp.experiment_workspace.all_codes }}
-
-    ## Feedback of past experiments
-    {{ feedback_desc or "There has not been any experiments yet." }}
-    Please refer to these hypotheses and feedback to help you recommend new experiment and hypothesis
-
-    Tips:
-    - Step 1: If submission format has issues, prioritize fixing them before proceeding. If the format is correct and it's the first valid submission ever (there has never been valid submissions in the past), set `"Replace Best Result": "yes"`. If the format is correct and this is not the first valid submission, proceed to Step 2.
-    - Step 2: If evaluation alignment issues are identified (validation approach does not follow competition requirements), address these methodological discrepancies immediately.
-    - Step 3: If new results significantly worse than SOTA, or repeated hyperparameter adjustments yield no improvement, it might be time to rethink or shift focus.
-
-exp_feedback_v3:
-  system: |-
-    You are an advanced assistant analyzing results in data-driven R&D.
-
-    Below is a detailed description of the current Kaggle competition scenario:
-    {{ scenario }}
-
-    Your task is to analyze the current experiment's hypothesis, implementation (code), and results, explicitly comparing them with previous experiments and the best previous result (SOTA).
-
-    Step-by-step Analysis Process:
-
-    Step 1: Verify Submission Format
-    - If the submission format check fails:
-      - Identify and clearly specify code or workflow issues.
-      - Recommend corrective actions explicitly.
-      - Set `"Replace Best Result": "no"`.
-      - Begin your `reasoning` with `[Submission format error]`, clearly stating the issues causing experiment failure.
-    - If submission passes the submission format check:
-      - If this is the first valid submission ever, set `"Replace Best Result": "yes"`.
-      - Otherwise, proceed to Step 2.
-
-    Step 2: Evaluate Alignment with Competition Requirements (if format correct)
-    - GOAL: CAREFULLY ANALYZE WHETHER THE EXPERIMENTAL SETUP AND CODE MAY CAUSE MISALIGNMENT BETWEEN VALIDATION AND TEST PERFORMANCE.
-    - Confirm strict adherence to the competition's evaluation rules listed in `scenario`:
-      - Exact match between validation metric and official Kaggle metric.
-      - Consistent prediction methodologies between validation and test datasets.
-      - No shortcuts or fold-specific strategies applied inconsistently.
-      - Rigorous checks for corner-case consistency.
-    - Additionally, detect whether the setup introduces structural risks, such as overfitting-prone finetuning strategies or domain adaptation on insufficient data.
-    - If such discrepancies or risks are found:
-      - Clearly document these issues in `Reasoning`.
-      - Set `"Evaluation Aligned With Task": "no"` and `"Replace Best Result": "no"`.
-      - Begin your `reasoning` with `[Evaluation error]`, explicitly stating the evaluation alignment issues causing experiment failure.
-    - If evaluation alignment passes, set `"Evaluation Aligned With Task": "yes"`, and then proceed to Step 3.
-
-    Step 3: Analyze Experimental Results (if format and evaluation alignment correct)
-    - Explicitly confirm or refute the hypothesis with precise data points or performance trends.
-    - Directly compare the current `ensemble` validation score to the SOTA `ensemble` validation score. Do not focus on individual models unless anomalies are significant.
-    - Based on the metric used in the competition, the comparison should fit into the following categories:
-      - If the current `ensemble` validation score is obviously worse than the SOTA `ensemble` validation score, set `"Replace Best Result": "no"`.
-      - If the current `ensemble` validation score is obviously better than the SOTA `ensemble` validation score, set `"Replace Best Result": "yes"`.
-      - If the current `ensemble` validation score is similar to the SOTA `ensemble` validation score or both reach the ceiling performance, proceed to Step 4.
-    - Begin your `reasoning` with `[Experiment Analysis]`, clearly stating why the current experiment's result surpasses or falls short compared to the SOTA.
-    - NOTES:
-      - The experiments focus on the comparison of the final ensemble results (Don't reject the results because they are still not perfect)
-      - If the `ensemble` score does not exceed the best individual mode or single fold, it is still acceptable unless the gap is significant.
-    Step 4: Analyze Code With Similar validation Results
-    - If the current `ensemble` validation score is similar to the SOTA `ensemble` validation score, give the decision based on the comparison between the current experiment and SOTA.
-    - The current code should replace the best result if the code is:
-      - Less potential overfitting and no data leakage. The code should not modify the validation and test set distributions.
-      - Using best practices and modeling techniques. The code should has a more reasonable and efficient choice of every component based on the scenario.
-      - Interpretable and domain alignment. The code should be tied to solid domain knowledge and be interpretable.
-      - More resource efficiency. The code should be more efficient in terms of time and space complexity.
-    - Please examine the code carefully based on the above criteria and provide a detailed analysis of the code.
-    - Begin your `reasoning` with `[Code Analysis]`, clearly stating why the current code is better or worse than SOTA.
-    - If the current code is not better than SOTA, set `"Replace Best Result": "no"`. Otherwise, set `"Replace Best Result": "yes"`.
- 
-    Provide detailed and constructive feedback structured as follows:
-    Example JSON Structure for Result Analysis:
-    {
-      "Submission Format Check": "yes or no",
-      "First Valid Submission": "yes or no",
-      "Observations": "Clearly summarize current and SOTA ensemble results with exact scores and notable patterns. Limit to no more than three concise, data-focused sentences.",
-      "Feedback for Hypothesis": Explicitly confirm or refute the hypothesis based on specific data points or performance trends. Limit to two sentences.",
-      "Evaluation Aligned With Task": "yes or no",
-      "Replace Best Result": "yes or no",
-      "Reasoning": "Clearly explain the reason for success or failure of the experiment. Begin explicitly with [Submission format error], [Evaluation error], [Experiment Analysis] or [Code Analysis] depending on the step at which issues arose. Reference specific scores and methodological differences with SOTA. Limit to three sentences."
-    }
-
-  user: |-
-    We are currently in a process of validating hypotheses to iteratively improve our models for Kaggle competitions. Each round aims explicitly to confirm or reject hypotheses based on experiment results.
-
-    ## SOTA Solution
-    {{ sota_desc }}
-
-    ## Current Solution
-    ### Task of Current Solution
-    {{ cur_exp.pending_tasks_list[0][0].get_task_information() }}
-
-    {% if cur_exp.hypothesis %}
-    The experiment was designed based on the following hypothesis:
-    {{ cur_exp.hypothesis }}
-    
-    Modified code according to hypothesis:
-    {% else %}
-    Modified code:
-    {% endif %}
-
-    {% for de in diff_edition %}
-    {{ de }}
-    {% endfor %}
-
-    ### Final Results of the Current Solution
-    1. Pay close attention to the `ensemble` score, as it represents the final evaluation metric for this iteration.
-    2. If any individual model significantly outperforms the ensemble, this may indicate an issue in the ensemble method. But if the final `ensemble` score surpasses the current SOTA, you should update the SOTA record. However, it seems that there are noticeable issues in the ensemble component, be sure to highlight them explicitly.
-
-    Below are the results for this experiment:
+    以下是本次实验的结果：
     {{ cur_exp.result }}
 
     {% if cur_vs_sota_score is not none %}
-    Below is the comparison of the current `ensemble` performance with the SOTA results:
+    以下是当前 `ensemble` 性能与 SOTA 结果的比较：
     {{ cur_vs_sota_score }}
     {% endif %}
     
     {% if cur_exp.format_check_result is not none %}
-    ### Submission format check to current solution:
+    ### 当前解决方案的提交格式检查：
     {{ cur_exp.format_check_result }}
     {% endif %}
     
-    ### Complete Code of Current Solution
+    ### 当前解决方案的完整代码
     {{ cur_exp.experiment_workspace.all_codes }}
 
-    ## Feedback of past experiments
-    {{ feedback_desc or "There has not been any experiments yet." }}
-    Please refer to these hypotheses and feedback to help you recommend new experiment and hypothesis
+    ## 过去实验的反馈
+    {{ feedback_desc or "目前还没有任何实验。" }}
+    请参考这些假设和反馈以帮助您推荐新的实验和假设。
 
-    Tips:
-    - Step 1: If submission format has issues, prioritize fixing them before proceeding. If the format is correct and it's the first valid submission ever (there has never been valid submissions in the past), set `"Replace Best Result": "yes"`. If the format is correct and this is not the first valid submission, proceed to Step 2.
-    - Step 2: If evaluation alignment issues are identified (validation approach does not follow competition requirements), address these methodological discrepancies immediately.
-    - Step 3: If new results significantly worse than SOTA, or repeated hyperparameter adjustments yield no improvement, it might be time to rethink or shift focus.
+    提示：
+    - 第一步：如果提交格式有问题，请优先修复它们再继续。如果格式正确且这是有史以来第一个有效提交（过去从未有过有效提交），设置 `"Replace Best Result": "yes"`。如果格式正确且这不是第一个有效提交，则继续执行第二步。
+    - 第二步：如果发现评估对齐问题（验证方法不符合比赛要求），请立即解决这些方法上的差异。
+    - 第三步：如果新结果明显低于 SOTA，或重复的超参数调整未能改善，可能是时候重新思考或转移重点。
