@@ -32,11 +32,11 @@
 
 R&D-Agent 目前在 MLE-bench 上是表现最优的机器学习工程智能体：
 
-| 智能体 | 低==Lite (%) | 中等 (%) | 高 (%) | 总体 (%) |
-|---------|--------|-----------|---------|----------|
-| R&D-Agent o1-preview | 48.18 ± 2.49 | 8.95 ± 2.36 | 18.67 ± 2.98 | 22.4 ± 1.1 |
+| 智能体                        | 低==Lite (%)  | 中等 (%)      | 高 (%)        | 总体 (%)       |
+|----------------------------|--------------|-------------|--------------|--------------|
+| R&D-Agent o1-preview       | 48.18 ± 2.49 | 8.95 ± 2.36 | 18.67 ± 2.98 | 22.4 ± 1.1   |
 | R&D-Agent o3(R)+GPT-4.1(D) | 51.52 ± 6.21 | 7.89 ± 3.33 | 16.67 ± 3.65 | 22.45 ± 2.45 |
-| AIDE o1-preview | 34.3 ± 2.4 | 8.8 ± 1.1 | 10.0 ± 1.9 | 16.9 ± 1.1 |
+| AIDE o1-preview            | 34.3 ± 2.4   | 8.8 ± 1.1   | 10.0 ± 1.9   | 16.9 ± 1.1   |
 
 **说明：**
 - **O3(R)+GPT-4.1(D)**：该版本旨在降低平均循环时间，并通过无缝集成 Research Agent (o3) 与 Development Agent (GPT-4.1) 实现高性价比。
@@ -275,11 +275,11 @@ R&D-Agent 已应用于多个有价值的数据驱动工业场景。
 
 支持场景如下：
 
-| 场景/目标 | 模型实现                   | 数据构建                                                                      |
-| --              | --                                     | --                                                                                 |
-| **💹 金融**      | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/model_loop)[▶️YouTube](https://www.youtube.com/watch?v=dm0dWL49Bc0&t=104s) |  🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/factor_loop) [▶️YouTube](https://www.youtube.com/watch?v=X4DK2QZKaKY&t=6s) <br/>   🦾 [自动报告阅读与实现](https://rdagent.azurewebsites.net/report_factor)[▶️YouTube](https://www.youtube.com/watch?v=ECLTXVcSx-c)  |
-| **🩺 医疗**      | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/dmm)[▶️YouTube](https://www.youtube.com/watch?v=VIaSTZuoZg4) | -                                                                                  |
-| **🏭 通用**      | 🦾 [自动论文阅读与实现](https://rdagent.azurewebsites.net/report_model)[▶️YouTube](https://www.youtube.com/watch?v=BiA2SfdKQ7o) <br/> 🤖 自动 Kaggle 模型调优   | 🤖自动 Kaggle 特征工程 |
+| 场景/目标     | 模型实现                                                                                                                                           | 数据构建                                                                                                                                                                                                                                                        |
+|-----------|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **💹 金融** | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/model_loop)[▶️YouTube](https://www.youtube.com/watch?v=dm0dWL49Bc0&t=104s)                    | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/factor_loop) [▶️YouTube](https://www.youtube.com/watch?v=X4DK2QZKaKY&t=6s) <br/>   🦾 [自动报告阅读与实现](https://rdagent.azurewebsites.net/report_factor)[▶️YouTube](https://www.youtube.com/watch?v=ECLTXVcSx-c) |
+| **🩺 医疗** | 🤖 [迭代提出想法与进化](https://rdagent.azurewebsites.net/dmm)[▶️YouTube](https://www.youtube.com/watch?v=VIaSTZuoZg4)                                  | -                                                                                                                                                                                                                                                           |
+| **🏭 通用** | 🦾 [自动论文阅读与实现](https://rdagent.azurewebsites.net/report_model)[▶️YouTube](https://www.youtube.com/watch?v=BiA2SfdKQ7o) <br/> 🤖 自动 Kaggle 模型调优 | 🤖自动 Kaggle 特征工程                                                                                                                                                                                                                                            |
 
 - **[路线图](https://rdagent.readthedocs.io/en/latest/scens/data_science.html#roadmap)**：Kaggle 场景新功能开发中。
 

@@ -3,7 +3,7 @@ CLI entrance for all rdagent application.
 
 This will
 - make rdagent a nice entry and
-- automatically load dotenv
+- autoamtically load dotenv
 """
 
 from dotenv import load_dotenv

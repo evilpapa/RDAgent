@@ -62,7 +62,6 @@ class PipelineCoSTEEREvaluator(CoSTEEREvaluator):
             result = implementation.run(env=env, entry=f"python -m coverage run main.py --debug")
         else:
             result = implementation.run(env=env, entry=f"python -m coverage run main.py")
-        execute_ret_code = result.exit_code
         result.stdout = remove_eda_part(result.stdout)
         if result.exit_code != 0:
             stdout += f"Code failed to run. Please check the stdout:\n Following the stdout of the debug mode run:\n{result.stdout.strip()}\n"
@@ -75,11 +74,7 @@ class PipelineCoSTEEREvaluator(CoSTEEREvaluator):
             if match := re.search(r"estimated_time:\s*(\d+(?:.\d+)?)", result.stdout, re.DOTALL):
                 full_estimated_time = float(match.group(1))
             if debug_time is not None and full_estimated_time is not None:
-                stdout += f"Debug mode ran in {debug_time:.2f} seconds, estimated full run time is {full_estimated_time:.2f} seconds.\n"
-                if full_estimated_time < env.conf.running_timeout_period * 3:
-                    stdout += "The estimated full run time is less than three times the timeout period.\n"
-                else:
-                    stdout += f"The estimated full run time is more than three times the timeout period.\n"
+                stdout += f"Debug mode ran in {debug_time:.2f} seconds, estimated full run time is {full_estimated_time:.2f} seconds. The estimated time is {full_estimated_time / env.conf.running_timeout_period * 100:.2f}% the debug time."
             else:
                 stdout += "Debug mode did not provide debug_time or estimated_time, it's a buggy implementation.\n"
 
@@ -130,21 +125,6 @@ class PipelineCoSTEEREvaluator(CoSTEEREvaluator):
             submission_result = implementation.run(env=env, entry="python test/submission_format_test.py")
             submission_check_out = submission_result.stdout
             submission_ret_code = submission_result.exit_code
-            if DS_RD_SETTING.rule_base_eval:
-                if execute_ret_code == 0 and score_ret_code == 0 and submission_ret_code == 0:
-                    return PipelineSingleFeedback(
-                        execution=stdout,
-                        return_checking=score_check_text + "\n" + submission_check_out,
-                        code="Code evaluation is not available.",
-                        final_decision=True,
-                    )
-                else:
-                    return PipelineSingleFeedback(
-                        execution=stdout,
-                        return_checking=score_check_text + "\n" + submission_check_out,
-                        code="Code evaluation is not available.",
-                        final_decision=False,
-                    )
             stdout += "\n" + submission_check_out
 
         if not isinstance(implementation, FBWorkspace):
