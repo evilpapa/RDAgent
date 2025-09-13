@@ -1,21 +1,21 @@
 .. _model_copilot_general:
 
 ======================
-General Model Copilot
+通用模型助手
 ======================
 
-**🤖 Automated Model Research & Development Co-Pilot**
+**🤖 自动化模型研发副驾驶**
 --------------------------------------------------------
 
-📖 Background
+📖 背景
 ~~~~~~~~~~~~~~
-In the fast-paced field of artificial intelligence, the number of academic papers published each year is skyrocketing. 
-These papers introduce new models, techniques, and approaches that can significantly advance the state of the art. 
-However, reproducing and implementing these models can be a daunting task, requiring substantial time and expertise. 
-Researchers often face challenges in extracting the essential details from these papers and converting them into functional code.
-And this is where the **General Model Copilot** steps in.
+在快节奏的人工智能领域，每年发表的学术论文数量正在飞速增长。
+这些论文介绍了可以显著推动技术水平的新模型、技术和方法。
+然而，复现和实现这些模型可能是一项艰巨的任务，需要大量的时间和专业知识。
+研究人员在从这些论文中提取基本细节并将其转换为功能代码方面经常面临挑战。
+这就是 **通用模型助手** 发挥作用的地方。
 
-🎥 `Demo <https://rdagent.azurewebsites.net/report_model>`_
+🎥 `演示 <https://rdagent.azurewebsites.net/report_model>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
@@ -23,77 +23,77 @@ And this is where the **General Model Copilot** steps in.
     <div style="display: flex; justify-content: center; align-items: center;">
       <video width="600" controls>
         <source src="https://rdagent.azurewebsites.net/media/b35f904765b05099b0fcddbebe041a04f4d7bde239657e5fc24bf0cc.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        您的浏览器不支持视频标签。
       </video>
     </div>
 
-🌟 Introduction
+🌟 介绍
 ~~~~~~~~~~~~~~~~
-In this scenario, our automated system proposes hypotheses, constructs models, implements code, performs back-testing, and uses feedback to iterate continuously. The system aims to automatically optimize performance metrics from the Qlib library, finding the best code through autonomous research and development.
+在这个场景中，我们的自动化系统提出假设、构建模型、实现代码、执行回测，并利用反馈进行持续迭代。该系统旨在自动优化 Qlib 库的性能指标，通过自主研发找到最佳代码。
 
-Model R&D CoPilot Scenario
+模型研发副驾驶场景
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-**Overview**
+**概述**
 
-This demo automates the extraction and iterative development of models from academic papers, ensuring functionality and correctness. This scenario automates the development of PyTorch models by reading academic papers or other sources. It supports various data types, including tabular, time-series, and graph data. The primary workflow involves two main components: the Reader and the Coder.
+该演示自动化了从学术论文中提取和迭代开发模型的过程，确保了功能性和正确性。该场景通过阅读学术论文或其他来源来自动化 PyTorch 模型的开发。它支持各种数据类型，包括表格、时间序列和图形数据。主要工作流程包括两个主要组件：阅读器和编码器。
 
-**Workflow Components**
+**工作流程组件**
 
-1. **Reader**
-   - Parses and extracts relevant model information from academic papers or sources, including architectures, parameters, and implementation details.
-   - Uses Large Language Models to convert content into a structured format for the Coder.
+1. **阅读器**
+   - 从学术论文或来源中解析和提取相关的模型信息，包括架构、参数和实现细节。
+   - 使用大型语言模型将内容转换为结构化格式，供编码器使用。
 
-2. **Evolving Coder**
-   - Translates structured information from the Reader into executable PyTorch code.
-   - Utilizes an evolving coding mechanism to ensure correct tensor shapes, verified with sample input tensors.
-   - Iteratively refines the code to align with source material specifications.
+2. **演进编码器**
+   - 将阅读器的结构化信息转换为可执行的 PyTorch 代码。
+   - 利用演进编码机制确保正确的张量形状，并使用样本输入张量进行验证。
+   - 迭代地优化代码，以符合源材料的规范。
 
-**Supported Data Types**
+**支持的数据类型**
 
-- **Tabular Data:** Structured data with rows and columns, such as spreadsheets or databases.
-- **Time-Series Data:** Sequential data points indexed in time order, useful for forecasting and temporal pattern recognition.
-- **Graph Data:** Data structured as nodes and edges, suitable for network analysis and relational tasks.
+- **表格数据：** 具有行和列的结构化数据，如电子表格或数据库。
+- **时间序列数据：** 按时间顺序索引的顺序数据点，可用于预测和时间模式识别。
+- **图形数据：** 结构为节点和边的数据，适用于网络分析和关系任务。
 
-⚡ Quick Start
+⚡ 快速开始
 ~~~~~~~~~~~~~~~~~
 
-Please refer to the installation part in :doc:`../installation_and_configuration` to prepare your system dependency.
+请参考 :doc:`../installation_and_configuration` 中的安装部分来准备您的系统依赖。
 
-You can try our demo by running the following command:
+您可以通过运行以下命令来尝试我们的演示：
 
-- 🐍 Create a Conda Environment
+- 🐍 创建 Conda 环境
   
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
+  - 使用 Python 创建一个新的 conda 环境（在我们的 CI 中，3.10 和 3.11 版本经过了充分测试）：
 
     .. code-block:: sh
     
         conda create -n rdagent python=3.10
 
-  - Activate the environment:
+  - 激活环境：
 
     .. code-block:: sh
 
         conda activate rdagent
 
-- 📦 Install the RDAgent
+- 📦 安装 RDAgent
     
-  - You can install the RDAgent package from PyPI:
+  - 您可以从 PyPI 安装 RDAgent 包：
 
     .. code-block:: sh
 
         pip install rdagent
 
 
-- 🚀 Run the Application
+- 🚀 运行应用程序
     
-  - Prepare relevant files (in pdf format) by uploading papers to the directory below and copy the path as report_file_path.
+  - 将相关文件（pdf 格式）上传到以下目录，并将路径复制为 report_file_path。
       
     .. code-block:: sh
 
         rdagent/scenarios/general_model
     
-  - Run the following command in your terminal within the same virtual environment:
+  - 在同一虚拟环境的终端中运行以下命令：
   
     .. code-block:: sh
 
-        rdagent general_model --report-file-path=<path_to_pdf_file>
+        rdagent general_model --report-file-path=<pdf_文件_路径>

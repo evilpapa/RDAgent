@@ -30,7 +30,7 @@ class EvolvingKnowledgeBase(KnowledgeBase):
 
 
 class EvolvableSubjects(EvaluableObj):
-    """The target object to be evolved"""
+    """要演进的目标对象"""
 
     def clone(self) -> EvolvableSubjects:
         return copy.deepcopy(self)
@@ -41,14 +41,14 @@ ASpecificEvolvableSubjects = TypeVar("ASpecificEvolvableSubjects", bound=Evolvab
 
 @dataclass
 class EvoStep(Generic[ASpecificEvolvableSubjects]):
-    """At a specific step,
-    based on
-    - previous trace
-    - newly RAG knowledge `QueriedKnowledge`
+    """在特定步骤中，
+    基于
+    - 先前的跟踪
+    - 新的 RAG 知识 `QueriedKnowledge`
 
-    the EvolvableSubjects is evolved to a new one `EvolvableSubjects`.
+    EvolvableSubjects 将演进为一个新的 `EvolvableSubjects`。
 
-    (optional) After evaluation, we get feedback `feedback`.
+    （可选）评估后，我们得到反馈 `feedback`。
     """
 
     evolvable_subjects: ASpecificEvolvableSubjects
@@ -69,17 +69,16 @@ class EvolvingStrategy(ABC, Generic[ASpecificEvolvableSubjects]):
         queried_knowledge: QueriedKnowledge | None = None,
         **kwargs: Any,
     ) -> ASpecificEvolvableSubjects:
-        """The evolving trace is a list of (evolvable_subjects, feedback) ordered
-        according to the time.
+        """演进跟踪是按时间排序的（可演进主题，反馈）列表。
 
-        The reason why the parameter is important for the evolving.
-        - evolving_trace: the historical feedback is important.
-        - queried_knowledge: queried knowledge
+        该参数对演进很重要的原因。
+        - evolving_trace：历史反馈很重要。
+        - queried_knowledge：查询到的知识
         """
 
 
 class RAGStrategy(ABC, Generic[ASpecificEvolvableSubjects]):
-    """Retrieval Augmentation Generation Strategy"""
+    """检索增强生成策略"""
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.knowledgebase: EvolvingKnowledgeBase = self.load_or_init_knowledge_base(*args, **kwargs)
@@ -109,10 +108,10 @@ class RAGStrategy(ABC, Generic[ASpecificEvolvableSubjects]):
         return_knowledge: bool = False,
         **kwargs: Any,
     ) -> Knowledge | None:
-        """Generating new knowledge based on the evolving trace.
-        - It is encouraged to query related knowledge before generating new knowledge.
+        """基于演进跟踪生成新知识。
+        - 鼓励在生成新知识之前查询相关知识。
 
-        RAGStrategy should maintain the new knowledge all by itself.
+        RAGStrategy 应自行维护新知识。
         """
 
     @abstractmethod
@@ -121,7 +120,7 @@ class RAGStrategy(ABC, Generic[ASpecificEvolvableSubjects]):
 
     @abstractmethod
     def load_dumped_knowledge_base(self, *args: Any, **kwargs: Any) -> None:
-        """This is to load the dumped knowledge base.
-        It's mainly used in parallel coding of which several coder shares the same knowledge base.
-        Then the agent should load the knowledge base from others before updating it.
+        """这是为了加载转储的知识库。
+        它主要用于并行编码，其中多个编码器共享同一个知识库。
+        然后，智能体在更新知识库之前应从其他地方加载知识库。
         """

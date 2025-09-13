@@ -1,31 +1,31 @@
 =========================
-For Development
+对于开发
 =========================
 
-If you want to try the latest version or contribute to RD-Agent. You can install it from the source and follow the commands in this page.
+如果您想尝试最新版本或为 RD-Agent 做出贡献。您可以从源代码安装并按照此页面中的命令进行操作。
 
    .. code-block:: bash
 
       git clone https://github.com/microsoft/RD-Agent
 
 
-🔧Prepare for development
+🔧准备开发
 =========================
 
-- Set up the development environment.
+- 设置开发环境。
 
    .. code-block:: bash
 
       make dev
 
-- Run linting and checking.
+- 运行 linting 和检查。
 
    .. code-block:: bash
 
       make lint
 
 
-- Some linting issues can be fixed automatically. We have added a command in the Makefile for easy use.
+- 一些 linting 问题可以自动修复。我们在 Makefile 中添加了一个命令以便于使用。
 
    .. code-block:: bash
 
@@ -33,13 +33,13 @@ If you want to try the latest version or contribute to RD-Agent. You can install
 
 
 
-Code Structure
+代码结构
 =========================
 
 .. code-block:: text
 
     📂 src
-    ➥ 📂 <project name>: avoid namespace conflict
+    ➥ 📂 <项目名称>: 避免命名空间冲突
       ➥ 📁 core
       ➥ 📁 components/A
       ➥ 📁 components/B
@@ -52,34 +52,34 @@ Code Structure
 .. list-table::
    :header-rows: 1
 
-   * - Folder Name
-     - Description
+   * - 文件夹名称
+     - 描述
    * - 📁 core
-     - The core framework of the system. All classes should be abstract and usually can't be used directly.
+     - 系统的核心框架。所有类都应该是抽象的，通常不能直接使用。
    * - 📁 component/A
-     - Useful components that can be used by others (e.g., scenarios). Many subclasses of core classes are located here.
+     - 其他人（例如，场景）可以使用的有用组件。核心类的许多子类都位于此处。
    * - 📁 scenarios/X
-     - Concrete features for specific scenarios (usually built based on components or core). These modules are often unreusable across scenarios.
+     - 特定场景的具体功能（通常基于组件或核心构建）。这些模块通常在不同场景之间不可重用。
    * - 📁 app
-     - Applications for specific scenarios (usually built based on components or scenarios). Removing any of them does not affect the system's completeness or other scenarios.
+     - 特定场景的应用程序（通常基于组件或场景构建）。删除其中任何一个都不会影响系统的完整性或其他场景。
    * - 📁 scripts
-     - Quick and dirty things. These are candidates for core, components, scenarios, and apps.
+     - 快速而粗糙的东西。这些是核心、组件、场景和应用程序的候选者。
 
 
 
-Conventions
+约定
 ===========
 
 
-File Naming Convention
+文件命名约定
 ----------------------
 
 .. list-table::
    :header-rows: 1
 
-   * - Name
-     - Description
+   * - 名称
+     - 描述
    * - `conf.py`
-     - The configuration for the module, app, and project.
+     - 模块、应用程序和项目的配置。
 
-.. <!-- TODO: renaming files -->
+.. <!-- TODO: 重命名文件 -->

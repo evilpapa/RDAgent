@@ -1,14 +1,14 @@
 =============
-API Reference
+API 参考
 =============
 
-Here you can find all ``RDAgent``'s interfaces.
+在这里你可以找到所有 ``RDAgent`` 的接口。
 
 
-RD Loop
+RD 循环
 =======
 
-Research
+研究
 --------
 
 .. automodule:: rdagent.core.proposal

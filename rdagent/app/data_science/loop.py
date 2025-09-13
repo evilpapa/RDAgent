@@ -25,35 +25,35 @@ def main(
 ):
     """
 
-    Parameters
+    参数
     ----------
     path :
-        A path like `$LOG_PATH/__session__/1/0_propose`. This indicates that we restore the state after finishing step 0 in loop 1.
+        类似 `$LOG_PATH/__session__/1/0_propose` 的路径。这表示我们在完成循环 1 中的步骤 0 后恢复状态。
     checkout :
-        Used to control the log session path. Boolean type, default is True.
-        - If True, the new loop will use the existing folder and clear logs for sessions after the one corresponding to the given path.
-        - If False, the new loop will use the existing folder but keep the logs for sessions after the one corresponding to the given path.
+        用于控制日志会话路径。布尔类型，默认为 True。
+        - 如果为 True，新循环将使用现有文件夹并清除给定路径对应的会话之后的会话日志。
+        - 如果为 False，新循环将使用现有文件夹，但保留给定路径对应的会话之后的会话日志。
     checkout_path:
-        If a checkout_path (or a str like Path) is provided, the new loop will be saved to that path, leaving the original path unchanged.
+        如果提供了 checkout_path（或类似 Path 的 str），新循环将保存到该路径，而原始路径保持不变。
     step_n :
-        Number of steps to run; if None, the process will run indefinitely until an error or KeyboardInterrupt occurs.
+        要运行的步数；如果为 None，该过程将无限期运行，直到出现错误或 KeyboardInterrupt。
     loop_n :
-        Number of loops to run; if None, the process will run indefinitely until an error or KeyboardInterrupt occurs.
-        - If the current loop is incomplete, it will be counted as the first loop for completion.
-        - If both step_n and loop_n are provided, the process will stop as soon as either condition is met.
+        要运行的循环数；如果为 None，该过程将无限期运行，直到出现错误或 KeyboardInterrupt。
+        - 如果当前循环未完成，它将被计为要完成的第一个循环。
+        - 如果同时提供了 step_n 和 loop_n，则一旦任一条件满足，该过程就会停止。
     competition :
-        Competition name.
+        竞赛名称。
     replace_timer :
-        If a session is loaded, determines whether to replace the timer with session.timer.
+        如果加载了会话，则确定是否用 session.timer 替换计时器。
     exp_gen_cls :
-        When there are different stages, the exp_gen can be replaced with the new proposal.
+        当有不同阶段时，可以用新的提案替换 exp_gen。
 
 
-    Auto R&D Evolving loop for models in a Kaggle scenario.
-    You can continue running a session by using the command:
+    Kaggle 场景中模型的自动研发演进循环。
+    您可以使用以下命令继续运行会话：
     .. code-block:: bash
-        dotenv run -- python rdagent/app/data_science/loop.py [--competition titanic] $LOG_PATH/__session__/1/0_propose  --step_n 1   # `step_n` is an optional parameter
-        rdagent kaggle --competition playground-series-s4e8  # This command is recommended.
+        dotenv run -- python rdagent/app/data_science/loop.py [--competition titanic] $LOG_PATH/__session__/1/0_propose  --step_n 1   # `step_n` 是一个可选参数
+        rdagent kaggle --competition playground-series-s4e8  # 推荐使用此命令。
     """
     if not checkout_path is None:
         checkout = Path(checkout_path)
@@ -69,7 +69,7 @@ def main(
     else:
         kaggle_loop: DataScienceRDLoop = DataScienceRDLoop.load(path, checkout=checkout, replace_timer=replace_timer)
 
-    # replace exp_gen if we have new class
+    # 如果有新类，则替换 exp_gen
     if exp_gen_cls is not None:
         kaggle_loop.exp_gen = import_class(exp_gen_cls)(kaggle_loop.exp_gen.scen)
 

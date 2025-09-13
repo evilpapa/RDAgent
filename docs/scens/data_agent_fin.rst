@@ -1,23 +1,23 @@
 .. _data_agent_fin:
 
 =====================
-Finance Data Agent
+金融数据智能体
 =====================
 
 
-**🤖 Automated Quantitative Trading & Iterative Factors Evolution**
+**🤖 自动化量化交易与迭代因子演进**
 -------------------------------------------------------------------
 
-📖 Background
+📖 背景
 ~~~~~~~~~~~~~~
-In the dynamic world of quantitative trading, **factors** serve as the strategic tools that enable traders to exploit market inefficiencies. 
-These factors—ranging from simple metrics like price-to-earnings ratios to complex models like discounted cash flows—are the key to predicting stock prices with a high degree of accuracy.
+在动态的量化交易世界中，**因子** 作为战略工具，使交易者能够利用市场无效性。
+这些因子——从简单的指标如市盈率到复杂的模型如贴现现金流——是高精度预测股价的关键。
 
-By leveraging these factors, quantitative traders can develop sophisticated strategies that not only identify market patterns but also significantly enhance trading efficiency and precision. 
-The ability to systematically analyze and apply these factors is what separates ordinary trading from truly strategic market outmaneuvering.
-And this is where the **Finance Model Agent** comes into play.
+通过利用这些因子，量化交易者可以开发出复杂的策略，不仅能识别市场模式，还能显著提高交易效率和精度。
+系统地分析和应用这些因子的能力是普通交易与真正的战略性市场操纵的区别所在。
+这就是 **金融模型智能体** 发挥作用的地方。
 
-🎥 `Demo <https://rdagent.azurewebsites.net/factor_loop>`_
+🎥 `演示 <https://rdagent.azurewebsites.net/factor_loop>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
@@ -25,107 +25,107 @@ And this is where the **Finance Model Agent** comes into play.
     <div style="display: flex; justify-content: center; align-items: center;">
       <video width="600" controls>
         <source src="https://rdagent.azurewebsites.net/media/65bb598f1372c1857ccbf09b2acf5d55830911625048c03102291098.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        您的浏览器不支持视频标签。
       </video>
     </div>
 
 
-🌟 Introduction
+🌟 介绍
 ~~~~~~~~~~~~~~~~
-In this scenario, our agent illustrates the iterative process of hypothesis generation, knowledge construction, and decision-making. 
+在这个场景中，我们的智能体展示了假设生成、知识构建和决策的迭代过程。
 
-It highlights how financial factors evolve through continuous feedback and refinement. 
+它突出了金融因子如何通过持续的反馈和改进而演进。
 
-Here's an enhanced outline of the steps:
+以下是步骤的增强大纲：
 
-**Step 1 : Hypothesis Generation 🔍**
+**步骤 1：假设生成 🔍**
 
-- Generate and propose initial hypotheses based on previous experiment analysis and domain expertise, with thorough reasoning and financial justification.
+- 基于先前的实验分析和领域专业知识，生成并提出初步假设，并附有详尽的推理和财务理由。
 
-**Step 2 : Factor Creation ✨**
+**步骤 2：因子创建 ✨**
 
-- Based on the hypothesis, divide the tasks.
-- Each task involves developing, defining, and implementing a new financial factor, including its name, description, formulation, and variables.
+- 根据假设划分任务。
+- 每个任务都涉及开发、定义和实现一个新的金融因子，包括其名称、描述、公式和变量。
 
-**Step 3 : Factor Implementation 👨‍💻**
+**步骤 3：因子实现 👨‍💻**
 
-- Implement the factor code based on the description, evolving it as a developer would.
-- Quantitatively validate the newly created factors.
+- 根据描述实现因子代码，像开发人员一样对其进行演进。
+- 定量验证新创建的因子。
 
-**Step 4 : Backtesting with Qlib 📉**
+**步骤 4：使用 Qlib 进行回测 📉**
 
-- Integrate the full dataset into the factor implementation code and prepare the factor library.
-- Conduct backtesting using the Alpha158 plus newly developed factors and LGBModel in Qlib to evaluate the new factors' effectiveness and performance.
+- 将完整数据集集成到因子实现代码中，并准备因子库。
+- 使用 Alpha158 加上新开发的因子和 Qlib 中的 LGBModel 进行回测，以评估新因子的有效性和性能。
 
 +----------------+------------+----------------+----------------------------------------------------+
-| Dataset        | Model      | Factors        | Data Split                                         |
+| 数据集        | 模型      | 因子        | 数据拆分                                         |
 +================+============+================+====================================================+
-| CSI300         | LGBModel   | Alpha158 Plus  | +-----------+--------------------------+           |
-|                |            |                | | Train     | 2008-01-01 to 2014-12-31 |           |
+| 沪深300         | LGBModel   | Alpha158 Plus  | +-----------+--------------------------+           |
+|                |            |                | | 训练     | 2008-01-01 到 2014-12-31 |           |
 |                |            |                | +-----------+--------------------------+           |
-|                |            |                | | Valid     | 2015-01-01 to 2016-12-31 |           |
+|                |            |                | | 验证     | 2015-01-01 到 2016-12-31 |           |
 |                |            |                | +-----------+--------------------------+           |
-|                |            |                | | Test      | 2017-01-01 to 2020-08-01 |           |
+|                |            |                | | 测试      | 2017-01-01 到 2020-08-01 |           |
 |                |            |                | +-----------+--------------------------+           |
 +----------------+------------+----------------+----------------------------------------------------+
 
 
-**Step 5 : Feedback Analysis 🔍**
+**步骤 5：反馈分析 🔍**
 
-- Analyze backtest results to assess performance.
-- Incorporate feedback to refine hypotheses and improve the model.
+- 分析回测结果以评估性能。
+- 采纳反馈以完善假设并改进模型。
 
-**Step 6 :Hypothesis Refinement ♻️**
+**步骤 6：假设完善 ♻️**
 
-- Refine hypotheses based on feedback from backtesting.
-- Repeat the process to continuously improve the model.
+- 根据回测的反馈完善假设。
+- 重复该过程以不断改进模型。
 
-⚡ Quick Start
+⚡ 快速开始
 ~~~~~~~~~~~~~~~~~
 
-Please refer to the installation part in :doc:`../installation_and_configuration` to prepare your system dependency.
+请参考 :doc:`../installation_and_configuration` 中的安装部分来准备您的系统依赖。
 
-You can try our demo by running the following command:
+您可以通过运行以下命令来尝试我们的演示：
 
-- 🐍 Create a Conda Environment
+- 🐍 创建 Conda 环境
 
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
+  - 使用 Python 创建一个新的 conda 环境（在我们的 CI 中，3.10 和 3.11 版本经过了充分测试）：
 
     .. code-block:: sh
 
           conda create -n rdagent python=3.10
 
-  - Activate the environment:
+  - 激活环境：
 
     .. code-block:: sh
 
         conda activate rdagent
 
-- 📦 Install the RDAgent
+- 📦 安装 RDAgent
   
-  - You can install the RDAgent package from PyPI:
+  - 您可以从 PyPI 安装 RDAgent 包：
 
     .. code-block:: sh
 
         pip install rdagent
 
-- 🚀 Run the Application
+- 🚀 运行应用程序
     
-  - You can directly run the application by using the following command:
+  - 您可以通过使用以下命令直接运行应用程序：
     
     .. code-block:: sh
 
         rdagent fin_factor
 
 
-🛠️ Usage of modules
+🛠️ 模块使用
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. _Env Config: 
 
-- **Env Config**
+- **环境配置**
 
-The following environment variables can be set in the `.env` file to customize the application's behavior:
+可以在 `.env` 文件中设置以下环境变量来自定义应用程序的行为：
 
 .. autopydantic_settings:: rdagent.app.qlib_rd_loop.conf.FactorBasePropSetting
     :settings-show-field-summary: False

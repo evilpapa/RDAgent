@@ -1,27 +1,27 @@
 ===============================
-Framework Design & Components
+框架设计与组件
 ===============================
 
-Framework & Components
+框架与组件
 =========================
 
-.. NOTE: This depends on the correctness of `c-v` of github.
+.. NOTE: 这取决于 github 的 `c-v` 的正确性。
 
 .. image:: _static/Framework-RDAgent.png
-    :alt: Components & Feature Level
+    :alt: 组件与功能级别
 
-The image above shows the overall framework of RDAgent.
+上图显示了 RDAgent 的总体框架。
 
-In a data mining expert's daily research and development process, they propose a hypothesis (e.g., a model structure like RNN can capture patterns in time-series data), design experiments (e.g., finance data contains time-series and we can verify the hypothesis in this scenario), implement the experiment as code (e.g., Pytorch model structure), and then execute the code to get feedback (e.g., metrics, loss curve, etc.). The experts learn from the feedback and improve in the next iteration.
+在数据挖掘专家的日常研发过程中，他们会提出一个假设（例如，像 RNN 这样的模型结构可以捕捉时间序列数据中的模式），设计实验（例如，金融数据包含时间序列，我们可以在这个场景中验证这个假设），将实验实现为代码（例如，Pytorch 模型结构），然后执行代码以获得反馈（例如，指标、损失曲线等）。专家从反馈中学习，并在下一次迭代中进行改进。
 
-We have established a basic method framework that continuously proposes hypotheses, verifies them, and gets feedback from the real world. This is the first scientific research automation framework that supports linking with real-world verification.
+我们建立了一个基本的方法框架，该框架不断提出假设，验证它们，并从现实世界中获得反馈。这是第一个支持与现实世界验证相联系的科学研究自动化框架。
 
 
 .. image:: https://github.com/user-attachments/assets/60cc2712-c32a-4492-a137-8aec59cdc66e
-    :alt: Class Level Figure
+    :alt: 类级别图
 
-The figure above shows the main classes and how they fit into the workflow for those interested in the detailed code.
+上图显示了主要类以及它们如何适应对详细代码感兴趣的人员的工作流程。
 
 
-.. Detailed Design
+.. 详细设计
 .. ===============

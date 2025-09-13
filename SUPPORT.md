@@ -1,25 +1,21 @@
-# TODO: The maintainer of this repo has not yet edited this file
+# TODO: 本仓库的维护者尚未编辑此文件
 
-**REPO OWNER**: Do you want Customer Service & Support (CSS) support for this product/project?
+**仓库所有者**：您希望为此产品/项目提供客户服务与支持 (CSS) 吗？
 
-- **No CSS support:** Fill out this template with information about how to file issues and get help.
-- **Yes CSS support:** Fill out an intake form at [aka.ms/onboardsupport](https://aka.ms/onboardsupport). CSS will work with/help you to determine next steps.
-- **Not sure?** Fill out an intake as though the answer were "Yes". CSS will help you decide.
+- **无 CSS 支持：** 使用如何提交问题和获取帮助的信息填写此模板。
+- **有 CSS 支持：** 在 [aka.ms/onboardsupport](https://aka.ms/onboardsupport) 填写接收表单。CSS 将与您合作/帮助您确定后续步骤。
+- **不确定？** 像答案是“是”一样填写接收表单。CSS 将帮助您决定。
 
-*Then remove this first heading from this SUPPORT.MD file before publishing your repo.*
+*然后在发布您的仓库之前，从此 SUPPORT.MD 文件中删除第一个标题。*
 
-# Support
+# 支持
 
-## How to file issues and get help  
+## 如何提交问题和获取帮助
 
-This project uses GitHub Issues to track bugs and feature requests. Please search the existing 
-issues before filing new issues to avoid duplicates.  For new issues, file your bug or 
-feature request as a new Issue.
+本项目使用 GitHub Issues 来跟踪错误和功能请求。在提交新问题之前，请搜索现有问题以避免重复。对于新问题，请将您的错误或功能请求作为新问题提交。
 
-For help and questions about using this project, please **REPO MAINTAINER: INSERT INSTRUCTIONS HERE 
-FOR HOW TO ENGAGE REPO OWNERS OR COMMUNITY FOR HELP. COULD BE A STACK OVERFLOW TAG OR OTHER
-CHANNEL. WHERE WILL YOU HELP PEOPLE?**.
+有关使用此项目的帮助和问题，请 **仓库维护者：在此处插入有关如何与仓库所有者或社区联系以获取帮助的说明。可以是一个 STACK OVERFLOW 标签或其他渠道。您将在哪里帮助人们？**。
 
-## Microsoft Support Policy  
+## 微软支持政策
 
-Support for this **PROJECT or PRODUCT** is limited to the resources listed above.
+对此 **项目或产品** 的支持仅限于上面列出的资源。

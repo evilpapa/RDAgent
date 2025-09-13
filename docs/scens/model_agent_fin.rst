@@ -1,23 +1,23 @@
 .. _model_agent_fin:
 
 =======================
-Finance Model Agent
+金融模型智能体
 =======================
 
-**🤖 Automated Quantitative Trading & Iterative Model Evolution**
+**🤖 自动化量化交易与迭代模型演进**
 ------------------------------------------------------------------------------------------
 
-📖 Background
+📖 背景
 ~~~~~~~~~~~~~~
-In the realm of quantitative finance, both factor discovery and model development play crucial roles in driving performance. 
-While much attention is often given to the discovery of new financial factors, the **models** that leverage these factors are equally important. 
-The effectiveness of a quantitative strategy depends not only on the factors used but also on how well these factors are integrated into robust, predictive models.
+在量化金融领域，因子发现和模型开发在驱动性能方面都起着至关重要的作用。
+虽然人们通常更关注新金融因子的发现，但利用这些因子的 **模型** 也同样重要。
+量化策略的有效性不仅取决于所使用的因子，还取决于这些因子如何被很好地整合到稳健的预测模型中。
 
-However, the process of developing and optimizing these models can be labor-intensive and complex, requiring continuous refinement and adaptation to ever-changing market conditions. 
-And this is where the **Finance Model Agent** steps in.
+然而，开发和优化这些模型的过程可能既耗时又复杂，需要不断地改进和适应不断变化的市场条件。
+这就是 **金融模型智能体** 发挥作用的地方。
 
 
-🎥 `Demo <https://rdagent.azurewebsites.net/model_loop>`_
+🎥 `演示 <https://rdagent.azurewebsites.net/model_loop>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
@@ -25,126 +25,126 @@ And this is where the **Finance Model Agent** steps in.
     <div style="display: flex; justify-content: center; align-items: center;">
       <video width="600" controls>
         <source src="https://rdagent.azurewebsites.net/media/d85e8cab1da1cd3501d69ce837452f53a971a24911eae7bfa9237137.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        您的浏览器不支持视频标签。
       </video>
     </div>
 
 
-🌟 Introduction
+🌟 介绍
 ~~~~~~~~~~~~~~~~
 
-In this scenario, our automated system proposes hypothesis, constructs model, implements code, conducts back-testing, and utilizes feedback in a continuous, iterative process.
+在这个场景中，我们的自动化系统在一个持续的迭代过程中提出假设、构建模型、实现代码、进行回测并利用反馈。
 
-The goal is to automatically optimize performance metrics within the Qlib library, ultimately discovering the most efficient code through autonomous research and development.
+目标是在 Qlib 库中自动优化性能指标，最终通过自主研发发现最高效的代码。
 
-Here's an enhanced outline of the steps:
+以下是步骤的增强大纲：
 
-**Step 1 : Hypothesis Generation 🔍**
+**步骤 1：假设生成 🔍**
 
-- Generate and propose initial hypotheses based on previous experiment analysis and domain expertise, with thorough reasoning and financial justification.
+- 基于先前的实验分析和领域专业知识，生成并提出初步假设，并附有详尽的推理和财务理由。
 
-**Step 2 : Model Creation ✨**
+**步骤 2：模型创建 ✨**
 
-- Transform the hypothesis into a task.
-- Develop, define, and implement a quantitative model, including its name, description, and formulation.
+- 将假设转化为任务。
+- 开发、定义和实现一个量化模型，包括其名称、描述和公式。
 
-**Step 3 : Model Implementation 👨‍💻**
+**步骤 3：模型实现 👨‍💻**
 
-- Implement the model code based on the detailed description.
-- Evolve the model iteratively as a developer would, ensuring accuracy and efficiency.
+- 根据详细描述实现模型代码。
+- 像开发人员一样迭代地演进模型，确保准确性和效率。
 
-**Step 4 : Backtesting with Qlib 📉**
+**步骤 4：使用 Qlib 进行回测 📉**
 
-- Conduct backtesting using the newly developed model and 20 factors extracted from Alpha158 in Qlib.
-- Evaluate the model's effectiveness and performance.
+- 使用新开发的模型和从 Alpha158 中提取的 20 个因子在 Qlib 中进行回测。
+- 评估模型的有效性和性能。
 
 +----------------+------------+------------------------+----------------------------------------------------+
-| Dataset        | Model      | Factors                | Data Split                                         |
+| 数据集        | 模型      | 因子                | 数据拆分                                         |
 +================+============+========================+====================================================+
-| CSI300         | RDAgent-dev| 20 factors (Alpha158)  | +-----------+--------------------------+           |
-|                |            |                        | | Train     | 2008-01-01 to 2014-12-31 |           |
+| 沪深300         | RDAgent-dev| 20 个因子 (Alpha158)  | +-----------+--------------------------+           |
+|                |            |                        | | 训练     | 2008-01-01 到 2014-12-31 |           |
 |                |            |                        | +-----------+--------------------------+           |
-|                |            |                        | | Valid     | 2015-01-01 to 2016-12-31 |           |
+|                |            |                        | | 验证     | 2015-01-01 到 2016-12-31 |           |
 |                |            |                        | +-----------+--------------------------+           |
-|                |            |                        | | Test      | 2017-01-01 to 2020-08-01 |           |
+|                |            |                        | | 测试      | 2017-01-01 到 2020-08-01 |           |
 |                |            |                        | +-----------+--------------------------+           |
 +----------------+------------+------------------------+----------------------------------------------------+
 
-**Step 5 : Feedback Analysis 🔍**
+**步骤 5：反馈分析 🔍**
 
-- Analyze backtest results to assess performance.
-- Incorporate feedback to refine hypotheses and improve the model.
+- 分析回测结果以评估性能。
+- 采纳反馈以完善假设并改进模型。
 
-**Step 6 :Hypothesis Refinement ♻️**
+**步骤 6：假设完善 ♻️**
 
-- Refine hypotheses based on feedback from backtesting.
-- Repeat the process to continuously improve the model.
+- 根据回测的反馈完善假设。
+- 重复该过程以不断改进模型。
 
-⚡ Quick Start
+⚡ 快速开始
 ~~~~~~~~~~~~~~~~~
 
-Please refer to the installation part in :doc:`../installation_and_configuration` to prepare your system dependency.
+请参考 :doc:`../installation_and_configuration` 中的安装部分来准备您的系统依赖。
 
-You can try our demo by running the following command:
+您可以通过运行以下命令来尝试我们的演示：
 
-- 🐍 Create a Conda Environment
+- 🐍 创建 Conda 环境
 
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
+  - 使用 Python 创建一个新的 conda 环境（在我们的 CI 中，3.10 和 3.11 版本经过了充分测试）：
 
     .. code-block:: sh
     
         conda create -n rdagent python=3.10
 
-  - Activate the environment:
+  - 激活环境：
 
     .. code-block:: sh
 
         conda activate rdagent
 
-- 📦 Install the RDAgent
+- 📦 安装 RDAgent
     
-  - You can install the RDAgent package from PyPI:
+  - 您可以从 PyPI 安装 RDAgent 包：
 
     .. code-block:: sh
 
         pip install rdagent
 
-- 🚀 Run the Application
+- 🚀 运行应用程序
     
-  - You can directly run the application by using the following command:
+  - 您可以通过使用以下命令直接运行应用程序：
     
     .. code-block:: sh
 
         rdagent fin_model
 
-🛠️ Usage of modules
+🛠️ 模块使用
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. _Env Config: 
 
-- **Env Config**
+- **环境配置**
 
-The following environment variables can be set in the `.env` file to customize the application's behavior:
+可以在 `.env` 文件中设置以下环境变量来自定义应用程序的行为：
 
 .. autopydantic_settings:: rdagent.app.qlib_rd_loop.conf.ModelBasePropSetting
     :settings-show-field-summary: False
     :exclude-members: Config
 
-- **Qlib Config**
-    - The `config.yaml` file located in the `model_template` folder contains the relevant configurations for running the developed model in Qlib. The default settings include key information such as:
-        - **market**: Specifies the market, which is set to `csi300`.
-        - **fields_group**: Defines the fields group, with the value `feature`.
-        - **col_list**: A list of columns used, including various indicators such as `RESI5`, `WVMA5`, `RSQR5`, and others.
-        - **start_time**: The start date for the data, set to `2008-01-01`.
-        - **end_time**: The end date for the data, set to `2020-08-01`.
-        - **fit_start_time**: The start date for fitting the model, set to `2008-01-01`.
-        - **fit_end_time**: The end date for fitting the model, set to `2014-12-31`.
+- **Qlib 配置**
+    - `model_template` 文件夹中的 `config.yaml` 文件包含在 Qlib 中运行已开发模型的相关配置。默认设置包括以下关键信息：
+        - **market**：指定市场，设置为 `csi300`。
+        - **fields_group**：定义字段组，值为 `feature`。
+        - **col_list**：使用的列列表，包括各种指标，如 `RESI5`、`WVMA5`、`RSQR5` 等。
+        - **start_time**：数据的开始日期，设置为 `2008-01-01`。
+        - **end_time**：数据的结束日期，设置为 `2020-08-01`。
+        - **fit_start_time**：拟合模型的开始日期，设置为 `2008-01-01`。
+        - **fit_end_time**：拟合模型的结束日期，设置为 `2014-12-31`。
 
-    - The default hyperparameters used in the configuration are as follows:
-        - **n_epochs**: The number of epochs, set to `100`.
-        - **lr**: The learning rate, set to `1e-3`.
-        - **early_stop**: The early stopping criterion, set to `10`.
-        - **batch_size**: The batch size, set to `2000`.
-        - **metric**: The evaluation metric, set to `loss`.
-        - **loss**: The loss function, set to `mse`.
-        - **n_jobs**: The number of parallel jobs, set to `20`.
+    - 配置中使用的默认超参数如下：
+        - **n_epochs**：时期数，设置为 `100`。
+        - **lr**：学习率，设置为 `1e-3`。
+        - **early_stop**：早停标准，设置为 `10`。
+        - **batch_size**：批量大小，设置为 `2000`。
+        - **metric**：评估指标，设置为 `loss`。
+        - **loss**：损失函数，设置为 `mse`。
+        - **n_jobs**：并行作业数，设置为 `20`。

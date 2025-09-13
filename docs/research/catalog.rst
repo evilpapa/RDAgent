@@ -1,33 +1,33 @@
 ===========
-Research
+研究
 ===========
 
-To achieve the good effects and improve R&D capabilities, we face multiple challenges, the most important of which is the continuous evolution capability. Existing large language models (LLMs) find it difficult to continue growing their capabilities after training is completed. Moreover, the training process of LLMs focuses more on general knowledge, and the lack of depth in more specialized knowledge becomes an obstacle to solving professional R&D problems within the industry. This specialized knowledge needs to be learned and acquired from in-depth industry practice.
+为了达到良好的效果并提高研发能力，我们面临着多重挑战，其中最重要的是持续进化的能力。现有的大型语言模型（LLM）在训练完成后很难继续增长其能力。此外，LLM 的训练过程更侧重于通用知识，而在更专业的知识方面缺乏深度，这成为解决行业内专业研发问题的障碍。这种专业知识需要从深入的行业实践中学习和获取。
 
 
-Our RD-Agent, on the other hand, can continuously acquire in-depth domain knowledge through deep exploration during the R&D phase, allowing its R&D capabilities to keep growing.
+另一方面，我们的 RD-Agent 可以在研发阶段通过深入探索不断获取深入的领域知识，使其研发能力不断增长。
 
-To address these key challenges and achieve industrial value, a series of research work needs to be completed.
+为了应对这些关键挑战并实现工业价值，需要完成一系列的研究工作。
 
 
-.. list-table:: Research Areas and Descriptions
+.. list-table:: 研究领域和描述
    :header-rows: 1
 
-   * - Research Area
-     - Description
-   * - :doc:`Benchmark <benchmark>`
-     - Benchmark the R&D abilities
-   * - Research
-     - Idea proposal: Explore new ideas or refine existing ones
-   * - :doc:`Development <dev>`
-     - Ability to realize ideas: Implement and execute ideas
+   * - 研究领域
+     - 描述
+   * - :doc:`基准测试 <benchmark>`
+     - 对研发能力进行基准测试
+   * - 研究
+     - 想法提出：探索新想法或完善现有想法
+   * - :doc:`开发 <dev>`
+     - 实现想法的能力：实施和执行想法
 
 
 
 
 .. toctree::
    :maxdepth: 1
-   :caption: Doctree:
+   :caption: 目录树:
    :hidden:
 
    benchmark

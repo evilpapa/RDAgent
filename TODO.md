@@ -1,10 +1,10 @@
-We encourage to set the TODOs in code. But some TODOs are more global.
-So we place it here.
+我们鼓励在代码中设置 TODO。但有些 TODO 更具全局性。
+所以我们把它放在这里。
 
 
-- [ ] Aligning the naming of files in components & scenarios.
-  - We would like to have the same logic for naming convention in components(reusable components for all scenarios) and scenarios (componets for specific scenario).
-  - But now we have following mismatch
-    - `coder` in `components` & `developer` in `components`
-- [ ] The name of the folders mismatch with the content in them.
-  - Why are scenarios in experiments?
+- [ ] 对齐组件和场景中文件的命名。
+  - 我们希望在组件（所有场景的可重用组件）和场景（特定场景的组件）中具有相同的命名约定逻辑。
+  - 但现在我们有以下不匹配
+    - `components` 中的 `coder` 和 `components` 中的 `developer`
+- [ ] 文件夹的名称与其中的内容不匹配。
+  - 为什么场景在实验中？

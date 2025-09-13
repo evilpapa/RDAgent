@@ -29,7 +29,7 @@ class EvoAgent(ABC, Generic[ASpecificEvaluator, ASpecificEvolvableSubjects]):
         eva: ASpecificEvaluator | Feedback,
     ) -> Generator[ASpecificEvolvableSubjects, None, None]:
         """
-        yield EvolvableSubjects for caller for easier process control and logging.
+        为调用者生成 EvolvableSubjects，以便于过程控制和日志记录。
         """
 
 
@@ -77,39 +77,39 @@ class RAGEvoAgent(EvoAgent[RAGEvaluator, ASpecificEvolvableSubjects], Generic[AS
                 # 1. RAG
                 queried_knowledge = None
                 if self.with_knowledge and self.rag is not None:
-                    # TODO: Putting the evolving trace in here doesn't actually work
+                    # TODO: 在此处放置演进跟踪实际上不起作用
                     queried_knowledge = self.rag.query(evo, self.evolving_trace)
 
-                # 2. evolve
+                # 2. 演进
                 evo = self.evolving_strategy.evolve(
                     evo=evo,
                     evolving_trace=self.evolving_trace,
                     queried_knowledge=queried_knowledge,
                 )
 
-                # 3. Pack evolve results
+                # 3. 打包演进结果
                 es = EvoStep[ASpecificEvolvableSubjects](evo, queried_knowledge)
 
-                # 4. Evaluation
+                # 4. 评估
                 if self.with_feedback:
                     es.feedback = (
                         eva if isinstance(eva, Feedback) else eva.evaluate(evo, queried_knowledge=queried_knowledge)
                     )
                     logger.log_object(es.feedback, tag="evolving feedback")
 
-                # 5. update trace
+                # 5. 更新跟踪
                 self.evolving_trace.append(es)
 
-                # 6. knowledge self-evolving
+                # 6. 知识自演进
                 if self.knowledge_self_gen and self.rag is not None:
                     with FileLock(self.filelock_path) if self.enable_filelock else nullcontext():  # type: ignore[arg-type]
                         self.rag.load_dumped_knowledge_base()
                         self.rag.generate_knowledge(self.evolving_trace)
                         self.rag.dump_knowledge_base()
 
-                yield evo  # yield the control to caller for process control and logging.
+                yield evo  # 将控制权交给调用者以进行过程控制和日志记录。
 
-                # 7. check if all tasks are completed
+                # 7. 检查是否所有任务都已完成
                 if self.with_feedback and es.feedback is not None and es.feedback.finished():
                     logger.info("All tasks in evolving subject have been completed.")
                     break

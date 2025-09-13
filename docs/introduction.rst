@@ -1,18 +1,18 @@
 =========================
-Introduction
+介绍
 =========================
 
 
 
-In modern industry, research and development (R&D) is crucial for the enhancement of industrial productivity, especially in the AI era, where the core aspects of R&D are mainly focused on data and models. We are committed to automate these high-value generic R&D processes through our open source R&D automation tool RDAgent, which let AI drive data-driven AI.
+在现代工业中，研究和开发（R&D）对于提高工业生产力至关重要，尤其是在人工智能时代，研发的核心方面主要集中在数据和模型上。我们致力于通过我们的开源研发自动化工具 RDAgent 来自动化这些高价值的通用研发流程，让 AI 驱动数据驱动的 AI。
 
 .. image:: _static/scen.png
-   :alt: Our focused scenario
+   :alt: 我们关注的场景
 
 
-Our RDAgent is designed to automate the most critical industrial R&D processes, focusing first on data-driven scenarios, to greatly boost the development productivity of models and data. 
+我们的 RDAgent 旨在自动化最关键的工业研发流程，首先关注数据驱动的场景，以极大地提高模型和数据的开发生产力。
 
-Methodologically, we propose an autonomous agent framework that consists of two key parts: (R)esearch stands for actively exploring by proposing new ideas, and (D)evelopment stands for realizing these ideas. The effectiveness of these two components will ultimately get feedbacks through practice, and both research and development capabilities can continuously learn and grow in the process.
+在方法论上，我们提出了一个由两个关键部分组成的自主智能体框架：（R）研究代表通过提出新想法积极探索，（D）开发代表实现这些想法。这两个组成部分的有效性最终将通过实践获得反馈，研究和开发能力都可以在此过程中不断学习和成长。
 
 
-For a quick start, visit `our GitHub home page <https://github.com/microsoft/RD-Agent>`_ ⚡. If you've already checked it out and want more details, please keep reading.
+要快速入门，请访问 `我们的 GitHub 主页 <https://github.com/microsoft/RD-Agent>`_ ⚡。如果您已经查看过并想了解更多详细信息，请继续阅读。

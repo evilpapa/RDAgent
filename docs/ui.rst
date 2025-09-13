@@ -1,49 +1,49 @@
 ==============
-User Interface
+用户界面
 ==============
 
 
-Introduction
+介绍
 ============
 
-RD-Agent will generate some logs during the R&D process. These logs are very useful for debugging and understanding the R&D process. However, just viewing the terminal log is not intuitive enough. RD-Agent provides a web app as UI to visualize the R&D process. You can easily view the R&D process and understand the R&D process better.
+RD-Agent 将在研发过程中生成一些日志。这些日志对于调试和理解研发过程非常有用。然而，仅查看终端日志不够直观。RD-Agent 提供了一个 Web 应用程序作为 UI 来可视化研发过程。您可以轻松地查看研发过程并更好地理解研发过程。
 
-A Quick Demo
+快速演示
 ============
 
-Start Web App
+启动 Web 应用
 -------------
 
-In `RD-Agent/` folder, run:
+在 `RD-Agent/` 文件夹中，运行：
 
 .. code-block:: bash
 
-    rdagent ui --port <port> --log-dir <log_dir like "log/"> [--debug]
+    rdagent ui --port <端口> --log-dir <日志目录，如 "log/"> [--debug]
 
-This will start a web app on `http://localhost:<port>`.
+这将在 `http://localhost:<端口>` 上启动一个 Web 应用程序。
 
-**NOTE**: The log_dir parameter is not required. You can manually enter the log_path in the web app. If you set the log_dir parameter, you can easily select a different log_path in the web app.
+**注意**：log_dir 参数不是必需的。您可以在 Web 应用程序中手动输入 log_path。如果设置了 log_dir 参数，您可以轻松地在 Web 应用程序中选择不同的 log_path。
 
---debug is optional, it will show a "Single Step Run" button in sidebar and saved objects info in the web app.
+--debug 是可选的，它将在侧边栏中显示“单步运行”按钮，并在 Web 应用程序中显示保存的对象信息。
 
-Use Web App
+使用 Web 应用
 -----------
 
-1. Open the sidebar.
+1. 打开侧边栏。
 
-.. TODO: update these
+.. TODO: 更新这些
 
-2. Select the scenario you want to show. There are some pre-defined scenarios:
-    - Qlib Model
-    - Qlib Factor
-    - Data Mining
-    - Model from Paper
+2. 选择要显示的场景。有一些预定义的场景：
+    - Qlib 模型
+    - Qlib 因子
+    - 数据挖掘
+    - 来自论文的模型
     - Kaggle
 
-3. Click the `Config⚙️` button and input the log path (if you set the log_dir parameter, you can select a log_path in the dropdown list).
+3. 单击 `Config⚙️` 按钮并输入日志路径（如果设置了 log_dir 参数，您可以在下拉列表中选择日志路径）。
 
-4. Click the buttons below Config⚙️ to show the scenario execution process. Buttons are:
-    - All Loops: Show complete scenario execution process.
-    - Next Loop: Show one success **R&D Loop**.
-    - One Evolving: Show one **evolving** step of **development** part.
-    - refresh logs: clear shown logs.
+4. 单击 Config⚙️ 下方的按钮以显示场景执行过程。按钮包括：
+    - 所有循环：显示完整的场景执行过程。
+    - 下一个循环：显示一个成功的 **研发循环**。
+    - 一次演进：显示 **开发** 部分的一个 **演进** 步骤。
+    - 刷新日志：清除显示的日志。

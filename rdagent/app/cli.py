@@ -1,9 +1,9 @@
 """
-CLI entrance for all rdagent application.
+所有 rdagent 应用程序的 CLI 入口。
 
-This will
-- make rdagent a nice entry and
-- autoamtically load dotenv
+这将
+- 使 rdagent 成为一个不错的入口
+- 自动加载 dotenv
 """
 
 import sys
@@ -11,8 +11,8 @@ import sys
 from dotenv import load_dotenv
 
 load_dotenv(".env")
-# 1) Make sure it is at the beginning of the script so that it will load dotenv before initializing BaseSettings.
-# 2) The ".env" argument is necessary to make sure it loads `.env` from the current directory.
+# 1) 确保它在脚本的开头，以便在初始化 BaseSettings 之前加载 dotenv。
+# 2) ".env" 参数是必要的，以确保它从当前目录加载 `.env`。
 
 import subprocess
 from importlib.resources import path as rpath
@@ -36,7 +36,7 @@ app = typer.Typer()
 
 def ui(port=19899, log_dir="", debug: bool = False, data_science: bool = False):
     """
-    start web app to show the log traces.
+    启动 Web 应用程序以显示日志跟踪。
     """
     if data_science:
         with rpath("rdagent.log.ui", "dsapp.py") as app_path:
@@ -56,7 +56,7 @@ def ui(port=19899, log_dir="", debug: bool = False, data_science: bool = False):
 
 def server_ui(port=19899):
     """
-    start web app to show the log traces in real time
+    启动 Web 应用程序以实时显示日志跟踪
     """
     subprocess.run(["python", "rdagent/log/server/app.py", f"--port={port}"])
 

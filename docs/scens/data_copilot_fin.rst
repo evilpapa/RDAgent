@@ -1,26 +1,26 @@
 .. _data_copilot_fin:
 
 =====================
-Finance Data Copilot
+金融数据助手
 =====================
 
 
-**🤖 Automated Quantitative Trading & Factors Extraction from Financial Reports**
+**🤖 自动化量化交易与从财务报告中提取因子**
 ---------------------------------------------------------------------------------
 
-📖 Background
+📖 背景
 ~~~~~~~~~~~~~~
-**Research reports** are treasure troves of insights, often unveiling potential **factors** that can drive successful quantitative trading strategies. 
-Yet, with the sheer volume of reports available, extracting the most valuable insights efficiently becomes a daunting task.
+**研究报告** 是洞察力的宝库，常常揭示出能够驱动成功的量化交易策略的潜在 **因子**。
+然而，面对海量的报告，高效地提取最有价值的见解成为一项艰巨的任务。
 
-Furthermore, rather than hastily replicating factors from a report, it's essential to delve into the underlying logic of their construction. 
-Does the factor capture the essential market dynamics? How unique is it compared to the factors already in your library?
+此外，与其仓促地复制报告中的因子，不如深入研究其构建的底层逻辑。
+该因子是否抓住了必要的市场动态？与您库中已有的因子相比，它有多独特？
 
-Therefore, there is an urgent need for a systematic approach to design a framework that can effectively manage this process. 
-And this is where the **Finance Data Copilot** steps in.
+因此，迫切需要一种系统化的方法来设计一个能够有效管理这一过程的框架。
+这就是 **金融数据助手** 发挥作用的地方。
 
 
-🎥 `Demo <https://rdagent.azurewebsites.net/report_factor>`_
+🎥 `演示 <https://rdagent.azurewebsites.net/report_factor>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
@@ -28,106 +28,106 @@ And this is where the **Finance Data Copilot** steps in.
     <div style="display: flex; justify-content: center; align-items: center;">
       <video width="600" controls>
         <source src="https://rdagent.azurewebsites.net/media/7b14b2bd3d8771da9cf7eb799b6d96729cec3d35c8d4f68060f3e2fd.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        您的浏览器不支持视频标签。
       </video>
     </div>
 
 
-🌟 Introduction
+🌟 介绍
 ~~~~~~~~~~~~~~~~
-In this scenario, RDAgent demonstrates the process of extracting factors from financial research reports, implementing these factors, and analyzing their performance through Qlib backtesting. 
-This process continually expands and refines the factor library.
+在这个场景中，RDAgent 演示了从金融研究报告中提取因子、实现这些因子并通过 Qlib 回测分析其性能的过程。
+这个过程不断地扩展和完善因子库。
 
-Here's an enhanced outline of the steps:
+以下是步骤的增强大纲：
 
-**Step 1 : Hypothesis Generation 🔍**
+**步骤 1：假设生成 🔍**
 
-- Generate and propose initial hypotheses based on insights from financial reports with thorough reasoning and financial justification.
+- 基于金融报告的见解，生成并提出初步假设，并附有详尽的推理和财务理由。
 
-**Step 2 : Factor Creation ✨**
+**步骤 2：因子创建 ✨**
 
-- Based on the hypothesis and financial reports, divide the tasks. 
-- Each task involves developing, defining, and implementing a new financial factor, including its name, description, formulation, and variables.
+- 根据假设和财务报告划分任务。
+- 每个任务都涉及开发、定义和实现一个新的金融因子，包括其名称、描述、公式和变量。
 
-**Step 3 : Factor Implementation 👨‍💻**
+**步骤 3：因子实现 👨‍💻**
 
-- Implement the factor code based on the description, evolving it as a developer would.
-- Quantitatively validate the newly created factors.
+- 根据描述实现因子代码，像开发人员一样对其进行演进。
+- 定量验证新创建的因子。
 
-**Step 4 : Backtesting with Qlib 📉**
+**步骤 4：使用 Qlib 进行回测 📉**
 
-- Integrate the full dataset into the factor implementation code and prepare the factor library.
-- Conduct backtesting using the Alpha158 plus newly developed factors and LGBModel in Qlib to evaluate the new factors' effectiveness and performance.
+- 将完整数据集集成到因子实现代码中，并准备因子库。
+- 使用 Alpha158 加上新开发的因子和 Qlib 中的 LGBModel 进行回测，以评估新因子的有效性和性能。
 
 +----------------+------------+----------------+----------------------------------------------------+
-| Dataset        | Model      | Factors        | Data Split                                         |
+| 数据集        | 模型      | 因子        | 数据拆分                                         |
 +================+============+================+====================================================+
-| CSI300         | LGBModel   | Alpha158 Plus  | +-----------+--------------------------+           |
-|                |            |                | | Train     | 2008-01-01 to 2014-12-31 |           |
+| 沪深300         | LGBModel   | Alpha158 Plus  | +-----------+--------------------------+           |
+|                |            |                | | 训练     | 2008-01-01 到 2014-12-31 |           |
 |                |            |                | +-----------+--------------------------+           |
-|                |            |                | | Valid     | 2015-01-01 to 2016-12-31 |           |
+|                |            |                | | 验证     | 2015-01-01 到 2016-12-31 |           |
 |                |            |                | +-----------+--------------------------+           |
-|                |            |                | | Test      | 2017-01-01 to 2020-08-01 |           |
+|                |            |                | | 测试      | 2017-01-01 到 2020-08-01 |           |
 |                |            |                | +-----------+--------------------------+           |
 +----------------+------------+----------------+----------------------------------------------------+
 
-**Step 5 : Feedback Analysis 🔍**
+**步骤 5：反馈分析 🔍**
 
-- Analyze backtest results to assess performance.
-- Incorporate feedback to refine hypotheses and improve the model.
+- 分析回测结果以评估性能。
+- 采纳反馈以完善假设并改进模型。
 
-**Step 6 :Hypothesis Refinement ♻️**
+**步骤 6：假设完善 ♻️**
 
-- Refine hypotheses based on feedback from backtesting.
-- Repeat the process to continuously improve the model.
+- 根据回测的反馈完善假设。
+- 重复该过程以不断改进模型。
 
-⚡ Quick Start
+⚡ 快速开始
 ~~~~~~~~~~~~~~~~~
 
-Please refer to the installation part in :doc:`../installation_and_configuration` to prepare your system dependency.
+请参考 :doc:`../installation_and_configuration` 中的安装部分来准备您的系统依赖。
 
-You can try our demo by running the following command:
+您可以通过运行以下命令来尝试我们的演示：
 
-- 🐍 Create a Conda Environment
+- 🐍 创建 Conda 环境
     
-  - Create a new conda environment with Python (3.10 and 3.11 are well tested in our CI):
+  - 使用 Python 创建一个新的 conda 环境（在我们的 CI 中，3.10 和 3.11 版本经过了充分测试）：
     
     .. code-block:: sh
     
         conda create -n rdagent python=3.10
 
-  - Activate the environment:
+  - 激活环境：
 
     .. code-block:: sh
 
         conda activate rdagent
 
-- 📦 Install the RDAgent
+- 📦 安装 RDAgent
   
-  - You can install the RDAgent package from PyPI:
+  - 您可以从 PyPI 安装 RDAgent 包：
 
     .. code-block:: sh
 
         pip install rdagent
 
-- 🚀 Run the Application
+- 🚀 运行应用程序
     
-  - Download the financial reports you wish to extract factors from and store them in your preferred folder.
+  - 下载您希望从中提取因子的财务报告，并将其存储在您喜欢的文件夹中。
 
-  - Specifically, you can follow this example, or use your own method:
+  - 具体来说，您可以按照此示例操作，或使用您自己的方法：
 
     .. code-block:: sh
 
         wget https://github.com/SunsetWolf/rdagent_resource/releases/download/reports/all_reports.zip
         unzip all_reports.zip -d git_ignore_folder/reports
 
-  - Run the application with the following command:
+  - 使用以下命令运行应用程序：
 
     .. code-block:: sh
 
         rdagent fin_factor_report --report-folder=git_ignore_folder/reports
 
-  - Alternatively, you can store the paths of the reports in `report_result_json_file_path`. The format should be:
+  - 或者，您可以将报告的路径存储在 `report_result_json_file_path` 中。格式应为：
 
     .. code-block:: json
 
@@ -137,20 +137,20 @@ You can try our demo by running the following command:
             "git_ignore_folder/report/fin_report3.pdf"
         ]
 
-  - Then, run the application using the following command:
+  - 然后，使用以下命令运行应用程序：
 
     .. code-block:: sh
 
         rdagent fin_factor_report
 
-🛠️ Usage of modules
+🛠️ 模块使用
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. _Env Config: 
 
-- **Env Config**
+- **环境配置**
 
-The following environment variables can be set in the `.env` file to customize the application's behavior:
+可以在 `.env` 文件中设置以下环境变量来自定义应用程序的行为：
 
 .. autopydantic_settings:: rdagent.app.qlib_rd_loop.conf.FactorFromReportPropSetting
     :settings-show-field-summary: False

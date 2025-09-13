@@ -15,13 +15,13 @@ def main(
     dataset: str | None = None,
 ):
     """
-    Parameters
+    参数
     ----------
     dataset :
-        Dateset name, used for finetune.
+        数据集名称，用于微调。
 
-    Auto R&D Evolving loop for models finetune.
-    You can continue running a session by using the command:
+    模型的自动研发演进循环微调。
+    您可以使用以下命令继续运行会话：
     .. code-block:: bash
         dotenv run -- python rdagent/app/finetune/llm/loop.py --dataset shibing624/alpaca-zh
     """
